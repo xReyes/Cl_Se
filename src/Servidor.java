@@ -1,4 +1,5 @@
 
+import DTO.Bancos_DTO;
 import DTO.Clientes_DTO;
 import DTO.Movimientos_DTO;
 import java.awt.BorderLayout;
@@ -73,6 +74,7 @@ public class Servidor extends javax.swing.JFrame {
                     Usuario obj2 = new Usuario();
                     Clientes_DTO cliente_dto = new Clientes_DTO();
                     Movimientos_DTO movimiento_dto = new Movimientos_DTO();
+                    Bancos_DTO banco_dto = new Bancos_DTO();
 
                     String cad = (new String(recibirPaquete.getData(),
                             0, recibirPaquete.getLength()));
@@ -149,6 +151,50 @@ public class Servidor extends javax.swing.JFrame {
                         movimiento_dto.Insert(movimiento_dto, conn);
 
                         JOptionPane.showMessageDialog(null, "Movimiento Agreado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+                    } else if (variables[0].equals("NewBanco")) {
+
+                        banco_dto.setTelefono(variables[1]);
+                        banco_dto.setDireccion(variables[2]);
+                        banco_dto.setSucursal(variables[3]);
+                        banco_dto.setId_cliente(variables[4]);
+
+                        banco_dto.Insert(banco_dto, conn);
+
+                        JOptionPane.showMessageDialog(null, "Banco Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                    } else if (variables[0].equals("EditBanco")) {
+
+                        banco_dto.setId_banco(variables[1]);
+                        banco_dto.setTelefono(variables[2]);
+                        banco_dto.setDireccion(variables[3]);
+                        banco_dto.setSucursal(variables[4]);
+                        banco_dto.setId_cliente(variables[5]);
+
+                        banco_dto.Edit(banco_dto, conn);
+
+                        JOptionPane.showMessageDialog(null, "Banco Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                    } else if (variables[0].equals("DeleteBanco")) {
+
+                        banco_dto.setId_banco(variables[1]);
+
+                        banco_dto.Delete(banco_dto, conn);
+
+                        JOptionPane.showMessageDialog(null, "Banco Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                    } else if (variables[0].equals("SearchBanco")) {
+
+                        banco_dto.setSucursal(variables[1]);
+
+                        banco_dto.Search(banco_dto, conn);
+
+                        mensaje = banco_dto.getId_banco() + " " + banco_dto.getTelefono() + " " + banco_dto.getDireccion() + " " + banco_dto.getSucursal() + " " + banco_dto.getId_cliente() + " ";
+
+                    } else if (variables[0].equals("ID_Cliente_Combo")) {
+
+                        banco_dto.Obtener_ID_Cliente(conn);
+
+                        mensaje = banco_dto.getList_id().toString().replaceAll(" ", "") + " ";
                     }
 
                 }

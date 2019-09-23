@@ -37,6 +37,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String nombre_Cliente;
     String buscar_Clientes;
 
+    String buscar_Banco;
+
     private DatagramSocket socket;
     Direccion_IP ip = new Direccion_IP();
 
@@ -61,7 +63,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             groupSexo_Cliente.add(rad_Masculino);
             groupSexo_Cliente.add(rad_Femenino);
-            
+
             h1 = new Thread(this);
             h1.start();
 
@@ -193,6 +195,17 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         txt_fm.setText(String.valueOf(now));
     }
 
+    public void limpiar_Banco() {
+
+        limpiar_Campos(txt_Sucursal_Banco);
+        limpiar_Campos(txt_Direccion_Banco);
+        limpiar_Campos(txt_Telefono_Banco);
+        limpiar_Campos(txt_nombre_Buscar_Banco);
+
+        Combo_Cliente_Banco.setSelectedIndex(0);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -291,7 +304,23 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel18 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        txt_id_banco = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        txt_nombre_Buscar_Banco = new javax.swing.JTextField();
+        btn_Buscar_Banco = new javax.swing.JButton();
+        txt_Sucursal_Banco = new javax.swing.JTextField();
+        txt_Direccion_Banco = new javax.swing.JTextField();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        txt_Telefono_Banco = new javax.swing.JTextField();
+        Combo_Cliente_Banco = new javax.swing.JComboBox<>();
+        jLabel37 = new javax.swing.JLabel();
+        btn_Nuevo_Banco = new javax.swing.JButton();
+        btn_Guardar_Banco = new javax.swing.JButton();
+        btn_Cancelar_Banco = new javax.swing.JButton();
+        btn_Editar_Banco = new javax.swing.JButton();
+        btn_Eliminar_Banco = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
 
@@ -906,24 +935,163 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel19.setText("Reyes");
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel33.setText("Sucursal:");
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel34.setText("Buscar por Nombre:");
+
+        txt_nombre_Buscar_Banco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        btn_Buscar_Banco.setText("Buscar");
+        btn_Buscar_Banco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Buscar_BancoActionPerformed(evt);
+            }
+        });
+
+        txt_Sucursal_Banco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txt_Direccion_Banco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_Direccion_Banco.setToolTipText("Ingresa la direccion completa separada por _");
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel35.setText("Direccion:");
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel36.setText("Telefono:");
+
+        txt_Telefono_Banco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        Combo_Cliente_Banco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel37.setText("Cliente:");
+
+        btn_Nuevo_Banco.setText("Nuevo");
+        btn_Nuevo_Banco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Nuevo_BancoActionPerformed(evt);
+            }
+        });
+
+        btn_Guardar_Banco.setText("Guardar");
+        btn_Guardar_Banco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Guardar_BancoActionPerformed(evt);
+            }
+        });
+
+        btn_Cancelar_Banco.setText("Cancelar");
+        btn_Cancelar_Banco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Cancelar_BancoActionPerformed(evt);
+            }
+        });
+
+        btn_Editar_Banco.setText("Editar");
+        btn_Editar_Banco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Editar_BancoActionPerformed(evt);
+            }
+        });
+
+        btn_Eliminar_Banco.setText("Eliminar");
+        btn_Eliminar_Banco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Eliminar_BancoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(717, Short.MAX_VALUE))
+                .addGap(68, 68, 68)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(txt_nombre_Buscar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btn_Buscar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btn_Nuevo_Banco)
+                                .addGap(57, 57, 57)
+                                .addComponent(btn_Guardar_Banco)
+                                .addGap(49, 49, 49)
+                                .addComponent(btn_Cancelar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(btn_Editar_Banco)
+                                .addGap(49, 49, 49)
+                                .addComponent(btn_Eliminar_Banco))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel33)
+                                    .addComponent(jLabel35)
+                                    .addComponent(jLabel36)
+                                    .addComponent(jLabel37))
+                                .addGap(46, 46, 46)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_id_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txt_Telefono_Banco)
+                                        .addComponent(txt_Direccion_Banco)
+                                        .addComponent(txt_Sucursal_Banco)
+                                        .addComponent(Combo_Cliente_Banco, 0, 222, Short.MAX_VALUE)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(68, 68, 68))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(469, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel34))
+                    .addComponent(txt_nombre_Buscar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Buscar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(txt_id_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel33))
+                    .addComponent(txt_Sucursal_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel35))
+                    .addComponent(txt_Direccion_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel36))
+                    .addComponent(txt_Telefono_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel37))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(Combo_Cliente_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Nuevo_Banco)
+                    .addComponent(btn_Guardar_Banco)
+                    .addComponent(btn_Cancelar_Banco)
+                    .addComponent(btn_Editar_Banco)
+                    .addComponent(btn_Eliminar_Banco))
+                .addGap(50, 50, 50))
         );
 
         JTabbedPrincipal.addTab("Banco", jPanel3);
@@ -1260,6 +1428,171 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_Buscar_MovimientoActionPerformed
 
+    private void btn_Buscar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_BancoActionPerformed
+
+        if (txt_nombre_Buscar_Banco.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el Nombre para Buscar!", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
+            txt_nombre_Buscar.requestFocus();
+
+        } else {
+
+            try {
+                //obtener mensaje del campo de texto y convertirlo en arrreglo byte
+                buscar_Banco = txt_nombre_Buscar_Banco.getText().trim();
+                String mensaje = "SearchBanco" + " " + buscar_Banco + " ";
+                byte datos[] = mensaje.getBytes();
+                //          //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);
+                //enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                esperarPaquetesBanco();
+                socket = new DatagramSocket();
+
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        }
+    }//GEN-LAST:event_btn_Buscar_BancoActionPerformed
+
+    private void btn_Nuevo_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Nuevo_BancoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Limpiar los Campos?");
+        if (JOptionPane.OK_OPTION == a) {
+            limpiar_Banco();
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Nuevo_BancoActionPerformed
+
+    private void btn_Guardar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Guardar_BancoActionPerformed
+
+        try {
+
+            String telefono;
+            String direccion;
+            String sucursal;
+            String id_cliente;
+
+            telefono = txt_Telefono_Banco.getText().trim();
+            direccion = txt_Direccion_Banco.getText().trim();
+            sucursal = txt_Sucursal_Banco.getText().trim();
+
+            String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
+            id_cliente = cliente_id[1];
+
+            String mensaje = "NewBanco " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
+            byte datos[] = mensaje.getBytes();
+            JOptionPane.showMessageDialog(null, mensaje);
+            //crear enviarPaquete
+
+            DatagramPacket snd = ip.Direccion(datos);
+            socket.send(snd);//enviar paquete
+
+        } catch (IOException exceptionES) {
+            exceptionES.printStackTrace();
+        }
+        try {
+            socket = new DatagramSocket();
+        } catch (SocketException excepcionSocket) {
+            excepcionSocket.printStackTrace();
+            System.exit(1);
+        }
+    }//GEN-LAST:event_btn_Guardar_BancoActionPerformed
+
+    private void btn_Cancelar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar_BancoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Cancelar?");
+        if (JOptionPane.OK_OPTION == a) {
+            limpiar_Banco();
+            JTabbedPrincipal.setSelectedIndex(0);
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Cancelar_BancoActionPerformed
+
+    private void btn_Editar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Editar_BancoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar el Banco?");
+        if (JOptionPane.OK_OPTION == a) {
+
+            try {
+
+                String id_banco;
+                String telefono;
+                String direccion;
+                String sucursal;
+                String id_cliente;
+
+                telefono = txt_Telefono_Banco.getText().trim();
+                direccion = txt_Direccion_Banco.getText().trim();
+                sucursal = txt_Sucursal_Banco.getText().trim();
+
+                String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
+                id_cliente = cliente_id[1];
+                id_banco = txt_id_banco.getText().trim();
+
+                String mensaje = "EditBanco " + id_banco + " " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
+                byte datos[] = mensaje.getBytes();
+                JOptionPane.showMessageDialog(null, mensaje);
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Editar_BancoActionPerformed
+
+    private void btn_Eliminar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Eliminar_BancoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar el Banco?");
+        if (JOptionPane.OK_OPTION == a) {
+
+            try {
+                String id_banco;
+                id_banco = txt_id_banco.getText();
+                String mensaje = "DeleteBanco " + id_banco + " Registro Borrado";
+                byte datos[] = mensaje.getBytes();
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
+            catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Eliminar_BancoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1359,22 +1692,76 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//fin del metodo e
 
+    private void esperarPaquetesBanco() {
+        try {
+            //establecer el paquete
+            byte datos[] = new byte[100];
+            DatagramPacket recibirPaquete = new DatagramPacket(
+                    datos, datos.length);
+            socket.receive(recibirPaquete);//esperar un paquete
+            String cad = (new String(recibirPaquete.getData(),
+                    0, recibirPaquete.getLength()));
+            String[] variables;
+            variables = cad.split(" ");
+
+            txt_id_banco.setText(variables[0]);
+            txt_Telefono_Banco.setText(variables[1]);
+            txt_Direccion_Banco.setText(variables[2]);
+            txt_Sucursal_Banco.setText(variables[3]);
+            Combo_Cliente_Banco.setSelectedItem(variables[4]);
+
+        } catch (IOException excepcion) {
+            excepcion.printStackTrace();
+        }
+    }//fin del metodo e
+
+    private void esperarPaquetesID_Cliente_Combo() {
+        try {
+            //establecer el paquete
+            byte datos[] = new byte[100];
+            DatagramPacket recibirPaquete = new DatagramPacket(
+                    datos, datos.length);
+            socket.receive(recibirPaquete);//esperar un paquete
+            String cad = (new String(recibirPaquete.getData(),
+                    0, recibirPaquete.getLength()));
+            String[] variables;
+            variables = cad.split(",");
+
+            Combo_Cliente_Banco.addItem("Seleccionar....");
+
+            for (Object objeto : variables) {
+
+                Combo_Cliente_Banco.addItem(objeto.toString());
+            }
+
+        } catch (IOException excepcion) {
+            excepcion.printStackTrace();
+        }
+    }//fin del metodo e
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Combo_Cliente_Banco;
     private javax.swing.JLabel JLabel_Hora;
     private javax.swing.JPanel JPanelClientes;
     private javax.swing.JPanel JPanel_Usuarios;
     private javax.swing.JTabbedPane JTabbedPrincipal;
     private javax.swing.JTree JTree_Inicio;
+    private javax.swing.JButton btn_Buscar_Banco;
     private javax.swing.JButton btn_Buscar_Cliente;
     private javax.swing.JButton btn_Buscar_Movimiento;
+    private javax.swing.JButton btn_Cancelar_Banco;
     private javax.swing.JButton btn_Cancelar_Cliente;
     private javax.swing.JButton btn_Cancelar_Movimiento;
+    private javax.swing.JButton btn_Editar_Banco;
     private javax.swing.JButton btn_Editar_Cliente;
     private javax.swing.JButton btn_Editar_Movimiento;
+    private javax.swing.JButton btn_Eliminar_Banco;
     private javax.swing.JButton btn_Eliminar_Cliente;
     private javax.swing.JButton btn_Eliminar_Movimiento;
+    private javax.swing.JButton btn_Guardar_Banco;
     private javax.swing.JButton btn_Guardar_Cliente;
     private javax.swing.JButton btn_Guardar_Movimiento;
+    private javax.swing.JButton btn_Nuevo_Banco;
     private javax.swing.JButton btn_Nuevo_Cliente;
     private javax.swing.JButton btn_Nuevo_Movimiento;
     private javax.swing.JButton btn_estadoCuenta;
@@ -1398,7 +1785,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -1414,6 +1800,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1440,17 +1831,32 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txt_Ap_Materno;
     private javax.swing.JTextField txt_Ap_Paterno;
     private javax.swing.JTextField txt_Direccion;
+    private javax.swing.JTextField txt_Direccion_Banco;
     private javax.swing.JTextField txt_Email;
     private javax.swing.JTextField txt_Nombre;
+    private javax.swing.JTextField txt_Sucursal_Banco;
     private javax.swing.JTextField txt_Telefono;
+    private javax.swing.JTextField txt_Telefono_Banco;
     private javax.swing.JTextField txt_buscar_id;
     private javax.swing.JTextField txt_cd;
     private javax.swing.JTextField txt_fm;
     public static javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_id_banco;
     private javax.swing.JTextField txt_id_cliente;
     private javax.swing.JTextField txt_nc;
     private javax.swing.JTextField txt_nombre_Buscar;
+    private javax.swing.JTextField txt_nombre_Buscar_Banco;
     private javax.swing.JTextField txt_s;
     private javax.swing.JTextField txt_tm;
     // End of variables declaration//GEN-END:variables
+
+    /*
+    MODIFICACIONES A LA BASE DE DATOS.
+    
+    Luis - Cambiamos la fecha a Varchar en Movimientos y eliminamos la Llave Foranea de id_movimientos en Cuenta.
+    Beth - Cambiamos la fecha a Varchar en Empresas.
+    Reyes - Agrege campo de Estado en Banco.
+    
+    
+     */
 }
