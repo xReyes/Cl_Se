@@ -59,8 +59,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             Generar_ID();
             fecha();
 
-//            groupSexo_Cliente.add(rad_Masculino);
-//            groupSexo_Cliente.add(rad_Femenino);
+            groupSexo_Cliente.add(rad_Masculino);
+            groupSexo_Cliente.add(rad_Femenino);
+            
             h1 = new Thread(this);
             h1.start();
 
@@ -137,7 +138,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         limpiar_Campos(txt_Telefono);
         limpiar_Campos(txt_nombre_Buscar);
 
-        //groupSexo_Cliente.clearSelection();
+        groupSexo_Cliente.clearSelection();
         combo_Pais.setSelectedIndex(0);
         combo_Tipo_Cuenta.setSelectedIndex(0);
 
@@ -201,6 +202,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        groupSexo_Cliente = new javax.swing.ButtonGroup();
         JTabbedPrincipal = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -1380,6 +1382,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn_nomina;
     private javax.swing.JComboBox<String> combo_Pais;
     private javax.swing.JComboBox<String> combo_Tipo_Cuenta;
+    private javax.swing.ButtonGroup groupSexo_Cliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscarCuenta;
     private javax.swing.JButton jButtonEditarCuenta;
