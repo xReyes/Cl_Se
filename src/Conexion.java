@@ -9,11 +9,11 @@ public class Conexion {
 
     Connection conn;
 
-    public Connection Conexion() {
+   public Connection Conexion() {
         try {
             DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
             Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/sistema_bancario", "root", "");
+                    "jdbc:mysql://localhost/sistema_bancario?characterEncoding=latin1&useConfigs=maxPerformance", "root", "");
             // con.createStatement();
             this.conn = con;
         } catch (SQLException e) {

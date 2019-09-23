@@ -1,5 +1,6 @@
 
 import DTO.Clientes_DTO;
+import DTO.Movimientos_DTO;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -7,6 +8,7 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -70,6 +72,7 @@ public class Servidor extends javax.swing.JFrame {
 
                     Usuario obj2 = new Usuario();
                     Clientes_DTO cliente_dto = new Clientes_DTO();
+                    Movimientos_DTO movimiento_dto = new Movimientos_DTO();
 
                     String cad = (new String(recibirPaquete.getData(),
                             0, recibirPaquete.getLength()));
@@ -133,6 +136,19 @@ public class Servidor extends javax.swing.JFrame {
 
                         mensaje = cliente_dto.getId_clientes() + " " + cliente_dto.getNombre() + " " + cliente_dto.getAp_Paterno() + " " + cliente_dto.getAp_Materno() + " " + cliente_dto.getSexo() + " " + cliente_dto.getDireccion() + " " + cliente_dto.getTelefono() + " " + cliente_dto.getEmail() + " " + cliente_dto.getPais() + " " + cliente_dto.getTipo_cuenta() + " ";
 
+                    } else if (variables[0].equals("NewMovimiento")) {
+
+                        Date now = new Date(System.currentTimeMillis());
+
+                        movimiento_dto.setTipo_movimiento(variables[1]);
+                        movimiento_dto.setFecha_movimiento(String.valueOf(now));
+                        movimiento_dto.setSaldo(Double.parseDouble(variables[8]));
+                        movimiento_dto.setN_cuenta(variables[9]);
+                        movimiento_dto.setCuenta_destino(variables[10]);
+
+                        movimiento_dto.Insert(movimiento_dto, conn);
+
+                        JOptionPane.showMessageDialog(null, "Movimiento Agreado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 }
