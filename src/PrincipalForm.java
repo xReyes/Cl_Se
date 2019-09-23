@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -52,12 +56,22 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             setLocationRelativeTo(null);
             setTitle("Sistema Bancario");
 
+            Generar_ID();
+            fecha();
+
 //            groupSexo_Cliente.add(rad_Masculino);
 //            groupSexo_Cliente.add(rad_Femenino);
             h1 = new Thread(this);
             h1.start();
 
             txt_id_cliente.setVisible(false);
+
+            btn_Editar_Cliente.setEnabled(false);
+            btn_Eliminar_Cliente.setEnabled(false);
+
+            btn_Editar_Movimiento.setEnabled(false);
+            btn_Eliminar_Movimiento.setEnabled(false);
+
         } catch (SocketException ex) {
             Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -127,6 +141,55 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         combo_Pais.setSelectedIndex(0);
         combo_Tipo_Cuenta.setSelectedIndex(0);
 
+    }
+
+    public void limpiar_Movimiento() {
+
+        limpiar_Campos(txt_id);
+        limpiar_Campos(txt_tm);
+        limpiar_Campos(txt_fm);
+        limpiar_Campos(txt_s);
+        limpiar_Campos(txt_nc);
+        limpiar_Campos(txt_cd);
+        limpiar_Campos(txt_buscar_id);
+
+        System.out.println(JPanelClientes.getSize());
+
+    }
+
+    public void ID_AUTO(Connection conn) throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ps = conn.prepareStatement("SELECT MAX(id_movimiento) AS id_movimiento " + "FROM movimientos");
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            int id = (rs.getInt(1) + 1);
+
+            txt_id.setText(String.valueOf(id));
+        }
+    }
+
+    private void Generar_ID() {
+
+        try {
+
+            ID_AUTO(conn.Conexion());
+
+        } catch (SQLException e) {
+        }
+    }
+
+    private void fecha() {
+
+        Date now = new Date(System.currentTimeMillis());
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
+
+        //System.out.println(date.format(now));
+        //System.out.println(hour.format(now));
+        //System.out.println(now);
+        txt_fm.setText(String.valueOf(now));
     }
 
     /**
