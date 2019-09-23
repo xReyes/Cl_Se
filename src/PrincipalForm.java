@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /*
@@ -36,6 +37,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
+    
+    //hey
 
     public PrincipalForm() {
         try {
@@ -808,12 +811,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
