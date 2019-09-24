@@ -6,6 +6,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,21 +27,15 @@ public class Login extends javax.swing.JFrame {
 
     String usuario;
     String password;
+    public Connection conn;
 
-    private DatagramSocket socket;
-    Direccion_IP ip = new Direccion_IP();
+    Usuario user = new Usuario();
 
     public Login() {
-        try {
-            initComponents();
-            setTitle("Sistema Bancario");
-            setExtendedState(MAXIMIZED_BOTH);
+        initComponents();
+        setTitle("Sistema Bancario");
+        setExtendedState(MAXIMIZED_BOTH);
 
-            socket = new DatagramSocket();
-
-        } catch (SocketException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -198,27 +194,37 @@ public class Login extends javax.swing.JFrame {
     private void JLabel_Login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_Login1MouseClicked
 
         try {
-            usuario = txt_Usuario1.getText();
-            password = txt_Password1.getText();
+            usuario = txt_Usuario1.getText().trim();
+            password = txt_Password1.getText().trim();
 
-            String mensaje = "Login " + usuario + " " + cifrarBase64(password) + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
+            user.SetNombre(usuario);
+            user.SetPassword(cifrarBase64(password));
 
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
+            Conexion obj = new Conexion();
+            conn = obj.Conexion();
 
-            this.setVisible(false);
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
+            if (user.Login(user, conn)) {
+
+                JOptionPane.showMessageDialog(this, "Sesion Iniciada", "Bienvenido(a)", JOptionPane.INFORMATION_MESSAGE);
+
+                this.setVisible(false);
+
+                PrincipalForm pf = new PrincipalForm();
+                pf.setVisible(true);
+
+            } else {
+
+                JOptionPane.showMessageDialog(this, "Usuario / Contraseña Incorrectos", "Error!", JOptionPane.INFORMATION_MESSAGE);
+
+                Login login = new Login();
+                login.setVisible(true);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
+
+
     }//GEN-LAST:event_JLabel_Login1MouseClicked
 
     private void JLabel_Registro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_Registro1MouseClicked
