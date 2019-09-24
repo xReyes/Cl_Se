@@ -229,8 +229,10 @@ public class Login extends javax.swing.JFrame {
 
     private void JLabel_Registro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_Registro1MouseClicked
 
-        Cliente4 cliente = new Cliente4();
-        cliente.setVisible(true);
+        NewUsuario user = new NewUsuario(this, true);
+        user.setVisible(true);
+
+
     }//GEN-LAST:event_JLabel_Registro1MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
@@ -285,28 +287,17 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JLabel_Login;
     private javax.swing.JLabel JLabel_Login1;
-    private javax.swing.JLabel JLabel_Registro;
     private javax.swing.JLabel JLabel_Registro1;
-    private LIB.JPanelRound JPanel_Login;
     private LIB.JPanelRound JPanel_Login1;
-    private LIB.JEImagePanel jEImagePanel1;
     private LIB.JEImagePanel jEImagePanel2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private LIB.JPanelTransparente jPanelTransparente1;
-    private LIB.JPanelTransparente jPanelTransparente2;
     private LIB.JPanelTransparente jPanelTransparente3;
     private LIB.JPanelTransparente jPanelTransparente4;
-    private LIB.JTexfieldPH_Password txt_Password;
     private LIB.JTexfieldPH_Password txt_Password1;
-    private LIB.JTexfieldPH_FielTex txt_Usuario;
     private LIB.JTexfieldPH_FielTex txt_Usuario1;
     // End of variables declaration//GEN-END:variables
 }
