@@ -130,26 +130,4 @@ public class Bancos_DTO {
         }
 
     }
-
-    public void Obtener_ID_Cliente(Connection conn) throws SQLException {
-
-        PreparedStatement stm1 = conn.prepareStatement("SELECT CONCAT('_',id_clientes,'_',nombre_Cliente,'_',a_paterno, '_',a_materno, ' ') AS id_nombre FROM clientes WHERE estado = 'Activo';");
-        rs = stm1.executeQuery();
-
-        while (rs.next()) {
-            list_id.add(rs.getString("id_nombre"));
-
-        }
-    }
-
-    ArrayList<String> list_id = new ArrayList<>();
-
-    public ArrayList<String> getList_id() {
-        return list_id;
-    }
-
-    public void setList_id(ArrayList<String> list_id) {
-        this.list_id = list_id;
-    }
-
 }

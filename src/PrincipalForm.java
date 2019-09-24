@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -46,9 +47,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     Calendar calendario;
     Thread h1;
 
-    //hey
-    
-    //REYES
     public PrincipalForm() {
         try {
             initComponents();
@@ -61,6 +59,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             setTitle("Sistema Bancario");
 
             Generar_ID();
+            Generar_ID_cliente();
             fecha();
 
             groupSexo_Cliente.add(rad_Masculino);
@@ -70,16 +69,26 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             h1.start();
 
             txt_id_cliente.setVisible(false);
+            txt_id_banco.setVisible(false);
 
-            btn_Editar_Cliente.setEnabled(false);
-            btn_Eliminar_Cliente.setEnabled(false);
-
-            btn_Editar_Movimiento.setEnabled(false);
-            btn_Eliminar_Movimiento.setEnabled(false);
-
+//            btn_Editar_Cliente.setEnabled(false);
+//            btn_Eliminar_Cliente.setEnabled(false);
+//
+//            btn_Editar_Movimiento.setEnabled(false);
+//            btn_Eliminar_Movimiento.setEnabled(false);
         } catch (SocketException ex) {
             Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public String remplazar_espacios(JTextField campo) {
+
+        String r = "";
+
+        r = campo.getText().trim().replaceAll(" ", "_");
+
+        return r;
 
     }
 
@@ -175,6 +184,22 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    public void Generar_ID_Cliente(Connection conn) throws SQLException {
+
+        PreparedStatement stm1 = conn.prepareStatement("SELECT CONCAT(id_clientes,'_',nombre_Cliente,'_',a_paterno, '_',a_materno, ' ') AS id_nombre FROM clientes WHERE estado = 'Activo';");
+        ResultSet rs = null;
+        rs = stm1.executeQuery();
+
+        Combo_Cliente_Banco.addItem("Selecciona...");
+
+        while (rs.next()) {
+
+            Combo_Cliente_Banco.addItem(rs.getString("id_nombre"));
+
+        }
+
+    }
+
     private void Generar_ID() {
 
         try {
@@ -185,15 +210,21 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    private void Generar_ID_cliente() {
+
+        try {
+            Generar_ID_Cliente(conn.Conexion());
+        } catch (SQLException ex) {
+        }
+
+    }
+
     private void fecha() {
 
         Date now = new Date(System.currentTimeMillis());
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
 
-        //System.out.println(date.format(now));
-        //System.out.println(hour.format(now));
-        //System.out.println(now);
         txt_fm.setText(String.valueOf(now));
     }
 
@@ -327,6 +358,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/img/icono2.png")).getImage());
 
         JTabbedPrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -539,7 +571,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         combo_Tipo_Cuenta.setBounds(540, 150, 190, 30);
 
         combo_Pais.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        combo_Pais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afganistán", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán", "Bahamas", "Bangladés", "Barbados", "Baréin", "Bélgica", "Belice", "Benín", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Bután", "Cabo Verde", "Camboya", "Camerún", "Canadá", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos Árabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "España", "Estados Unidos", "Estonia", "Etiopía", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabón", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisáu", "Haití", "Honduras", "Hungría", "India", "Indonesia", "Irak", "Irán", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomón", "Israel", "Italia", "Jamaica", "Japón", "Jordania", "Kazajistán", "Kenia", "Kirguistán", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Líbano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Malí", "Malta", "Marruecos", "Mauricio", "Mauritania", "México", "Micronesia", "Moldavia", "Mónaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Níger", "Nigeria", "Noruega", "Nueva Zelanda", "Omán", "Países Bajos", "Pakistán", "Palaos", "Panamá", "Papúa Nueva Guinea", "Paraguay", "Perú", "Polonia", "Portugal", "Reino Unido", "República Centroafricana", "República Checa", "República del Congo", "República Democrática del Congo", "República Dominicana", "República Sudafricana", "Ruanda", "Rumanía", "Rusia", "Samoa", "San Cristóbal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucía", "Santo Tomé y Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudán", "Sudán del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistán", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Túnez", "Turkmenistán", "Turquía", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistán", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue" }));
+        combo_Pais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afganistan", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyan", "Bahamas", "Banglades", "Barbados", "Barein", "Belgica", "Belice", "Benin", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Butan", "Cabo Verde", "Camboya", "Camerun", "Canada", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos arabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "Espana", "Estados Unidos", "Estonia", "Etiopaa", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabon", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisau", "Haiti", "Honduras", "Hungria", "India", "Indonesia", "Irak", "Iran", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomon", "Israel", "Italia", "Jamaica", "Japon", "Jordania", "Kazajistan", "Kenia", "Kirguistan", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Mali", "Malta", "Marruecos", "Mauricio", "Mauritania", "Mexico", "Micronesia", "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Noruega", "Nueva Zelanda", "Oman", "Paises Bajos", "Pakistan", "Palaos", "Panama", "Papua Nueva Guinea", "Paraguay", "Peru", "Polonia", "Portugal", "Reino Unido", "Republica Centroafricana", "Republica Checa", "Republica del Congo", "Republica Democrática del Congo", "Republica Dominicana", "Republica Sudafricana", "Ruanda", "Rumania", "Rusia", "Samoa", "San Cristobal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucia", "Santo Tome y Principe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudan", "Sudan del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistan", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Tunez", "Turkmenistan", "Turquia", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue" }));
         JPanelClientes.add(combo_Pais);
         combo_Pais.setBounds(540, 110, 190, 30);
 
@@ -1187,15 +1219,15 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             String pais;
             String tipo_cuenta;
 
-            nombre_Cliente = txt_Nombre.getText().trim();
-            ap_Paterno = txt_Ap_Paterno.getText().trim();
-            ap_Materno = txt_Ap_Materno.getText().trim();
+            nombre_Cliente = remplazar_espacios(txt_Nombre);
+            ap_Paterno = remplazar_espacios(txt_Ap_Paterno);
+            ap_Materno = remplazar_espacios(txt_Ap_Materno);
             sexo = sexo_Cliente();
-            direccion = txt_Direccion.getText().trim();
-            email = txt_Email.getText().trim();
-            telefono = txt_Telefono.getText().trim();
+            direccion = remplazar_espacios(txt_Direccion);
+            email = remplazar_espacios(txt_Email);
+            telefono = remplazar_espacios(txt_Telefono);
             pais = combo_Pais.getSelectedItem().toString();
-            tipo_cuenta = combo_Tipo_Cuenta.getSelectedItem().toString();
+            tipo_cuenta = combo_Tipo_Cuenta.getSelectedItem().toString().replaceAll(" ", "_");
 
             String mensaje = "NewCliente " + nombre_Cliente + " " + ap_Paterno + " " + ap_Materno + " " + sexo + " " + direccion + " " + email + " " + telefono + " " + pais + " " + tipo_cuenta + " ";
             byte datos[] = mensaje.getBytes();
@@ -1309,15 +1341,15 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                 String tipo_cuenta;
 
                 id_cliente = txt_id_cliente.getText().trim();
-                nombre_Cliente = txt_Nombre.getText().trim();
-                ap_Paterno = txt_Ap_Paterno.getText().trim();
-                ap_Materno = txt_Ap_Materno.getText().trim();
+                nombre_Cliente = remplazar_espacios(txt_Nombre);
+                ap_Paterno = remplazar_espacios(txt_Ap_Paterno);
+                ap_Materno = remplazar_espacios(txt_Ap_Materno);
                 sexo = sexo_Cliente();
-                direccion = txt_Direccion.getText().trim();
-                email = txt_Email.getText().trim();
-                telefono = txt_Telefono.getText().trim();
+                direccion = remplazar_espacios(txt_Direccion);
+                email = remplazar_espacios(txt_Email);
+                telefono = remplazar_espacios(txt_Telefono);
                 pais = combo_Pais.getSelectedItem().toString();
-                tipo_cuenta = combo_Tipo_Cuenta.getSelectedItem().toString();
+                tipo_cuenta = combo_Tipo_Cuenta.getSelectedItem().toString().replaceAll(" ", "_");
 
                 String mensaje = "EditCliente " + id_cliente + " " + nombre_Cliente + " " + ap_Paterno + " " + ap_Materno + " " + sexo + " " + direccion + " " + email + " " + telefono + " " + pais + " " + tipo_cuenta + " ";
                 byte datos[] = mensaje.getBytes();
@@ -1488,7 +1520,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             sucursal = txt_Sucursal_Banco.getText().trim();
 
             String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
-            id_cliente = cliente_id[1];
+            id_cliente = cliente_id[0];
 
             String mensaje = "NewBanco " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
             byte datos[] = mensaje.getBytes();
@@ -1717,29 +1749,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//fin del metodo e
 
-    private void esperarPaquetesID_Cliente_Combo() {
-        try {
-            //establecer el paquete
-            byte datos[] = new byte[100];
-            DatagramPacket recibirPaquete = new DatagramPacket(
-                    datos, datos.length);
-            socket.receive(recibirPaquete);//esperar un paquete
-            String cad = (new String(recibirPaquete.getData(),
-                    0, recibirPaquete.getLength()));
-            String[] variables;
-            variables = cad.split(",");
-
-            Combo_Cliente_Banco.addItem("Seleccionar....");
-
-            for (Object objeto : variables) {
-
-                Combo_Cliente_Banco.addItem(objeto.toString());
-            }
-
-        } catch (IOException excepcion) {
-            excepcion.printStackTrace();
-        }
-    }//fin del metodo e
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo_Cliente_Banco;
@@ -1859,6 +1868,10 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     Beth - Cambiamos la fecha a Varchar en Empresas.
     Reyes - Agrege campo de Estado en Banco.
     
+    
+    *****PENDIENTES*****
+    Remplazar todos los espacios por _ Listo Metodo!.
+    Validar campos.
     
      */
 }

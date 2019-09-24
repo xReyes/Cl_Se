@@ -64,35 +64,26 @@ public class Usuario {
 
     }
 
-    public void Login(Connection conn) throws SQLException {
+    public boolean Login(Usuario dto, Connection conn) throws SQLException {
 
         PreparedStatement stm = conn.prepareStatement("SELECT * FROM usuarios WHERE nombre = ? and password = ?; ");
-        stm.setString(1, this.nombre);
-        stm.setString(2, this.password);
+        stm.setString(1, dto.getNombre());
+        stm.setString(2, dto.getPassword());
         rs = stm.executeQuery();
 
         if (rs.next()) {
 
             if (this.nombre.equals(rs.getString("nombre")) && this.password.equals(rs.getString("password"))) {
 
-                JOptionPane.showMessageDialog(null, "Sesion Iniciada");
-
-//                DatagramSocket socket;
-//                try {
-//                    socket = new DatagramSocket(5000);
-//                } catch (SocketException ex) {
-//                    Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-
-                PrincipalForm pf = new PrincipalForm();
-                pf.setVisible(true);
+                return true;
 
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario / Contraseña Incorrectos");
 
-            Login login = new Login();
-            login.setVisible(true);
+            return false;
         }
+
+        return false;
+
     }
 }
