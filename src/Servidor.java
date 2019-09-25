@@ -1,6 +1,7 @@
 
 import DTO.Bancos_DTO;
 import DTO.Clientes_DTO;
+import DTO.CuentasDTO;
 import DTO.Movimientos_DTO;
 import java.awt.BorderLayout;
 import java.io.IOException;
@@ -73,6 +74,7 @@ public class Servidor extends javax.swing.JFrame {
                     Clientes_DTO cliente_dto = new Clientes_DTO();
                     Movimientos_DTO movimiento_dto = new Movimientos_DTO();
                     Bancos_DTO banco_dto = new Bancos_DTO();
+                    CuentasDTO cuentasDTO = new CuentasDTO();
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
                     String[] variables;
@@ -178,6 +180,19 @@ public class Servidor extends javax.swing.JFrame {
                             banco_dto.Search(banco_dto, conn);
 
                             mensaje = banco_dto.getId_banco() + " " + banco_dto.getTelefono() + " " + banco_dto.getDireccion() + " " + banco_dto.getSucursal() + " " + banco_dto.getId_cliente() + " ";
+                            break;
+                            
+                        case "NewCuenta":
+                            
+                            JOptionPane.showMessageDialog(this, variables[2]);
+                            cuentasDTO.setIdCliente(Integer.parseInt(variables[1]));
+                            cuentasDTO.setIdUsuario(Integer.parseInt(variables[2]));
+                            cuentasDTO.setNoDeCuenta(Integer.parseInt(variables[3]));
+                            cuentasDTO.setTipoCuenta(variables[4]);
+                            cuentasDTO.setFechaApertura(variables[5]);
+                            cuentasDTO.setSaldoApertura(Double.parseDouble(variables[6]));
+                            
+                            cuentasDTO.insert(cuentasDTO, conn);
                             break;
 
                         default:
