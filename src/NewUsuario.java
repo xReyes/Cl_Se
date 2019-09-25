@@ -216,10 +216,11 @@ public class NewUsuario extends javax.swing.JDialog {
     private void JLabel_Login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_Login1MouseClicked
 
         try {
-            String usuario = txt_Usuario.getText();
-            String psw = txt_Password.getText();
-            String perfil = txt_Usuario.getText();
-            String cliente = txt_Am_New_User.getText();
+
+            String usuario = "";
+            String perfil = "";
+            String psw = "";
+            String cliente = "";
 
             String mensaje = "1 " + usuario + " " + perfil + " " + psw + " " + cliente + " ";
             byte datos[] = mensaje.getBytes();

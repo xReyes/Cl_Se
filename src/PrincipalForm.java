@@ -1885,6 +1885,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     Reyes - Agrege campo de Estado en Banco.
     
     
+    ----------------
+    
+    Siempre despues de dar un push hacer Clean and Build
+    
+    ----------------
     *****PENDIENTES*****
     Remplazar todos los espacios por _ Listo Metodo!.
     Validar campos.
