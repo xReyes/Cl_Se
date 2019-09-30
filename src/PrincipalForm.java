@@ -46,7 +46,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
-  
+
     public PrincipalForm() {
         try {
             initComponents();
@@ -1375,24 +1375,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_btn_Editar_ClienteActionPerformed
 
     private void jButtonGuardarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarCuentaActionPerformed
-        try {
-            // TODO add your handling code here:
 
-            CuentasDTO cuentasDTO = new CuentasDTO();
 
-            cuentasDTO.setIdCliente(Integer.parseInt(jTextFieldIdClienteCuenta.getText()));
-            cuentasDTO.setIdUsuario(Integer.parseInt(jTextFieldIdUsuarioCuenta.getText()));
-            cuentasDTO.setNoDeCuenta(Integer.parseInt(jTextFieldNoDeCuenta.getText()));
-            cuentasDTO.setTipoCuenta(jComboBoxTipoCuenta.getSelectedItem().toString());
-            cuentasDTO.setFechaApertura(jTextFieldFechaAperturaCuenta.getText());
-            cuentasDTO.setSaldoApertura(Double.parseDouble(jTextFieldSaldoAperturaCuenta.getText()));
-
-            cuentasDTO.insert(cuentasDTO, conn.Conexion());
-
-            JOptionPane.showMessageDialog(this, "cuenta agregada");
-        } catch (SQLException ex) {
-            Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_jButtonGuardarCuentaActionPerformed
 
     private void jButtonEditarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCuentaActionPerformed

@@ -76,7 +76,6 @@ public class Servidor extends javax.swing.JFrame {
                     Movimientos_DTO movimiento_dto = new Movimientos_DTO();
                     Bancos_DTO banco_dto = new Bancos_DTO();
                     CuentasDTO cuentasDTO = new CuentasDTO();
-                    Usuario user = new Usuario();
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
                     String[] variables;
@@ -171,21 +170,21 @@ public class Servidor extends javax.swing.JFrame {
                             cuentasDTO.insert(cuentasDTO, conn);
                             break;
 
-                        case "NewUser":
-                            user.SetNombre(variables[1]);
-                            user.setPerfil(variables[2]);
-                            user.SetPassword(variables[3]);
-                            user.setA_paterno(variables[4]);
-                            user.setA_materno(variables[5]);
-                            user.setTelefono(variables[6]);
-                            user.setEmail(variables[7]);
-                            user.setDomicilio(variables[8]);
-                            
-                            user.Insert(conn);
-                            
-                            JOptionPane.showMessageDialog(null, "Usuario Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+//                        case "NewUser":
+//                            user.SetNombre(variables[1]);
+//                            user.setPerfil(variables[2]);
+//                            user.SetPassword(variables[3]);
+//                            user.setA_paterno(variables[4]);
+//                            user.setA_materno(variables[5]);
+//                            user.setTelefono(variables[6]);
+//                            user.setEmail(variables[7]);
+//                            user.setDomicilio(variables[8]);
+//                            
+//                            user.Insert(conn);
+//                            
+//                            JOptionPane.showMessageDialog(null, "Usuario Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
 
-                            break;
+//                            break;
                         default:
                             break;
                     }
