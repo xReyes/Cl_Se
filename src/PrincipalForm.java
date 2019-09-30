@@ -46,7 +46,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
-  
+
     public PrincipalForm() {
         try {
             initComponents();
@@ -1375,40 +1375,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_btn_Editar_ClienteActionPerformed
 
     private void jButtonGuardarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarCuentaActionPerformed
-        try {
-            // TODO add your handling code here:
 
-            String idCliente;
-            String idUsuario;
-            String noDeCuenta;
-            String tipoCuenta;
-            String fechaApertura;
-            String saldoApertura;
 
-            idCliente = remplazar_espacios(jTextFieldIdClienteCuenta);
-            idUsuario = remplazar_espacios(jTextFieldIdUsuarioCuenta);
-            noDeCuenta = remplazar_espacios(jTextFieldNoDeCuenta);
-            tipoCuenta = jComboBoxTipoCuenta.getSelectedItem().toString();
-            fechaApertura = remplazar_espacios(jTextFieldFechaAperturaCuenta);
-            saldoApertura = remplazar_espacios(jTextFieldSaldoAperturaCuenta);
-
-            String mensaje = "NewCuenta "+ idCliente + " " + idUsuario + " " + noDeCuenta + " " + tipoCuenta + " " + fechaApertura + " " + saldoApertura + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
-
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
-
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
-        }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
     }//GEN-LAST:event_jButtonGuardarCuentaActionPerformed
 
     private void jButtonEditarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCuentaActionPerformed
