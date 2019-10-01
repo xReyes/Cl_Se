@@ -3,6 +3,7 @@ package Validaciones;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -12,7 +13,7 @@ import javax.swing.JTextField;
  */
 public class validaciones {
 
-    public static String reemplazar_espacios(JTextField re) {
+    public String reemplazar_espacios(JTextField re) {
 
         String r;
 
@@ -22,7 +23,17 @@ public class validaciones {
 
     }
 
-    public static String reemplazar_guion(JTextField re) {
+    public String reemplazar_espacios_combos(JComboBox re) {
+
+        String r;
+
+        r = re.getSelectedItem().toString().trim().replaceAll(" ", "_");
+
+        return r;
+
+    }
+
+    public String reemplazar_guion(JTextField re) {
 
         String r;
 
@@ -32,7 +43,17 @@ public class validaciones {
 
     }
 
-    public static boolean estaVacio(String cad) {
+    public String reemplazar_guion_combos(JComboBox re) {
+
+        String r;
+
+        r = re.getSelectedItem().toString().trim().replaceAll("_", " ");
+
+        return r;
+
+    }
+
+    public boolean estaVacio(String cad) {
 
         if (cad.trim().isEmpty()) {
             return true;

@@ -1,6 +1,7 @@
 
 import DTO.Clientes_DTO;
 import DTO.CuentasDTO;
+import Validaciones.validaciones;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -42,6 +43,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private DatagramSocket socket;
     Direccion_IP ip = new Direccion_IP();
+    validaciones v = new validaciones();
 
     String hora, minutos, segundos, ampm;
     Calendar calendario;
@@ -57,6 +59,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             setLocationRelativeTo(null);
             setTitle("Sistema Bancario");
+            setResizable(false);
 
             Generar_ID();
             Generar_ID_cliente();
@@ -71,24 +74,14 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             txt_id_cliente.setVisible(false);
             txt_id_banco.setVisible(false);
 
-//            btn_Editar_Cliente.setEnabled(false);
-//            btn_Eliminar_Cliente.setEnabled(false);
-//
-//            btn_Editar_Movimiento.setEnabled(false);
-//            btn_Eliminar_Movimiento.setEnabled(false);
+            v.validar_Solo_Letras(txt_Nombre);
+            v.validar_Solo_Letras(txt_Ap_Paterno);
+            v.validar_Solo_Letras(txt_Ap_Materno);
+            v.validar_Solo_Numeros(txt_Telefono);
+
         } catch (SocketException ex) {
             Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
-
-    public String remplazar_espacios(JTextField campo) {
-
-        String r = "";
-
-        r = campo.getText().trim().replaceAll(" ", "_");
-
-        return r;
 
     }
 
@@ -150,6 +143,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         limpiar_Campos(txt_Email);
         limpiar_Campos(txt_Telefono);
         limpiar_Campos(txt_nombre_Buscar);
+        limpiar_Campos(txt_id_cliente);
 
         groupSexo_Cliente.clearSelection();
         combo_Pais.setSelectedIndex(0);
@@ -1208,44 +1202,57 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void btn_Guardar_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Guardar_ClienteActionPerformed
 
-        try {
+        if (v.estaVacio(txt_Nombre.getText()) || v.estaVacio(txt_Ap_Paterno.getText()) || v.estaVacio(txt_Ap_Materno.getText()) || v.estaVacio(txt_Direccion.getText()) || v.estaVacio(txt_Telefono.getText()) || v.estaVacio(txt_Email.getText())) {
 
-            String ap_Paterno;
-            String ap_Materno;
-            String sexo;
-            String direccion;
-            String telefono;
-            String email;
-            String pais;
-            String tipo_cuenta;
+            JOptionPane.showMessageDialog(this, "Algun Campo esta Vacio Verifica!!", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
 
-            nombre_Cliente = remplazar_espacios(txt_Nombre);
-            ap_Paterno = remplazar_espacios(txt_Ap_Paterno);
-            ap_Materno = remplazar_espacios(txt_Ap_Materno);
-            sexo = sexo_Cliente();
-            direccion = remplazar_espacios(txt_Direccion);
-            email = remplazar_espacios(txt_Email);
-            telefono = remplazar_espacios(txt_Telefono);
-            pais = combo_Pais.getSelectedItem().toString();
-            tipo_cuenta = combo_Tipo_Cuenta.getSelectedItem().toString().replaceAll(" ", "_");
+            if (rad_Femenino.isSelected() == false && rad_Masculino.isSelected() == false) {
 
-            String mensaje = "NewCliente " + nombre_Cliente + " " + ap_Paterno + " " + ap_Materno + " " + sexo + " " + direccion + " " + email + " " + telefono + " " + pais + " " + tipo_cuenta + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
+                JOptionPane.showMessageDialog(this, "Selecciona el Sexo", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
 
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
+                try {
+                    String ap_Paterno;
+                    String ap_Materno;
+                    String sexo;
+                    String direccion;
+                    String telefono;
+                    String email;
+                    String pais;
+                    String tipo_cuenta;
 
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
+                    nombre_Cliente = v.reemplazar_espacios(txt_Nombre);
+                    ap_Paterno = v.reemplazar_espacios(txt_Ap_Paterno);
+                    ap_Materno = v.reemplazar_espacios(txt_Ap_Materno);
+                    sexo = sexo_Cliente();
+                    direccion = v.reemplazar_espacios(txt_Direccion);
+                    email = v.reemplazar_espacios(txt_Email);
+                    telefono = v.reemplazar_espacios(txt_Telefono);
+                    pais = v.reemplazar_espacios_combos(combo_Pais);
+                    tipo_cuenta = v.reemplazar_espacios_combos(combo_Tipo_Cuenta);
+
+                    String mensaje = "NewCliente " + nombre_Cliente + " " + ap_Paterno + " " + ap_Materno + " " + sexo + " " + direccion + " " + email + " " + telefono + " " + pais + " " + tipo_cuenta + " ";
+                    byte datos[] = mensaje.getBytes();
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    //crear enviarPaquete
+
+                    DatagramPacket snd = ip.Direccion(datos);
+                    socket.send(snd);//enviar paquete
+
+                } catch (IOException exceptionES) {
+                    exceptionES.printStackTrace();
+                }
+                try {
+                    socket = new DatagramSocket();
+                } catch (SocketException excepcionSocket) {
+                    excepcionSocket.printStackTrace();
+                    System.exit(1);
+                }
+
+            }
         }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
+
     }//GEN-LAST:event_btn_Guardar_ClienteActionPerformed
 
     private void btn_Buscar_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_ClienteActionPerformed
@@ -1295,89 +1302,106 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void btn_Eliminar_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Eliminar_ClienteActionPerformed
 
-        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar el Cliente?");
-        if (JOptionPane.OK_OPTION == a) {
-
-            try {
-                String id_clientes;
-                id_clientes = txt_id_cliente.getText();
-                String mensaje = "DeleteCliente " + id_clientes + " Registro Borrado";
-                byte datos[] = mensaje.getBytes();
-                //crear enviarPaquete
-
-                DatagramPacket snd = ip.Direccion(datos);
-                socket.send(snd);//enviar paquete
-            } catch (IOException exceptionES) {
-                exceptionES.printStackTrace();
-            }
-            try {
-                socket = new DatagramSocket();
-            } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
-            catch (SocketException excepcionSocket) {
-                excepcionSocket.printStackTrace();
-                System.exit(1);
-            }
-
+        if (txt_id_cliente.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Para Eliminar un Cliente Primero Debes Buscarlo!", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
 
+            int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar el Cliente?");
+            if (JOptionPane.OK_OPTION == a) {
+
+                try {
+                    String id_clientes;
+                    id_clientes = txt_id_cliente.getText();
+                    String mensaje = "DeleteCliente " + id_clientes + " Registro Borrado";
+                    byte datos[] = mensaje.getBytes();
+                    //crear enviarPaquete
+
+                    DatagramPacket snd = ip.Direccion(datos);
+                    socket.send(snd);//enviar paquete
+                } catch (IOException exceptionES) {
+                    exceptionES.printStackTrace();
+                }
+                try {
+                    socket = new DatagramSocket();
+                } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
+                catch (SocketException excepcionSocket) {
+                    excepcionSocket.printStackTrace();
+                    System.exit(1);
+                }
+
+            } else {
+
+            }
         }
     }//GEN-LAST:event_btn_Eliminar_ClienteActionPerformed
 
     private void btn_Editar_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Editar_ClienteActionPerformed
 
-        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar el Cliente?");
-        if (JOptionPane.OK_OPTION == a) {
+        if (v.estaVacio(txt_Nombre.getText()) || v.estaVacio(txt_Ap_Paterno.getText()) || v.estaVacio(txt_Ap_Materno.getText()) || v.estaVacio(txt_Direccion.getText()) || v.estaVacio(txt_Telefono.getText()) || v.estaVacio(txt_Email.getText())) {
 
-            try {
-
-                String id_cliente;
-                String ap_Paterno;
-                String ap_Materno;
-                String sexo;
-                String direccion;
-                String telefono;
-                String email;
-                String pais;
-                String tipo_cuenta;
-
-                id_cliente = txt_id_cliente.getText().trim();
-                nombre_Cliente = remplazar_espacios(txt_Nombre);
-                ap_Paterno = remplazar_espacios(txt_Ap_Paterno);
-                ap_Materno = remplazar_espacios(txt_Ap_Materno);
-                sexo = sexo_Cliente();
-                direccion = remplazar_espacios(txt_Direccion);
-                email = remplazar_espacios(txt_Email);
-                telefono = remplazar_espacios(txt_Telefono);
-                pais = combo_Pais.getSelectedItem().toString();
-                tipo_cuenta = combo_Tipo_Cuenta.getSelectedItem().toString().replaceAll(" ", "_");
-
-                String mensaje = "EditCliente " + id_cliente + " " + nombre_Cliente + " " + ap_Paterno + " " + ap_Materno + " " + sexo + " " + direccion + " " + email + " " + telefono + " " + pais + " " + tipo_cuenta + " ";
-                byte datos[] = mensaje.getBytes();
-                JOptionPane.showMessageDialog(null, mensaje);
-                //crear enviarPaquete
-
-                DatagramPacket snd = ip.Direccion(datos);
-                socket.send(snd);//enviar paquete
-
-            } catch (IOException exceptionES) {
-                exceptionES.printStackTrace();
-            }
-            try {
-                socket = new DatagramSocket();
-            } catch (SocketException excepcionSocket) {
-                excepcionSocket.printStackTrace();
-                System.exit(1);
-            }
-
+            JOptionPane.showMessageDialog(this, "Algun Campo esta Vacio Verifica!!", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
 
+            if (rad_Femenino.isSelected() == false && rad_Masculino.isSelected() == false) {
+
+                JOptionPane.showMessageDialog(this, "Selecciona el Sexo", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+
+                int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar el Cliente?");
+                if (JOptionPane.OK_OPTION == a) {
+
+                    try {
+
+                        String id_cliente;
+                        String ap_Paterno;
+                        String ap_Materno;
+                        String sexo;
+                        String direccion;
+                        String telefono;
+                        String email;
+                        String pais;
+                        String tipo_cuenta;
+
+                        id_cliente = txt_id_cliente.getText().trim();
+                        nombre_Cliente = v.reemplazar_espacios(txt_Nombre);
+                        ap_Paterno = v.reemplazar_espacios(txt_Ap_Paterno);
+                        ap_Materno = v.reemplazar_espacios(txt_Ap_Materno);
+                        sexo = sexo_Cliente();
+                        direccion = v.reemplazar_espacios(txt_Direccion);
+                        email = v.reemplazar_espacios(txt_Email);
+                        telefono = v.reemplazar_espacios(txt_Telefono);
+                        pais = v.reemplazar_espacios_combos(combo_Pais);
+                        tipo_cuenta = v.reemplazar_espacios_combos(combo_Tipo_Cuenta);
+
+                        String mensaje = "EditCliente " + id_cliente + " " + nombre_Cliente + " " + ap_Paterno + " " + ap_Materno + " " + sexo + " " + direccion + " " + email + " " + telefono + " " + pais + " " + tipo_cuenta + " ";
+                        byte datos[] = mensaje.getBytes();
+                        JOptionPane.showMessageDialog(null, mensaje);
+                        //crear enviarPaquete
+
+                        DatagramPacket snd = ip.Direccion(datos);
+                        socket.send(snd);//enviar paquete
+
+                    } catch (IOException exceptionES) {
+                        exceptionES.printStackTrace();
+                    }
+                    try {
+                        socket = new DatagramSocket();
+                    } catch (SocketException excepcionSocket) {
+                        excepcionSocket.printStackTrace();
+                        System.exit(1);
+                    }
+
+                } else {
+
+                }
+            }
         }
     }//GEN-LAST:event_btn_Editar_ClienteActionPerformed
 
     private void jButtonGuardarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarCuentaActionPerformed
 
         try {
-            
+
             String idCliente;
             String idUsuario;
             String noDeCuenta;
@@ -1385,12 +1409,12 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             String fechaApertura;
             String saldoApertura;
 
-            idCliente = remplazar_espacios(jTextFieldIdClienteCuenta);
-            idUsuario = remplazar_espacios(jTextFieldIdUsuarioCuenta);
-            noDeCuenta = remplazar_espacios(jTextFieldNoDeCuenta);
-            tipoCuenta = jComboBoxTipoCuenta.getSelectedItem().toString();
-            fechaApertura = remplazar_espacios(jTextFieldFechaAperturaCuenta);
-            saldoApertura = remplazar_espacios(jTextFieldSaldoAperturaCuenta);
+            idCliente = v.reemplazar_espacios(jTextFieldIdClienteCuenta);
+            idUsuario = v.reemplazar_espacios(jTextFieldIdUsuarioCuenta);
+            noDeCuenta = v.reemplazar_espacios(jTextFieldNoDeCuenta);
+            tipoCuenta = v.reemplazar_espacios_combos(jComboBoxTipoCuenta);
+            fechaApertura = v.reemplazar_espacios(jTextFieldFechaAperturaCuenta);
+            saldoApertura = v.reemplazar_espacios(jTextFieldSaldoAperturaCuenta);
 
             String mensaje = "NewCuenta " + idCliente + " " + idUsuario + " " + noDeCuenta + " " + tipoCuenta + " " + fechaApertura + " " + saldoApertura + " ";
             byte datos[] = mensaje.getBytes();

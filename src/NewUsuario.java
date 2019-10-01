@@ -31,6 +31,11 @@ public class NewUsuario extends javax.swing.JDialog {
         v = new validaciones();
         this.setSize(this.getToolkit().getScreenSize());
 
+        v.validar_Solo_Letras(txt_Nombre_New_User);
+        v.validar_Solo_Letras(txt_Ap_New_User);
+        v.validar_Solo_Letras(txt_Am_New_User);
+        v.validar_Solo_Numeros(txt_Telefono_New_User);
+
         try {
             socket = new DatagramSocket();
         } catch (SocketException ex) {
@@ -224,33 +229,40 @@ public class NewUsuario extends javax.swing.JDialog {
 
     private void JLabel_Login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_Login1MouseClicked
 
-        try {
+        if (v.estaVacio(txt_Nombre_New_User.getText()) || v.estaVacio(txt_Perfil_New_User.getText()) || v.estaVacio(txt_Password.getText()) || v.estaVacio(txt_Ap_New_User.getText()) || v.estaVacio(txt_Am_New_User.getText()) || v.estaVacio(txt_Telefono_New_User.getText()) || v.estaVacio(txt_Email_New_User.getText()) || v.estaVacio(txt_Domicilio_New_User.getText())) {
 
-            String nombre = v.reemplazar_espacios(txt_Nombre_New_User);
-            String perfil = v.reemplazar_espacios(txt_Perfil_New_User);
-            String psw = v.reemplazar_espacios(txt_Password);
-            String a_paterno = v.reemplazar_espacios(txt_Ap_New_User);
-            String a_materno = v.reemplazar_espacios(txt_Am_New_User);
-            String telefono = v.reemplazar_espacios(txt_Telefono_New_User);
-            String email = v.reemplazar_espacios(txt_Email_New_User);
-            String domicilio = v.reemplazar_espacios(txt_Domicilio_New_User);
+            JOptionPane.showMessageDialog(this, "Algun Campo esta Vacio Verifica!!", "Error", JOptionPane.INFORMATION_MESSAGE);
 
-            String mensaje = "NewUser " + nombre + " " + perfil + " " + psw + " " + a_paterno + " " + a_materno + " " + telefono + " " + email + " " + domicilio + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
+        } else {
+            try {
 
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
+                String nombre = v.reemplazar_espacios(txt_Nombre_New_User);
+                String perfil = v.reemplazar_espacios(txt_Perfil_New_User);
+                String psw = v.reemplazar_espacios(txt_Password);
+                String a_paterno = v.reemplazar_espacios(txt_Ap_New_User);
+                String a_materno = v.reemplazar_espacios(txt_Am_New_User);
+                String telefono = v.reemplazar_espacios(txt_Telefono_New_User);
+                String email = v.reemplazar_espacios(txt_Email_New_User);
+                String domicilio = v.reemplazar_espacios(txt_Domicilio_New_User);
+
+                String mensaje = "NewUser " + nombre + " " + perfil + " " + psw + " " + a_paterno + " " + a_materno + " " + telefono + " " + email + " " + domicilio + " ";
+                byte datos[] = mensaje.getBytes();
+                JOptionPane.showMessageDialog(null, mensaje);
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
         }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
+
 
     }//GEN-LAST:event_JLabel_Login1MouseClicked
 
