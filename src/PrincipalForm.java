@@ -228,6 +228,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         limpiar_Campos(txt_Direccion_Banco);
         limpiar_Campos(txt_Telefono_Banco);
         limpiar_Campos(txt_nombre_Buscar_Banco);
+        limpiar_Campos(txt_id_banco);
 
         Combo_Cliente_Banco.setSelectedIndex(0);
 
@@ -1549,37 +1550,51 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void btn_Guardar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Guardar_BancoActionPerformed
 
-        try {
+        if (v.estaVacio(txt_Sucursal_Banco.getText()) || v.estaVacio(txt_Telefono_Banco.getText()) || v.estaVacio(txt_Direccion_Banco.getText())) {
 
-            String telefono;
-            String direccion;
-            String sucursal;
-            String id_cliente;
+            JOptionPane.showMessageDialog(this, "Algun Campo esta Vacio Verifica!!", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
 
-            telefono = txt_Telefono_Banco.getText().trim();
-            direccion = txt_Direccion_Banco.getText().trim();
-            sucursal = txt_Sucursal_Banco.getText().trim();
+            if (Combo_Cliente_Banco.getSelectedItem().toString().equals("Selecciona...")) {
 
-            String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
-            id_cliente = cliente_id[0];
+                JOptionPane.showMessageDialog(this, "Selecciona el Cliente", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
 
-            String mensaje = "NewBanco " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
+                try {
+                    String telefono;
+                    String direccion;
+                    String sucursal;
+                    String id_cliente;
 
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
+                    telefono = txt_Telefono_Banco.getText().trim();
+                    direccion = txt_Direccion_Banco.getText().trim();
+                    sucursal = txt_Sucursal_Banco.getText().trim();
 
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
+                    String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
+                    id_cliente = cliente_id[0];
+
+                    String mensaje = "NewBanco " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
+                    byte datos[] = mensaje.getBytes();
+                    JOptionPane.showMessageDialog(null, mensaje);
+                    //crear enviarPaquete
+
+                    DatagramPacket snd = ip.Direccion(datos);
+                    socket.send(snd);//enviar paquete
+
+                } catch (IOException exceptionES) {
+                    exceptionES.printStackTrace();
+                }
+                try {
+                    socket = new DatagramSocket();
+                } catch (SocketException excepcionSocket) {
+                    excepcionSocket.printStackTrace();
+                    System.exit(1);
+                }
+            }
+
         }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
+
+
     }//GEN-LAST:event_btn_Guardar_BancoActionPerformed
 
     private void btn_Cancelar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar_BancoActionPerformed
@@ -1596,74 +1611,91 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void btn_Editar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Editar_BancoActionPerformed
 
-        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar el Banco?");
-        if (JOptionPane.OK_OPTION == a) {
+        if (v.estaVacio(txt_Sucursal_Banco.getText()) || v.estaVacio(txt_Telefono_Banco.getText()) || v.estaVacio(txt_Direccion_Banco.getText())) {
 
-            try {
-
-                String id_banco;
-                String telefono;
-                String direccion;
-                String sucursal;
-                String id_cliente;
-
-                telefono = txt_Telefono_Banco.getText().trim();
-                direccion = txt_Direccion_Banco.getText().trim();
-                sucursal = txt_Sucursal_Banco.getText().trim();
-
-                String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
-                id_cliente = cliente_id[1];
-                id_banco = txt_id_banco.getText().trim();
-
-                String mensaje = "EditBanco " + id_banco + " " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
-                byte datos[] = mensaje.getBytes();
-                JOptionPane.showMessageDialog(null, mensaje);
-                //crear enviarPaquete
-
-                DatagramPacket snd = ip.Direccion(datos);
-                socket.send(snd);//enviar paquete
-
-            } catch (IOException exceptionES) {
-                exceptionES.printStackTrace();
-            }
-            try {
-                socket = new DatagramSocket();
-            } catch (SocketException excepcionSocket) {
-                excepcionSocket.printStackTrace();
-                System.exit(1);
-            }
-
+            JOptionPane.showMessageDialog(this, "Algun Campo esta Vacio Verifica!!", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
 
+            if (Combo_Cliente_Banco.getSelectedItem().toString().equals("Selecciona...")) {
+
+                JOptionPane.showMessageDialog(this, "Selecciona el Cliente", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+
+                int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar el Banco?");
+                if (JOptionPane.OK_OPTION == a) {
+
+                    try {
+
+                        String id_banco;
+                        String telefono;
+                        String direccion;
+                        String sucursal;
+                        String id_cliente;
+
+                        telefono = txt_Telefono_Banco.getText().trim();
+                        direccion = txt_Direccion_Banco.getText().trim();
+                        sucursal = txt_Sucursal_Banco.getText().trim();
+
+                        String cliente_id[] = Combo_Cliente_Banco.getSelectedItem().toString().trim().split("_");
+                        id_cliente = cliente_id[1];
+                        id_banco = txt_id_banco.getText().trim();
+
+                        String mensaje = "EditBanco " + id_banco + " " + telefono + " " + direccion + " " + sucursal + " " + id_cliente + " ";
+                        byte datos[] = mensaje.getBytes();
+                        JOptionPane.showMessageDialog(null, mensaje);
+                        //crear enviarPaquete
+
+                        DatagramPacket snd = ip.Direccion(datos);
+                        socket.send(snd);//enviar paquete
+
+                    } catch (IOException exceptionES) {
+                        exceptionES.printStackTrace();
+                    }
+                    try {
+                        socket = new DatagramSocket();
+                    } catch (SocketException excepcionSocket) {
+                        excepcionSocket.printStackTrace();
+                        System.exit(1);
+                    }
+
+                } else {
+                }
+            }
         }
     }//GEN-LAST:event_btn_Editar_BancoActionPerformed
 
     private void btn_Eliminar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Eliminar_BancoActionPerformed
 
-        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar el Banco?");
-        if (JOptionPane.OK_OPTION == a) {
-
-            try {
-                String id_banco;
-                id_banco = txt_id_banco.getText();
-                String mensaje = "DeleteBanco " + id_banco + " Registro Borrado";
-                byte datos[] = mensaje.getBytes();
-                //crear enviarPaquete
-
-                DatagramPacket snd = ip.Direccion(datos);
-                socket.send(snd);//enviar paquete
-            } catch (IOException exceptionES) {
-                exceptionES.printStackTrace();
-            }
-            try {
-                socket = new DatagramSocket();
-            } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
-            catch (SocketException excepcionSocket) {
-                excepcionSocket.printStackTrace();
-                System.exit(1);
-            }
-
+        if (txt_id_banco.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Para Eliminar un Banco Primero Debes Buscarlo!", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
+
+            int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar el Banco?");
+            if (JOptionPane.OK_OPTION == a) {
+
+                try {
+                    String id_banco;
+                    id_banco = txt_id_banco.getText();
+                    String mensaje = "DeleteBanco " + id_banco + " Registro Borrado";
+                    byte datos[] = mensaje.getBytes();
+                    //crear enviarPaquete
+
+                    DatagramPacket snd = ip.Direccion(datos);
+                    socket.send(snd);//enviar paquete
+                } catch (IOException exceptionES) {
+                    exceptionES.printStackTrace();
+                }
+                try {
+                    socket = new DatagramSocket();
+                } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
+                catch (SocketException excepcionSocket) {
+                    excepcionSocket.printStackTrace();
+                    System.exit(1);
+                }
+
+            } else {
+
+            }
 
         }
     }//GEN-LAST:event_btn_Eliminar_BancoActionPerformed
