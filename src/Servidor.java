@@ -194,6 +194,14 @@ public class Servidor extends javax.swing.JFrame {
                             
                             cuentasDTO.insert(cuentasDTO, conn);
                             break;
+                            
+                        case "SearchCuenta":
+                            
+                            cuentasDTO.setNoDeCuenta(Integer.parseInt(variables[1]));
+                            cuentasDTO = cuentasDTO.search(cuentasDTO, conn);
+                            
+                            mensaje = String.valueOf(cuentasDTO.getIdCliente()) + " " + String.valueOf(cuentasDTO.getIdUsuario()) + " " + String.valueOf(cuentasDTO.getNoDeCuenta()) + " " + cuentasDTO.getFechaApertura() + " " + cuentasDTO.getTipoCuenta() + " " + String.valueOf(cuentasDTO.getSaldoApertura()) + " ";
+                            break;
 
                         default:
                             break;
