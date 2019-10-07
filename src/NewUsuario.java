@@ -1,4 +1,5 @@
 
+import Validaciones.validaciones;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -6,6 +7,7 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,12 +22,19 @@ public class NewUsuario extends javax.swing.JDialog {
 
     private DatagramSocket socket;
     Direccion_IP ip = new Direccion_IP();
+    private validaciones v;
 
     public NewUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
+        v = new validaciones();
         this.setSize(this.getToolkit().getScreenSize());
+
+        v.validar_Solo_Letras(txt_Nombre_New_User);
+        v.validar_Solo_Letras(txt_Ap_New_User);
+        v.validar_Solo_Letras(txt_Am_New_User);
+        v.validar_Solo_Numeros(txt_Telefono_New_User);
 
         try {
             socket = new DatagramSocket();
@@ -47,7 +56,7 @@ public class NewUsuario extends javax.swing.JDialog {
 
         jEImagePanel2 = new LIB.JEImagePanel();
         jPanelTransparente3 = new LIB.JPanelTransparente();
-        txt_Usuario = new LIB.JTexfieldPH_FielTex();
+        txt_Perfil_New_User = new LIB.JTexfieldPH_FielTex();
         txt_Password = new LIB.JTexfieldPH_Password();
         JPanel_Login1 = new LIB.JPanelRound();
         JLabel_Login1 = new javax.swing.JLabel();
@@ -79,9 +88,9 @@ public class NewUsuario extends javax.swing.JDialog {
         jPanelTransparente3.setColorSecundario(new java.awt.Color(87, 60, 39));
         jPanelTransparente3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_Usuario.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        txt_Usuario.setPlaceholder("Usuario:");
-        jPanelTransparente3.add(txt_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+        txt_Perfil_New_User.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        txt_Perfil_New_User.setPlaceholder("Perfil:");
+        jPanelTransparente3.add(txt_Perfil_New_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         txt_Password.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         txt_Password.setPlaceholder("Contraseña:");
@@ -105,8 +114,8 @@ public class NewUsuario extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Usuario:");
-        jPanelTransparente3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, 30));
+        jLabel4.setText("Pefil");
+        jPanelTransparente3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Light", 0, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,6 +144,11 @@ public class NewUsuario extends javax.swing.JDialog {
 
         txt_Confir_Password.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         txt_Confir_Password.setPlaceholder("Confirmar Contraseña:");
+        txt_Confir_Password.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_Confir_PasswordFocusLost(evt);
+            }
+        });
         jPanelTransparente3.add(txt_Confir_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
@@ -215,28 +229,40 @@ public class NewUsuario extends javax.swing.JDialog {
 
     private void JLabel_Login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_Login1MouseClicked
 
-        try {
-            String usuario = txt_Usuario.getText();
-            String psw = txt_Password.getText();
-            String perfil = txt_Usuario.getText();
-            String cliente = txt_Am_New_User.getText();
+        if (v.estaVacio(txt_Nombre_New_User.getText()) || v.estaVacio(txt_Perfil_New_User.getText()) || v.estaVacio(txt_Password.getText()) || v.estaVacio(txt_Ap_New_User.getText()) || v.estaVacio(txt_Am_New_User.getText()) || v.estaVacio(txt_Telefono_New_User.getText()) || v.estaVacio(txt_Email_New_User.getText()) || v.estaVacio(txt_Domicilio_New_User.getText())) {
 
-            String mensaje = "1 " + usuario + " " + perfil + " " + psw + " " + cliente + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
+            JOptionPane.showMessageDialog(this, "Algun Campo esta Vacio Verifica!!", "Error", JOptionPane.INFORMATION_MESSAGE);
 
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
+        } else {
+            try {
+
+                String nombre = v.reemplazar_espacios(txt_Nombre_New_User);
+                String perfil = v.reemplazar_espacios(txt_Perfil_New_User);
+                String psw = v.reemplazar_espacios(txt_Password);
+                String a_paterno = v.reemplazar_espacios(txt_Ap_New_User);
+                String a_materno = v.reemplazar_espacios(txt_Am_New_User);
+                String telefono = v.reemplazar_espacios(txt_Telefono_New_User);
+                String email = v.reemplazar_espacios(txt_Email_New_User);
+                String domicilio = v.reemplazar_espacios(txt_Domicilio_New_User);
+
+                String mensaje = "NewUser " + nombre + " " + perfil + " " + psw + " " + a_paterno + " " + a_materno + " " + telefono + " " + email + " " + domicilio + " ";
+                byte datos[] = mensaje.getBytes();
+                JOptionPane.showMessageDialog(null, mensaje);
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
         }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
+
 
     }//GEN-LAST:event_JLabel_Login1MouseClicked
 
@@ -245,6 +271,19 @@ public class NewUsuario extends javax.swing.JDialog {
         this.dispose();
 
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void txt_Confir_PasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_Confir_PasswordFocusLost
+
+        String pass = txt_Password.getText().trim();
+        String conf_pass = txt_Confir_Password.getText().trim();
+
+        if (!pass.equals(conf_pass)) {
+
+            JOptionPane.showMessageDialog(this, "Las Contraseñas no Coinciden!", "Error!", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+    }//GEN-LAST:event_txt_Confir_PasswordFocusLost
 
     /**
      * @param args the command line arguments
@@ -311,7 +350,7 @@ public class NewUsuario extends javax.swing.JDialog {
     private LIB.JTexfieldPH_FielTex txt_Email_New_User;
     private LIB.JTexfieldPH_FielTex txt_Nombre_New_User;
     private LIB.JTexfieldPH_Password txt_Password;
+    private LIB.JTexfieldPH_FielTex txt_Perfil_New_User;
     private LIB.JTexfieldPH_FielTex txt_Telefono_New_User;
-    private LIB.JTexfieldPH_FielTex txt_Usuario;
     // End of variables declaration//GEN-END:variables
 }

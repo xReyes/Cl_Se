@@ -1,19 +1,20 @@
 
-import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class Usuario {
 
     private String nombre;
     private String password;
     private String perfil;
+    private String a_paterno;
+    private String a_materno;
+    private String telefono;
+    private String email;
+    private String domicilio;
+
     ResultSet rs;
 
     public void SetNombre(String nombre) {
@@ -40,12 +41,75 @@ public class Usuario {
         return this.perfil;
     }
 
+    public String getA_paterno() {
+        return a_paterno;
+    }
+
+    public void setA_paterno(String a_paterno) {
+        this.a_paterno = a_paterno;
+    }
+
+    public String getA_materno() {
+        return a_materno;
+    }
+
+    public void setA_materno(String a_materno) {
+        this.a_materno = a_materno;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
     public void Insert(Connection conn) throws SQLException {
-        PreparedStatement stmt1 = conn.prepareStatement("INSERT INTO usuarios (nombre, perfil, password) " + "VALUES  (?, ?, ?)");
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int id = 0;
+        ps = conn.prepareStatement("SELECT MAX(id_usuario) AS id_usuario FROM usuarios;");
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            id = (rs.getInt(1) + 1);
+
+        }
+
+        PreparedStatement stmt1 = conn.prepareStatement("INSERT INTO usuarios (nombre, perfil, password) VALUES  (?, ?, ?);");
         stmt1.setString(1, this.getNombre());
         stmt1.setString(2, this.getPerfil());
         stmt1.setString(3, this.getPassword());
         stmt1.executeUpdate();
+
+        PreparedStatement st = conn.prepareStatement("INSERT INTO datos_usuarios (id_usuarios, nombre, a_paterno, a_materno, telefono, email, domicilio) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?);");
+        st.setInt(1, id);
+        st.setString(2, this.getNombre());
+        st.setString(3, this.getA_paterno());
+        st.setString(4, this.getA_materno());
+        st.setString(5, this.getTelefono());
+        st.setString(6, this.getEmail());
+        st.setString(7, this.getDomicilio());
+        st.executeUpdate();
+
     }
 
     public void Delete(Connection conn) throws SQLException {

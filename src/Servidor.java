@@ -11,6 +11,7 @@ import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -75,6 +76,7 @@ public class Servidor extends javax.swing.JFrame {
                     Movimientos_DTO movimiento_dto = new Movimientos_DTO();
                     Bancos_DTO banco_dto = new Bancos_DTO();
                     CuentasDTO cuentasDTO = new CuentasDTO();
+                    Usuario user = new Usuario();
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
                     String[] variables;
@@ -91,12 +93,9 @@ public class Servidor extends javax.swing.JFrame {
                             cliente_dto.setTelefono(variables[7]);
                             cliente_dto.setPais(variables[8]);
                             cliente_dto.setTipo_cuenta(variables[9]);
-                            
                             cliente_dto.Insert(cliente_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Cliente Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "EditCliente":
                             cliente_dto.setId_clientes(variables[1]);
                             cliente_dto.setNombre(variables[2]);
@@ -108,28 +107,19 @@ public class Servidor extends javax.swing.JFrame {
                             cliente_dto.setTelefono(variables[8]);
                             cliente_dto.setPais(variables[9]);
                             cliente_dto.setTipo_cuenta(variables[10]);
-                            
                             cliente_dto.Edit(cliente_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Cliente Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "DeleteCliente":
                             cliente_dto.setId_clientes(variables[1]);
-                            
                             cliente_dto.Delete(cliente_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Cliente Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "SearchCliente":
                             cliente_dto.setNombre(variables[1]);
-                            
                             cliente_dto.Search(cliente_dto, conn);
-
                             mensaje = cliente_dto.getId_clientes() + " " + cliente_dto.getNombre() + " " + cliente_dto.getAp_Paterno() + " " + cliente_dto.getAp_Materno() + " " + cliente_dto.getSexo() + " " + cliente_dto.getDireccion() + " " + cliente_dto.getTelefono() + " " + cliente_dto.getEmail() + " " + cliente_dto.getPais() + " " + cliente_dto.getTipo_cuenta() + " ";
                             break;
-
                         case "NewMovimiento":
                             Date now = new Date(System.currentTimeMillis());
                             movimiento_dto.setTipo_movimiento(variables[1]);
@@ -137,53 +127,39 @@ public class Servidor extends javax.swing.JFrame {
                             movimiento_dto.setSaldo(Double.parseDouble(variables[8]));
                             movimiento_dto.setN_cuenta(variables[9]);
                             movimiento_dto.setCuenta_destino(variables[10]);
-                            
                             movimiento_dto.Insert(movimiento_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Movimiento Agreado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "NewBanco":
                             banco_dto.setTelefono(variables[1]);
                             banco_dto.setDireccion(variables[2]);
                             banco_dto.setSucursal(variables[3]);
                             banco_dto.setId_cliente(variables[4]);
-                            
                             banco_dto.Insert(banco_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Banco Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "EditBanco":
                             banco_dto.setId_banco(variables[1]);
                             banco_dto.setTelefono(variables[2]);
                             banco_dto.setDireccion(variables[3]);
                             banco_dto.setSucursal(variables[4]);
                             banco_dto.setId_cliente(variables[5]);
-                            
                             banco_dto.Edit(banco_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Banco Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "DeleteBanco":
                             banco_dto.setId_banco(variables[1]);
-                            
                             banco_dto.Delete(banco_dto, conn);
-
                             JOptionPane.showMessageDialog(null, "Banco Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
-
                         case "SearchBanco":
                             banco_dto.setSucursal(variables[1]);
-                            
                             banco_dto.Search(banco_dto, conn);
-
                             mensaje = banco_dto.getId_banco() + " " + banco_dto.getTelefono() + " " + banco_dto.getDireccion() + " " + banco_dto.getSucursal() + " " + banco_dto.getId_cliente() + " ";
                             break;
-                            
+
                         case "NewCuenta":
-                            
+
                             JOptionPane.showMessageDialog(this, variables[2]);
                             cuentasDTO.setIdCliente(Integer.parseInt(variables[1]));
                             cuentasDTO.setIdUsuario(Integer.parseInt(variables[2]));
@@ -191,7 +167,7 @@ public class Servidor extends javax.swing.JFrame {
                             cuentasDTO.setTipoCuenta(variables[4]);
                             cuentasDTO.setFechaApertura(variables[5]);
                             cuentasDTO.setSaldoApertura(Double.parseDouble(variables[6]));
-                            
+
                             cuentasDTO.insert(cuentasDTO, conn);
                             break;
                             
@@ -203,6 +179,21 @@ public class Servidor extends javax.swing.JFrame {
                             mensaje = String.valueOf(cuentasDTO.getIdCliente()) + " " + String.valueOf(cuentasDTO.getIdUsuario()) + " " + String.valueOf(cuentasDTO.getNoDeCuenta()) + " " + cuentasDTO.getFechaApertura() + " " + cuentasDTO.getTipoCuenta() + " " + String.valueOf(cuentasDTO.getSaldoApertura()) + " ";
                             break;
 
+                        case "NewUser":
+                            user.SetNombre(variables[1]);
+                            user.setPerfil(variables[2]);
+                            user.SetPassword(variables[3]);
+                            user.setA_paterno(variables[4]);
+                            user.setA_materno(variables[5]);
+                            user.setTelefono(variables[6]);
+                            user.setEmail(variables[7]);
+                            user.setDomicilio(variables[8]);
+
+                            user.Insert(conn);
+
+                            JOptionPane.showMessageDialog(null, "Usuario Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
                         default:
                             break;
                     }
