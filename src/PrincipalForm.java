@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -21,6 +23,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -48,9 +56,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
-    
-    //reyes
 
+    //reyes
     public PrincipalForm() {
         try {
             initComponents();
@@ -409,6 +416,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         btn_movimientos.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btn_movimientos.setText("Movimientos de Cuenta");
+        btn_movimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_movimientosActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_movimientos);
         btn_movimientos.setBounds(400, 300, 200, 40);
 
