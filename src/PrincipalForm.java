@@ -48,6 +48,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
+    
+    //reyes
 
     public PrincipalForm() {
         try {
