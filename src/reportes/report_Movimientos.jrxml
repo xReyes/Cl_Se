@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6c595c0e-0c22-47ff-aa5a-c4539b459d43">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FF0000">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FF0000">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="movimentos" uuid="42b5a825-a727-4abb-9be7-3e683db817c5">
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM movimientos;]]>
+		</queryString>
+		<field name="id_movimiento" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="tipo_movimiento" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="fecha_movimiento" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="saldo" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="n_cuenta" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="cuenta_destino" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<group name="id_movimiento">
+			<groupExpression><![CDATA[$F{id_movimiento}]]></groupExpression>
+		</group>
+		<group name="tipo_movimiento">
+			<groupExpression><![CDATA[$F{tipo_movimiento}]]></groupExpression>
+		</group>
+		<group name="fecha_movimiento">
+			<groupExpression><![CDATA[$F{fecha_movimiento}]]></groupExpression>
+		</group>
+		<group name="saldo">
+			<groupExpression><![CDATA[$F{saldo}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT * FROM movimientos;]]>
+	</queryString>
+	<field name="id_movimiento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_movimiento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_movimiento" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saldo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="n_cuenta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cuenta_destino" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="213" y="30" width="342" height="25" uuid="9e35a4d5-9ca3-407f-b5d5-9998e6559f37"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Jasper Report Sistema Bancario]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="10" width="555" height="1" uuid="51d268f2-cfee-4b61-add9-a8eaa8ef6bd3"/>
+			</line>
+			<image>
+				<reportElement x="14" y="11" width="85" height="68" uuid="16d32067-46a6-4d6a-999d-da81801e04c9"/>
+				<imageExpression><![CDATA["C:\\Users\\reyes\\OneDrive\\Documentos\\GitHub\\Cl_Se\\src\\img\\santander.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="322" y="55" width="87" height="18" uuid="e8e2c106-c261-4bb2-85a4-593e9cc6eb25"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="12"/>
+				</textElement>
+				<text><![CDATA[Movimientos de: ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="491" y="11" width="63" height="20" uuid="3d8d0347-7c7f-4171-b30a-7e778915a051"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="330" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="61" uuid="3318c293-fed5-4447-b0c3-cf769f24e233"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="199" y="7" width="175" height="22" uuid="dcf2175f-7148-4baf-bb6f-3288908d43ce"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Movimientos Bancarios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="29" width="139" height="20" uuid="ecc89bb5-eafd-46a9-9bb5-ad3e75c9be4a"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero de Cuenta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="29" width="124" height="20" uuid="56fab38a-d9d6-4ae6-880b-8b9a7441fae4"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{n_cuenta}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="81" width="555" height="234" uuid="c56050b8-1e67-4c9b-8bcf-a749867b1a3a"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="movimentos" uuid="364323a5-285b-4765-883f-2f36ebba73da">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="55" uuid="90b8f775-618a-424c-9008-4ea12f2216a2">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="30" uuid="bf736be1-c2a2-4166-84d9-32f6df60c935"/>
+								<textElement textAlignment="Center" verticalAlignment="Top">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<text><![CDATA[ID Movimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="55" height="20" uuid="750fcc51-7491-4dae-8df0-d70abf0e37ad"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{id_movimiento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="128" uuid="1e52034d-29bf-47ce-8520-14e935b8e252">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="128" height="30" uuid="31977c53-19bb-41bf-a4ad-6e9c79b91ad4"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<text><![CDATA[Tipo  de Movimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="128" height="20" uuid="5c50c45a-d303-4ab3-b3f6-9ef66118f79c"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{tipo_movimiento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="2b6ef338-60c4-4b69-bcad-23c31ede7a8d">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="94433363-8812-4a52-addc-25ad5131093a"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<text><![CDATA[Fecha de Movimiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="1f2a9a55-bfa8-40bb-9a28-622f97653791"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fecha_movimiento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="77" uuid="1d58d2cc-a68c-4d53-80f9-963ffba41348">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="77" height="30" uuid="5bfa867d-dd6c-478a-927d-972ad75639ba"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<text><![CDATA[Saldo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="77" height="20" uuid="5b4856b5-55f1-44c1-954d-8da5390e142c"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="2737957f-6c60-4e14-835b-bf3886d1f925">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="89" height="30" uuid="3a56312f-0cec-451c-aeab-162ffc414d3c"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<text><![CDATA[Nº de Cuenta]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="89" height="20" uuid="4f06fbfc-839e-464c-889f-d046f71ce09d"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{n_cuenta}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="116" uuid="f13d7a4d-9608-4ca9-99b9-f6e0133b2b4d">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="116" height="30" uuid="5503512f-07a7-490a-a60f-7887ff213d72"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<text><![CDATA[Nº de Cuenta de Destino]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="116" height="20" uuid="06dfc840-b4c5-456a-9c52-82408f2bd08f"/>
+								<textElement textAlignment="Center">
+									<font fontName="Segoe UI Light" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cuenta_destino}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="542" y="34" width="12" height="20" uuid="0b35e23e-c8d2-4118-a73b-a50c0958f2bb"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="491" y="32" width="52" height="18" uuid="b58c9ba7-e3ff-4894-bf6e-8bc447918e35"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paginas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="17" width="334" height="22" uuid="47ac8a6f-f30d-4097-9ef9-7e861207822a"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gracias por usar nuestro Sistema Bancario!.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="9" width="555" height="1" uuid="aad1985c-ed01-4f92-9a53-7c27289111bc"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
