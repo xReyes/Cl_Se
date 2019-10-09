@@ -85,8 +85,11 @@
 			<groupExpression><![CDATA[$F{saldo}]]></groupExpression>
 		</group>
 	</subDataset>
+	<parameter name="n_cuenta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM movimientos;]]>
+		<![CDATA[SELECT * FROM movimientos WHERE n_cuenta = $P!{n_cuenta};]]>
 	</queryString>
 	<field name="id_movimiento" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
