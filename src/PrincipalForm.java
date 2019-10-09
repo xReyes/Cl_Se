@@ -366,7 +366,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 24)); // NOI18N
         jLabel11.setText("Bienvenido(a) a Nuestro Sistema Bancario");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(280, 220, 450, 26);
+        jLabel11.setBounds(280, 220, 450, 27);
 
         JTree_Inicio.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Inicio");
@@ -448,37 +448,37 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Ap Paterno:");
         JPanelClientes.add(jLabel2);
-        jLabel2.setBounds(100, 160, 73, 17);
+        jLabel2.setBounds(100, 160, 74, 17);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Ap Materno:");
         JPanelClientes.add(jLabel3);
-        jLabel3.setBounds(100, 240, 75, 17);
+        jLabel3.setBounds(100, 240, 78, 17);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Direccion:");
         JPanelClientes.add(jLabel4);
-        jLabel4.setBounds(100, 290, 61, 17);
+        jLabel4.setBounds(100, 290, 62, 17);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Telefono:");
         JPanelClientes.add(jLabel5);
-        jLabel5.setBounds(100, 330, 57, 17);
+        jLabel5.setBounds(100, 330, 60, 17);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Email:");
         JPanelClientes.add(jLabel6);
-        jLabel6.setBounds(440, 200, 36, 17);
+        jLabel6.setBounds(440, 200, 38, 17);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Pais:");
         JPanelClientes.add(jLabel7);
-        jLabel7.setBounds(440, 120, 28, 17);
+        jLabel7.setBounds(440, 120, 30, 17);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Tipo de Cliente:");
         JPanelClientes.add(jLabel8);
-        jLabel8.setBounds(440, 160, 94, 17);
+        jLabel8.setBounds(440, 160, 100, 17);
 
         btn_Nuevo_Cliente.setText("Nuevo");
         btn_Nuevo_Cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -487,7 +487,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanelClientes.add(btn_Nuevo_Cliente);
-        btn_Nuevo_Cliente.setBounds(120, 420, 63, 23);
+        btn_Nuevo_Cliente.setBounds(120, 420, 61, 21);
 
         btn_Guardar_Cliente.setText("Guardar");
         btn_Guardar_Cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -496,7 +496,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanelClientes.add(btn_Guardar_Cliente);
-        btn_Guardar_Cliente.setBounds(240, 420, 71, 23);
+        btn_Guardar_Cliente.setBounds(240, 420, 71, 21);
 
         btn_Buscar_Cliente.setText("Buscar");
         btn_Buscar_Cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -514,7 +514,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanelClientes.add(btn_Cancelar_Cliente);
-        btn_Cancelar_Cliente.setBounds(360, 420, 80, 23);
+        btn_Cancelar_Cliente.setBounds(360, 420, 80, 21);
 
         btn_Eliminar_Cliente.setText("Eliminar");
         btn_Eliminar_Cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -523,7 +523,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanelClientes.add(btn_Eliminar_Cliente);
-        btn_Eliminar_Cliente.setBounds(600, 420, 69, 23);
+        btn_Eliminar_Cliente.setBounds(600, 420, 69, 21);
 
         txt_Email.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         JPanelClientes.add(txt_Email);
@@ -552,15 +552,15 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Ap Materno:");
         JPanelClientes.add(jLabel9);
-        jLabel9.setBounds(100, 200, 75, 17);
+        jLabel9.setBounds(100, 200, 78, 17);
 
         rad_Femenino.setText("Feminino");
         JPanelClientes.add(rad_Femenino);
-        rad_Femenino.setBounds(300, 240, 90, 23);
+        rad_Femenino.setBounds(300, 240, 90, 21);
 
         rad_Masculino.setText("Masculino");
         JPanelClientes.add(rad_Masculino);
-        rad_Masculino.setBounds(200, 240, 71, 23);
+        rad_Masculino.setBounds(200, 240, 71, 21);
 
         combo_Tipo_Cuenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         combo_Tipo_Cuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Premier" }));
@@ -588,7 +588,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanelClientes.add(btn_Editar_Cliente);
-        btn_Editar_Cliente.setBounds(490, 420, 61, 23);
+        btn_Editar_Cliente.setBounds(490, 420, 59, 21);
         JPanelClientes.add(txt_id_cliente);
         txt_id_cliente.setBounds(200, 70, 100, 30);
 
@@ -605,9 +605,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         jLabel17.setText("ID");
         JPanel_Usuarios.add(jLabel17);
-        jLabel17.setBounds(27, 73, 11, 14);
+        jLabel17.setBounds(27, 73, 11, 13);
         JPanel_Usuarios.add(jTextField1);
-        jTextField1.setBounds(90, 70, 140, 20);
+        jTextField1.setBounds(90, 70, 140, 19);
 
         JTabbedPrincipal.addTab("Usuarios", JPanel_Usuarios);
 
@@ -628,6 +628,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         jButtonBuscarCuenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonBuscarCuenta.setText("Buscar");
+        jButtonBuscarCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarCuentaActionPerformed(evt);
+            }
+        });
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setText("Buscar por No. de cuenta");
@@ -1702,6 +1707,44 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_btn_Eliminar_BancoActionPerformed
 
+    private void jButtonBuscarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCuentaActionPerformed
+        // TODO add your handling code here:
+        
+        String noDeCuenta;
+        
+        if (jTextFieldBuscarCuenta.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el numero de cuenta para Buscar!", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
+            jTextFieldBuscarCuenta.requestFocus();
+
+        } else {
+
+            try {
+                //obtener mensaje del campo de texto y convertirlo en arrreglo byte
+                noDeCuenta = jTextFieldBuscarCuenta.getText().trim();
+                String mensaje = "SearchCuenta" + " " + noDeCuenta + " ";
+                byte datos[] = mensaje.getBytes();
+                //          //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);
+                //enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                esperarPaquetesCuentas();
+                socket = new DatagramSocket();
+
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        }
+        
+        
+    }//GEN-LAST:event_jButtonBuscarCuentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1818,6 +1861,30 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             txt_Direccion_Banco.setText(variables[2]);
             txt_Sucursal_Banco.setText(variables[3]);
             Combo_Cliente_Banco.setSelectedItem(variables[4]);
+
+        } catch (IOException excepcion) {
+            excepcion.printStackTrace();
+        }
+    }//fin del metodo e
+    
+    private void esperarPaquetesCuentas() {
+        try {
+            //establecer el paquete
+            byte datos[] = new byte[100];
+            DatagramPacket recibirPaquete = new DatagramPacket(
+                    datos, datos.length);
+            socket.receive(recibirPaquete);//esperar un paquete
+            String cad = (new String(recibirPaquete.getData(),
+                    0, recibirPaquete.getLength()));
+            String[] variables;
+            variables = cad.split(" ");
+
+            jTextFieldIdClienteCuenta.setText(variables[0]);
+            jTextFieldIdUsuarioCuenta.setText(variables[1]);
+            jTextFieldNoDeCuenta.setText(variables[2]);
+            jTextFieldFechaAperturaCuenta.setText(variables[3]);
+            jComboBoxTipoCuenta.setSelectedItem(variables[4]);
+            jTextFieldSaldoAperturaCuenta.setText(variables[6]);
 
         } catch (IOException excepcion) {
             excepcion.printStackTrace();

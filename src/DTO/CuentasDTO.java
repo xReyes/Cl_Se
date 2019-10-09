@@ -102,21 +102,22 @@ public class CuentasDTO {
 
     }
 
-    public void Search(CuentasDTO dto, Connection conn) throws SQLException {
+    public CuentasDTO search(CuentasDTO dto, Connection conn) throws SQLException {
 
         ResultSet rs;
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cuenta WHERE n_cuenta = '?';");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cuenta WHERE n_cuenta = ?;");
         stmt.setInt(1, dto.getNoDeCuenta());
         rs = stmt.executeQuery();
 
         if (rs.next()) {
-            setIdCliente(rs.getInt("id_cliente"));
-            setNoDeCuenta(rs.getInt("n_cuenta"));
-            setFechaApertura(rs.getString("fecha_apertura"));
-            setTipoCuenta(rs.getString("tipo_cuenta"));
-            setSaldoApertura(rs.getDouble("saldo_apertura"));
+            dto.setIdCliente(rs.getInt("id_cliente"));
+            dto.setIdUsuario(rs.getInt("id_usuario"));
+            dto.setNoDeCuenta(rs.getInt("n_cuenta"));
+            dto.setFechaApertura(rs.getString("fecha_apertura"));
+            dto.setTipoCuenta(rs.getString("tipo_cuenta"));
+            dto.setSaldoApertura(rs.getDouble("saldo_apertura"));
 
         }
-
+        return dto;
     }
 }
