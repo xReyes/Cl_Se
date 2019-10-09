@@ -416,6 +416,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         btn_movimientos.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btn_movimientos.setText("Movimientos de Cuenta");
+        btn_movimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_movimientosActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_movimientos);
         btn_movimientos.setBounds(400, 300, 200, 40);
 
@@ -1708,6 +1713,31 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         }
     }//GEN-LAST:event_btn_Eliminar_BancoActionPerformed
+
+    private void btn_movimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_movimientosActionPerformed
+
+        int n_cuenta = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu Numero de Cuenta!"));
+
+        try {
+            Map parametros = new HashMap();
+
+            parametros.put("n_cuenta", n_cuenta);
+
+            JasperReport jr = JasperCompileManager.compileReport("src/reportes/report_Movimientos.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.Conexion());
+
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setTitle("Movimientos de Cuenta");
+            jv.setExtendedState(PrincipalForm.MAXIMIZED_BOTH);
+            jv.setIconImage(new ImageIcon(getClass().getResource("/img/santander.jpg")).getImage());
+            jv.setVisible(true);
+
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btn_movimientosActionPerformed
 
     /**
      * @param args the command line arguments
