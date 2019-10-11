@@ -88,8 +88,11 @@
 	<parameter name="n_cuenta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="anio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM movimientos WHERE n_cuenta = $P!{n_cuenta};]]>
+		<![CDATA[SELECT * FROM movimientos WHERE n_cuenta = $P!{n_cuenta} AND YEAR(fecha_movimiento) = $P!{anio};]]>
 	</queryString>
 	<field name="id_movimiento" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -129,11 +132,11 @@
 				<imageExpression><![CDATA["C:\\Users\\reyes\\OneDrive\\Documentos\\GitHub\\Cl_Se\\src\\img\\santander.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="322" y="55" width="87" height="18" uuid="e8e2c106-c261-4bb2-85a4-593e9cc6eb25"/>
+				<reportElement x="322" y="55" width="111" height="18" uuid="e8e2c106-c261-4bb2-85a4-593e9cc6eb25"/>
 				<textElement>
 					<font fontName="Segoe UI Light" size="12"/>
 				</textElement>
-				<text><![CDATA[Movimientos de: ]]></text>
+				<text><![CDATA[Movimientos del Año: ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="491" y="11" width="63" height="20" uuid="3d8d0347-7c7f-4171-b30a-7e778915a051"/>
@@ -141,6 +144,13 @@
 					<font fontName="Segoe UI Light" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="55" width="100" height="20" uuid="b52cbf6a-8f45-4221-abcc-ad949379672b"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

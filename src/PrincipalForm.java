@@ -416,6 +416,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         btn_movimientos.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btn_movimientos.setText("Movimientos de Cuenta");
+        btn_movimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_movimientosActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_movimientos);
         btn_movimientos.setBounds(400, 300, 200, 40);
 
@@ -1751,6 +1756,10 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         
         
     }//GEN-LAST:event_jButtonBuscarCuentaActionPerformed
+
+    private void btn_movimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_movimientosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_movimientosActionPerformed
 
     /**
      * @param args the command line arguments
