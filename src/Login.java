@@ -193,7 +193,7 @@ public class Login extends javax.swing.JFrame {
             usuario = txt_Usuario1.getText().trim();
             password = txt_Password1.getText().trim();
 
-            user.SetNombre(usuario);
+            user.setPerfil(usuario);
             user.SetPassword(cifrarBase64(password));
 
             Conexion obj = new Conexion();
