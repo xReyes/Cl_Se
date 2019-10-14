@@ -57,7 +57,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     Calendar calendario;
     Thread h1;
 
-    //reyes
     public PrincipalForm() {
         try {
             initComponents();
@@ -1721,9 +1720,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void jButtonBuscarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarCuentaActionPerformed
         // TODO add your handling code here:
-        
+
         String noDeCuenta;
-        
+
         if (jTextFieldBuscarCuenta.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingresa el numero de cuenta para Buscar!", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
             jTextFieldBuscarCuenta.requestFocus();
@@ -1753,12 +1752,32 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
 
         }
-        
-        
+
+
     }//GEN-LAST:event_jButtonBuscarCuentaActionPerformed
 
     private void btn_movimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_movimientosActionPerformed
-        // TODO add your handling code here:
+
+        String n_cuenta = JOptionPane.showInputDialog("Ingresa tu Numero de Cuenta!");
+
+        try {
+            Map parametros = new HashMap();
+
+            parametros.put("n_cuenta", n_cuenta);
+
+            JasperReport jr = JasperCompileManager.compileReport("src/reportes/report_Movimientos.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.Conexion());
+
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setTitle("Movimientos de Cuenta");
+            jv.setExtendedState(PrincipalForm.MAXIMIZED_BOTH);
+            jv.setVisible(true);
+
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+
     }//GEN-LAST:event_btn_movimientosActionPerformed
 
     /**
@@ -1787,12 +1806,14 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new PrincipalForm().setVisible(true);
             }
         });
     }
 
+    @Override
     public void run() {
         Thread ct = Thread.currentThread();
         while (ct == h1) {
@@ -1806,20 +1827,20 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     }
 
     public void calcula() {
-        Calendar calendario = new GregorianCalendar();
+        Calendar c = new GregorianCalendar();
         Date fechaHoraActual = new Date();
 
-        calendario.setTime(fechaHoraActual);
-        ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+        c.setTime(fechaHoraActual);
+        ampm = c.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
 
         if (ampm.equals("PM")) {
-            int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
+            int h = c.get(Calendar.HOUR_OF_DAY) - 12;
             hora = h > 9 ? "" + h : "0" + h;
         } else {
-            hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+            hora = c.get(Calendar.HOUR_OF_DAY) > 9 ? "" + c.get(Calendar.HOUR_OF_DAY) : "0" + c.get(Calendar.HOUR_OF_DAY);
         }
-        minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
-        segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND) : "0" + calendario.get(Calendar.SECOND);
+        minutos = c.get(Calendar.MINUTE) > 9 ? "" + c.get(Calendar.MINUTE) : "0" + c.get(Calendar.MINUTE);
+        segundos = c.get(Calendar.SECOND) > 9 ? "" + c.get(Calendar.SECOND) : "0" + c.get(Calendar.SECOND);
     }
 
     private void esperarPaquetesClientes() {
@@ -1882,7 +1903,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             excepcion.printStackTrace();
         }
     }//fin del metodo e
-    
+
     private void esperarPaquetesCuentas() {
         try {
             //establecer el paquete
