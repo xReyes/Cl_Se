@@ -73,6 +73,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             Generar_ID_cliente();
             fecha();
 
+            JLabel_id_usuario.setText(Usuario.id_usuario);
+
             groupSexo_Cliente.add(rad_Masculino);
             groupSexo_Cliente.add(rad_Femenino);
 
@@ -81,6 +83,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             txt_id_cliente.setVisible(false);
             txt_id_banco.setVisible(false);
+            JLabel_id_usuario.setVisible(false);
 
             v.validar_Solo_Letras(txt_Nombre);
             v.validar_Solo_Letras(txt_Ap_Paterno);
@@ -115,21 +118,32 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         try {
 
-            if (nodo.getUserObject().equals("Cuenta")) {
+            if (nodo.getUserObject().equals("Agregar Nueva Cuenta")) {
+                JTabbedPrincipal.setSelectedIndex(3);
+
+            }
+            if (nodo.getUserObject().equals("Movimientos")) {
+                JTabbedPrincipal.setSelectedIndex(4);
 
             }
             if (nodo.getUserObject().equals("Agregar Nuevo Cliente")) {
-
                 JTabbedPrincipal.setSelectedIndex(1);
 
             }
-            if (nodo.getUserObject().equals("Bancos")) {
+            if (nodo.getUserObject().equals("Agregar Nuevo Banco")) {
+                JTabbedPrincipal.setSelectedIndex(6);
 
             }
-            if (nodo.getUserObject().equals("Empresas")) {
+            if (nodo.getUserObject().equals("Agregar Nueva Empresa")) {
+                JTabbedPrincipal.setSelectedIndex(5);
 
             }
-            if (nodo.getUserObject().equals("Seguros")) {
+            if (nodo.getUserObject().equals("Ver Nomina")) {
+                btn_nominaActionPerformed(null);
+
+            }
+            if (nodo.getUserObject().equals("Agregar Nuevo Seguro")) {
+                JTabbedPrincipal.setSelectedIndex(8);
 
             }
         } catch (NullPointerException e) {
@@ -263,6 +277,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         JLabel_Hora = new javax.swing.JLabel();
+        JLabel_id_usuario = new javax.swing.JLabel();
         JPanelClientes = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -377,7 +392,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         JTree_Inicio.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Inicio");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Cuenta");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Ver Estado de Cuenta");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Agregar Nueva Cuenta");
         treeNode2.add(treeNode3);
         treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Movimientos");
         treeNode2.add(treeNode3);
@@ -398,8 +413,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         treeNode1.add(treeNode2);
         treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Seguros");
         treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Agregar Nuevo Seguro");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Ver Seguros");
         treeNode2.add(treeNode3);
         treeNode1.add(treeNode2);
         JTree_Inicio.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -425,11 +438,21 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         btn_estadoCuenta.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btn_estadoCuenta.setText("Estado de Cuenta");
+        btn_estadoCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_estadoCuentaActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_estadoCuenta);
         btn_estadoCuenta.setBounds(400, 370, 200, 40);
 
         btn_nomina.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btn_nomina.setText("Nomina");
+        btn_nomina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nominaActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_nomina);
         btn_nomina.setBounds(400, 440, 200, 40);
 
@@ -444,6 +467,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         JLabel_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jPanel1.add(JLabel_Hora);
         JLabel_Hora.setBounds(640, 480, 140, 20);
+        jPanel1.add(JLabel_id_usuario);
+        JLabel_id_usuario.setBounds(710, 460, 70, 20);
 
         JTabbedPrincipal.addTab("Menu", jPanel1);
 
@@ -1780,6 +1805,16 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_btn_movimientosActionPerformed
 
+    private void btn_nominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nominaActionPerformed
+
+
+    }//GEN-LAST:event_btn_nominaActionPerformed
+
+    private void btn_estadoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_estadoCuentaActionPerformed
+
+
+    }//GEN-LAST:event_btn_estadoCuentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1793,15 +1828,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -1932,6 +1963,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo_Cliente_Banco;
     private javax.swing.JLabel JLabel_Hora;
+    public static javax.swing.JLabel JLabel_id_usuario;
     private javax.swing.JPanel JPanelClientes;
     private javax.swing.JPanel JPanel_Usuarios;
     private javax.swing.JTabbedPane JTabbedPrincipal;
