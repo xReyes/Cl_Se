@@ -46,7 +46,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     String nombre_Cliente;
     String buscar_Clientes;
-
+    String otro_seguro;
     String buscar_Banco;
 
     private DatagramSocket socket;
@@ -71,6 +71,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             Generar_ID();
             Generar_ID_cliente();
+            Generar_Datos_Seguros();
             fecha();
 
             JLabel_id_usuario.setText(Usuario.id_usuario);
@@ -235,6 +236,52 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     }
 
+    private void Generar_Datos_Seguros() {
+
+        try {
+
+            Genener_ID_Empresas_Seguros(conn.Conexion());
+            Genener_N_Cuenta_Seguros(conn.Conexion());
+
+        } catch (SQLException e) {
+        }
+
+    }
+
+    public void Genener_ID_Empresas_Seguros(Connection conn) throws SQLException {
+
+        PreparedStatement stm1 = conn.prepareStatement("SELECT CONCAT(id_empresa, '_', representante, ' ', sucursal, ' ', direccion) AS nombre_Empresa "
+                + "FROM empresa INNER JOIN banco ON empresa.id_banco = banco.id_banco;");
+        ResultSet rs = null;
+        rs = stm1.executeQuery();
+
+        Combo_Empresas_Seguros.addItem("Selecciona...");
+
+        while (rs.next()) {
+
+            Combo_Empresas_Seguros.addItem(rs.getString("nombre_Empresa"));
+
+        }
+
+    }
+
+    public void Genener_N_Cuenta_Seguros(Connection conn) throws SQLException {
+
+        PreparedStatement stm1 = conn.prepareStatement("SELECT CONCAT(n_cuenta, '_', CONCAT(nombre_Cliente,' ', a_paterno, ' ', a_materno)) AS N_Cuenta "
+                + "FROM cuenta INNER JOIN clientes ON cuenta.id_cliente = clientes.id_clientes;");
+        ResultSet rs = null;
+        rs = stm1.executeQuery();
+
+        Combo_Cuenta_Seguros.addItem("Selecciona...");
+
+        while (rs.next()) {
+
+            Combo_Cuenta_Seguros.addItem(rs.getString("N_Cuenta"));
+
+        }
+
+    }
+
     private void fecha() {
 
         Date now = new Date(System.currentTimeMillis());
@@ -374,6 +421,23 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         btn_Eliminar_Banco = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        Combo_Empresas_Seguros = new javax.swing.JComboBox<>();
+        Combo_Tipo_Seguro = new javax.swing.JComboBox<>();
+        Combo_Cuenta_Seguros = new javax.swing.JComboBox<>();
+        txt_monto_seguro = new javax.swing.JFormattedTextField();
+        btn_Nuevo_Seguros = new javax.swing.JButton();
+        btn_Guardar_Seguros = new javax.swing.JButton();
+        btn_Cancelar_Seguros = new javax.swing.JButton();
+        btn_Editar_Seguros = new javax.swing.JButton();
+        btn_Eliminar_Eliminar = new javax.swing.JButton();
+        jLabel43 = new javax.swing.JLabel();
+        txt_idSeguro_Buscar_Seguros = new javax.swing.JTextField();
+        btn_Buscar_Seguros = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/img/icono2.png")).getImage());
@@ -1080,44 +1144,43 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(390, 390, 390)
                         .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(txt_nombre_Buscar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(btn_Buscar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btn_Nuevo_Banco)
-                                .addGap(57, 57, 57)
-                                .addComponent(btn_Guardar_Banco)
-                                .addGap(49, 49, 49)
-                                .addComponent(btn_Cancelar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(btn_Editar_Banco)
-                                .addGap(49, 49, 49)
-                                .addComponent(btn_Eliminar_Banco))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(102, 102, 102)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel33)
-                                    .addComponent(jLabel35)
-                                    .addComponent(jLabel36)
-                                    .addComponent(jLabel37))
-                                .addGap(46, 46, 46)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_id_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txt_Telefono_Banco)
-                                        .addComponent(txt_Direccion_Banco)
-                                        .addComponent(txt_Sucursal_Banco)
-                                        .addComponent(Combo_Cliente_Banco, 0, 222, Short.MAX_VALUE)))))
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel37))
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_id_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txt_Telefono_Banco)
+                                .addComponent(txt_Direccion_Banco)
+                                .addComponent(txt_Sucursal_Banco)
+                                .addComponent(Combo_Cliente_Banco, 0, 222, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(68, 68, 68))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(btn_Nuevo_Banco)
+                .addGap(57, 57, 57)
+                .addComponent(btn_Guardar_Banco)
+                .addGap(49, 49, 49)
+                .addComponent(btn_Cancelar_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(btn_Editar_Banco)
+                .addGap(49, 49, 49)
+                .addComponent(btn_Eliminar_Banco)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1156,14 +1219,14 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(Combo_Cliente_Banco, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addGap(81, 81, 81)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_Nuevo_Banco)
                     .addComponent(btn_Guardar_Banco)
                     .addComponent(btn_Cancelar_Banco)
                     .addComponent(btn_Editar_Banco)
                     .addComponent(btn_Eliminar_Banco))
-                .addGap(50, 50, 50))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         JTabbedPrincipal.addTab("Banco", jPanel3);
@@ -1187,15 +1250,165 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seguros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
+        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel38.setText("Tipo de Seguro:");
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel39.setText("Monto:");
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel40.setText("Empresa:");
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel41.setText("Cuenta:");
+
+        Combo_Empresas_Seguros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        Combo_Tipo_Seguro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Combo_Tipo_Seguro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona...", "Vida", "Poliza Temporal", "Ordinario de vida o vitalicio", "Seguro Dotal", "Gastos Medicos Mayores", "Salud", "Responsabilidad civil y riesgos profesionales", "Seguros de Auto", "Protección de Hogar", "Otra.." }));
+        Combo_Tipo_Seguro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combo_Tipo_SeguroActionPerformed(evt);
+            }
+        });
+
+        Combo_Cuenta_Seguros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txt_monto_seguro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+
+        btn_Nuevo_Seguros.setText("Nuevo");
+        btn_Nuevo_Seguros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Nuevo_SegurosActionPerformed(evt);
+            }
+        });
+
+        btn_Guardar_Seguros.setText("Guardar");
+        btn_Guardar_Seguros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Guardar_SegurosActionPerformed(evt);
+            }
+        });
+
+        btn_Cancelar_Seguros.setText("Cancelar");
+        btn_Cancelar_Seguros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Cancelar_SegurosActionPerformed(evt);
+            }
+        });
+
+        btn_Editar_Seguros.setText("Editar");
+        btn_Editar_Seguros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Editar_SegurosActionPerformed(evt);
+            }
+        });
+
+        btn_Eliminar_Eliminar.setText("Eliminar");
+        btn_Eliminar_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Eliminar_EliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel43.setText("Buscar por ID:");
+
+        txt_idSeguro_Buscar_Seguros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        btn_Buscar_Seguros.setText("Buscar");
+        btn_Buscar_Seguros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Buscar_SegurosActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("$");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 776, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(btn_Nuevo_Seguros)
+                .addGap(57, 57, 57)
+                .addComponent(btn_Guardar_Seguros)
+                .addGap(49, 49, 49)
+                .addComponent(btn_Cancelar_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(btn_Editar_Seguros)
+                .addGap(49, 49, 49)
+                .addComponent(btn_Eliminar_Eliminar)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel40)
+                        .addGap(49, 49, 49)
+                        .addComponent(Combo_Empresas_Seguros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel41)
+                            .addComponent(jLabel39)
+                            .addComponent(jLabel38))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Combo_Cuenta_Seguros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel15)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_monto_seguro))
+                                    .addComponent(Combo_Tipo_Seguro, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 30, Short.MAX_VALUE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_idSeguro_Buscar_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btn_Buscar_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_idSeguro_Buscar_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel43))
+                    .addComponent(btn_Buscar_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel40)
+                            .addComponent(Combo_Empresas_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel41)
+                            .addComponent(Combo_Cuenta_Seguros, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txt_monto_seguro, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15))
+                            .addComponent(jLabel39, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addComponent(Combo_Tipo_Seguro, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel38))
+                .addGap(98, 98, 98)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Nuevo_Seguros)
+                    .addComponent(btn_Guardar_Seguros)
+                    .addComponent(btn_Cancelar_Seguros)
+                    .addComponent(btn_Editar_Seguros)
+                    .addComponent(btn_Eliminar_Eliminar))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         JTabbedPrincipal.addTab("Seguros", jPanel2);
@@ -1783,12 +1996,10 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void btn_movimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_movimientosActionPerformed
 
-        String n_cuenta = JOptionPane.showInputDialog("Ingresa tu Numero de Cuenta!");
-
         try {
             Map parametros = new HashMap();
 
-            parametros.put("n_cuenta", n_cuenta);
+            parametros.put("n_cuenta", JLabel_id_usuario.getText().trim());
 
             JasperReport jr = JasperCompileManager.compileReport("src/reportes/report_Movimientos.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.Conexion());
@@ -1814,6 +2025,41 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
 
     }//GEN-LAST:event_btn_estadoCuentaActionPerformed
+
+    private void btn_Nuevo_SegurosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Nuevo_SegurosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Nuevo_SegurosActionPerformed
+
+    private void btn_Guardar_SegurosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Guardar_SegurosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Guardar_SegurosActionPerformed
+
+    private void btn_Cancelar_SegurosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar_SegurosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Cancelar_SegurosActionPerformed
+
+    private void btn_Editar_SegurosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Editar_SegurosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Editar_SegurosActionPerformed
+
+    private void btn_Eliminar_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Eliminar_EliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Eliminar_EliminarActionPerformed
+
+    private void btn_Buscar_SegurosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_SegurosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Buscar_SegurosActionPerformed
+
+    private void Combo_Tipo_SeguroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_Tipo_SeguroActionPerformed
+
+        if (Combo_Tipo_Seguro.getSelectedIndex() == 10) {
+
+            otro_seguro = JOptionPane.showInputDialog("Ingrese el Otro Tipo de Seguro!");
+
+        }
+
+
+    }//GEN-LAST:event_Combo_Tipo_SeguroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1962,6 +2208,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo_Cliente_Banco;
+    private javax.swing.JComboBox<String> Combo_Cuenta_Seguros;
+    private javax.swing.JComboBox<String> Combo_Empresas_Seguros;
+    private javax.swing.JComboBox<String> Combo_Tipo_Seguro;
     private javax.swing.JLabel JLabel_Hora;
     public static javax.swing.JLabel JLabel_id_usuario;
     private javax.swing.JPanel JPanelClientes;
@@ -1971,21 +2220,27 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn_Buscar_Banco;
     private javax.swing.JButton btn_Buscar_Cliente;
     private javax.swing.JButton btn_Buscar_Movimiento;
+    private javax.swing.JButton btn_Buscar_Seguros;
     private javax.swing.JButton btn_Cancelar_Banco;
     private javax.swing.JButton btn_Cancelar_Cliente;
     private javax.swing.JButton btn_Cancelar_Movimiento;
+    private javax.swing.JButton btn_Cancelar_Seguros;
     private javax.swing.JButton btn_Editar_Banco;
     private javax.swing.JButton btn_Editar_Cliente;
     private javax.swing.JButton btn_Editar_Movimiento;
+    private javax.swing.JButton btn_Editar_Seguros;
     private javax.swing.JButton btn_Eliminar_Banco;
     private javax.swing.JButton btn_Eliminar_Cliente;
+    private javax.swing.JButton btn_Eliminar_Eliminar;
     private javax.swing.JButton btn_Eliminar_Movimiento;
     private javax.swing.JButton btn_Guardar_Banco;
     private javax.swing.JButton btn_Guardar_Cliente;
     private javax.swing.JButton btn_Guardar_Movimiento;
+    private javax.swing.JButton btn_Guardar_Seguros;
     private javax.swing.JButton btn_Nuevo_Banco;
     private javax.swing.JButton btn_Nuevo_Cliente;
     private javax.swing.JButton btn_Nuevo_Movimiento;
+    private javax.swing.JButton btn_Nuevo_Seguros;
     private javax.swing.JButton btn_estadoCuenta;
     private javax.swing.JButton btn_movimientos;
     private javax.swing.JButton btn_nomina;
@@ -2004,6 +2259,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -2027,7 +2283,12 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2063,8 +2324,10 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txt_cd;
     private javax.swing.JTextField txt_fm;
     public static javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_idSeguro_Buscar_Seguros;
     private javax.swing.JTextField txt_id_banco;
     private javax.swing.JTextField txt_id_cliente;
+    private javax.swing.JFormattedTextField txt_monto_seguro;
     private javax.swing.JTextField txt_nc;
     private javax.swing.JTextField txt_nombre_Buscar;
     private javax.swing.JTextField txt_nombre_Buscar_Banco;
