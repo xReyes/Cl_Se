@@ -1,4 +1,5 @@
 
+import java.awt.Cursor;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.event.KeyEvent;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +32,10 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         setTitle("Sistema Bancario");
         setExtendedState(MAXIMIZED_BOTH);
+
+        JLabel_Login1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JLabel_Registro1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jLabel7.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -212,9 +217,8 @@ public class Login extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Usuario / Contraseña Incorrectos", "Error!", JOptionPane.INFORMATION_MESSAGE);
 
-                Login login = new Login();
-                login.setVisible(true);
-
+                txt_Password1.setText("");
+                txt_Usuario1.setText("");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

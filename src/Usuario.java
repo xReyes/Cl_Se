@@ -18,6 +18,7 @@ public class Usuario {
     public static String id_usuario;
 
     ResultSet rs;
+    ResultSet rs1;
 
     public void SetNombre(String nombre) {
         this.nombre = nombre;
@@ -140,7 +141,12 @@ public class Usuario {
         if (rs.next()) {
 
             if (this.perfil.equals(rs.getString("perfil")) && this.password.equals(rs.getString("password"))) {
-                id_usuario = rs.getString("id_usuario");
+                PreparedStatement stm1 = conn.prepareStatement("SELECT n_cuenta FROM cuenta WHERE id_cliente = '" + rs.getString("id_usuario") + "'; ");
+                rs1 = stm1.executeQuery();
+                if (rs1.next()) {
+                    id_usuario = rs1.getString("n_cuenta");
+                }
+
                 return true;
 
             }
