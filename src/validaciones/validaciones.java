@@ -53,6 +53,16 @@ public class validaciones {
 
     }
 
+    public String reemplazar_guion_textos(String re) {
+
+        String r;
+
+        r = re.trim().replaceAll("_", " ");
+
+        return r;
+
+    }
+
     public boolean estaVacio(String cad) {
 
         if (cad.trim().isEmpty()) {

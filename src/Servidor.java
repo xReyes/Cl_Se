@@ -3,6 +3,7 @@ import DTO.Bancos_DTO;
 import DTO.Clientes_DTO;
 import DTO.CuentasDTO;
 import DTO.Movimientos_DTO;
+import DTO.Seguros_DTO;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -72,11 +73,14 @@ public class Servidor extends javax.swing.JFrame {
                     Conexion obj = new Conexion();
                     conn = obj.Conexion();
 
+                    //***** DECLARACION DE LAS CLASES.
                     Clientes_DTO cliente_dto = new Clientes_DTO();
                     Movimientos_DTO movimiento_dto = new Movimientos_DTO();
                     Bancos_DTO banco_dto = new Bancos_DTO();
                     CuentasDTO cuentasDTO = new CuentasDTO();
                     Usuario user = new Usuario();
+                    Seguros_DTO seguros_dto = new Seguros_DTO();
+                    //*****
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
                     String[] variables;
@@ -153,7 +157,7 @@ public class Servidor extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Banco Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         case "SearchBanco":
-                            banco_dto.setSucursal(variables[1]);
+                            banco_dto.setId_banco(variables[1]);
                             banco_dto.Search(banco_dto, conn);
                             mensaje = banco_dto.getId_banco() + " " + banco_dto.getTelefono() + " " + banco_dto.getDireccion() + " " + banco_dto.getSucursal() + " " + banco_dto.getId_cliente() + " ";
                             break;
@@ -170,12 +174,12 @@ public class Servidor extends javax.swing.JFrame {
 
                             cuentasDTO.insert(cuentasDTO, conn);
                             break;
-                            
+
                         case "SearchCuenta":
-                            
+
                             cuentasDTO.setNoDeCuenta(Integer.parseInt(variables[1]));
                             cuentasDTO = cuentasDTO.search(cuentasDTO, conn);
-                            
+
                             mensaje = String.valueOf(cuentasDTO.getIdCliente()) + " " + String.valueOf(cuentasDTO.getIdUsuario()) + " " + String.valueOf(cuentasDTO.getNoDeCuenta()) + " " + cuentasDTO.getFechaApertura() + " " + cuentasDTO.getTipoCuenta() + " " + String.valueOf(cuentasDTO.getSaldoApertura()) + " ";
                             break;
 
@@ -192,6 +196,41 @@ public class Servidor extends javax.swing.JFrame {
                             user.Insert(conn);
 
                             JOptionPane.showMessageDialog(null, "Usuario Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "NewSure":
+                            seguros_dto.setEmpresa(variables[1]);
+                            seguros_dto.setTipo_seguro(variables[2]);
+                            seguros_dto.setMonto(variables[3]);
+                            seguros_dto.setCuenta(variables[4]);
+
+                            seguros_dto.Insert(seguros_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Seguro Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "EditSure":
+                            seguros_dto.setId_seguro(variables[1]);
+                            seguros_dto.setEmpresa(variables[2]);
+                            seguros_dto.setTipo_seguro(variables[3]);
+                            seguros_dto.setMonto(variables[4]);
+                            seguros_dto.setCuenta(variables[5]);
+
+                            seguros_dto.Edit(seguros_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Seguro Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "DeleteSure":
+                            seguros_dto.setId_seguro(variables[1]);
+
+                            seguros_dto.Delete(seguros_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Banco Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "SearchSure":
+                            seguros_dto.setId_seguro(variables[1]);
+
+                            seguros_dto.Search(seguros_dto, conn);
+                            mensaje = seguros_dto.getId_seguro() + " " + seguros_dto.getEmpresa() + " " + seguros_dto.getTipo_seguro() + " " + seguros_dto.getMonto() + " " + seguros_dto.getCuenta() + " ";
 
                             break;
                         default:

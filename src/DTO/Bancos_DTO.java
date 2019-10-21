@@ -9,9 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JComboBox;
 
 /**
  *
@@ -117,7 +114,7 @@ public class Bancos_DTO {
 
     public void Search(Bancos_DTO dto, Connection conn) throws SQLException {
 
-        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM banco WHERE sucursal = '" + this.sucursal + "';");
+        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM banco WHERE id_banco = '" + this.id_banco + "';");
         rs = stmt1.executeQuery();
 
         if (rs.next()) {
