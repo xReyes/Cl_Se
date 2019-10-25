@@ -3,33 +3,77 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="cuentas" uuid="2c03114a-327f-4559-9153-d2c737db158e">
+		<parameter name="mes" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT CONCAT(nombre_Cliente, ' ', a_paterno, ' ', a_materno) AS nombre_completo, 
+n_cuenta, tipo_cuenta, fecha_apertura, saldo_apertura
+FROM cuenta INNER JOIN clientes ON cuenta.id_cliente = clientes.id_clientes
+WHERE MONTH(fecha_apertura) = $P{mes};]]>
+		</queryString>
+		<field name="nombre_completo" class="java.lang.String"/>
+		<field name="n_cuenta" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="tipo_cuenta" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="fecha_apertura" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="saldo_apertura" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="mes" class="java.lang.String"/>
 	<parameter name="n_cuenta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT banco.*, clientes.*, cuenta.*, CONCAT(nombre_Cliente,' ', a_paterno, ' ', a_materno) AS nombre_compl, clientes.direccion AS direccion_cliente
-FROM banco INNER JOIN clientes ON id_cliente = id_clientes
-INNER JOIN cuenta ON cuenta.id_cliente = clientes.id_clientes
+		<![CDATA[SELECT clientes.*, CONCAT(nombre_Cliente,' ', a_paterno, ' ', a_materno) AS nombre_compl, clientes.direccion
+FROM clientes INNER JOIN cuenta ON clientes.id_clientes = cuenta.id_cliente
 WHERE n_cuenta = $P!{n_cuenta};]]>
 	</queryString>
-	<field name="id_banco" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="telefono" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="direccion" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="sucursal" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="id_cliente" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="estado" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="id_clientes" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -45,6 +89,12 @@ WHERE n_cuenta = $P!{n_cuenta};]]>
 	<field name="sexo" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="email" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -54,29 +104,10 @@ WHERE n_cuenta = $P!{n_cuenta};]]>
 	<field name="tipo_cliente" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="id_cuenta" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="n_cuenta" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="tipo_cuenta" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="id_movimiento" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="fecha_apertura" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="saldo_apertura" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="id_usuario" class="java.lang.Integer">
+	<field name="estado" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nombre_compl" class="java.lang.String"/>
-	<field name="direccion_cliente" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -85,34 +116,6 @@ WHERE n_cuenta = $P!{n_cuenta};]]>
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="187" uuid="25220539-9338-474b-9b1c-39af3bfb86ab"/>
 			</rectangle>
-			<textField>
-				<reportElement x="4" y="2" width="146" height="25" uuid="55a55691-e14e-4e6a-841a-1a08caacc306"/>
-				<textElement>
-					<font fontName="Segoe UI Light" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{sucursal}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="4" y="27" width="146" height="25" uuid="f679887a-ac87-4fba-9a5b-833261a0c217"/>
-				<textElement>
-					<font fontName="Segoe UI Light" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="4" y="52" width="146" height="25" uuid="f6e4ca40-7379-4779-bf20-e42654e2f87c"/>
-				<textElement>
-					<font fontName="Segoe UI Light" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="283" y="0" width="107" height="25" uuid="d215d3ff-127b-46e9-878b-0c695b2bb146"/>
-				<textElement textAlignment="Right">
-					<font fontName="Segoe UI Light" size="14"/>
-				</textElement>
-				<text><![CDATA[Fecha del Estado:]]></text>
-			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="390" y="0" width="160" height="25" uuid="b36f3b98-16cb-4d3a-9816-33ea64966ac7"/>
 				<textElement textAlignment="Right">
@@ -121,39 +124,39 @@ WHERE n_cuenta = $P!{n_cuenta};]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="184" y="53" width="179" height="31" forecolor="#3366FF" uuid="1d7ae0fe-07c4-436a-af12-311f09640978"/>
+				<reportElement x="133" y="57" width="273" height="31" forecolor="#3366FF" uuid="1d7ae0fe-07c4-436a-af12-311f09640978"/>
 				<textElement textAlignment="Center">
 					<font fontName="Segoe UI Light" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ESTADO DE CUENTA]]></text>
+				<text><![CDATA[Cuentas Creadas en el Mes de:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="195" y="84" width="160" height="25" uuid="9662375e-a53a-4bcf-8299-bc48a5aa2756"/>
+				<reportElement x="165" y="91" width="213" height="25" uuid="9662375e-a53a-4bcf-8299-bc48a5aa2756"/>
 				<textElement textAlignment="Center">
 					<font fontName="Segoe UI Light" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre_compl}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="195" y="109" width="160" height="25" uuid="ff269b25-dff1-4355-84ca-f20073ca3233"/>
-				<textElement textAlignment="Center">
-					<font fontName="Segoe UI Light" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{direccion_cliente}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="195" y="134" width="160" height="25" uuid="3c55e65c-2f90-4256-8627-0674d2201365"/>
+				<reportElement x="165" y="141" width="213" height="25" uuid="3c55e65c-2f90-4256-8627-0674d2201365"/>
 				<textElement textAlignment="Center">
 					<font fontName="Segoe UI Light" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="195" y="159" width="159" height="25" uuid="ee4ed995-2013-4ecb-ba3d-6218ca8ae1d1"/>
+				<reportElement x="406" y="57" width="46" height="31" forecolor="#3366FF" uuid="8714d209-b136-4b6d-9dcc-a0321fc8ca1b"/>
+				<textElement>
+					<font fontName="Segoe UI Light" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="116" width="213" height="25" uuid="db9c4da8-c6fa-4697-a7cb-9e2f88cb9b4c"/>
 				<textElement textAlignment="Center">
 					<font fontName="Segoe UI Light" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pais}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -161,7 +164,114 @@ WHERE n_cuenta = $P!{n_cuenta};]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="282" splitType="Stretch"/>
+		<band height="282" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="0" width="555" height="282" uuid="89362b9e-40b9-4a5a-82f0-90e254a35d25"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="cuentas" uuid="a99e0872-10b0-49ec-86bf-d272fcb64f5f">
+						<datasetParameter name="mes">
+							<datasetParameterExpression><![CDATA[$P{mes}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="155" uuid="3c168323-8bfb-435e-9704-85dab3f455c0">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="19" y="0" width="122" height="30" uuid="a13d7a74-7f6c-42a6-a0a6-e7c7cdc8163d"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Nombre del Cliente]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="155" height="20" uuid="f541732b-a93a-436f-8058-9bed36731561"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="5c3aa79f-a50a-40c0-9c8f-cd308b76963e">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="9" y="0" width="90" height="30" uuid="b4722051-fe6e-4281-9159-381ff23f42b5"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Numero de Cuenta]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="105" height="20" uuid="50117341-3874-4ab4-84e5-cca59ba49567"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{n_cuenta}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="78" uuid="50ce19b5-9d8a-4980-be9e-6ff96520ebcb">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="5" y="0" width="72" height="30" uuid="8b14da5a-ef59-47b8-b5bf-6fcbeaf987ee"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Tipo Cuenta]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="5" y="0" width="72" height="20" uuid="cf7fa9df-b399-446e-88f3-c6bc961b3b62"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{tipo_cuenta}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="126" uuid="a50d4b01-3d76-4c29-aa4b-0118ae7cb424">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="19" y="0" width="90" height="30" uuid="6fe227da-f69c-4e44-9b5d-689d40023fa0"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Fecha de Apertura]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="126" height="20" uuid="c993868f-7003-4ef8-bf2d-170c28af0112"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{fecha_apertura}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="91" uuid="7b0eeb46-10ed-4496-be4e-a4f6a6fad5a6">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="0155d2ea-6650-4374-98c2-1da5e179f599"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Saldo de Apertura]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="5bfb1693-ff0d-4621-94fc-548cff354965"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{saldo_apertura}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
 	</columnHeader>
 	<detail>
 		<band splitType="Stretch"/>

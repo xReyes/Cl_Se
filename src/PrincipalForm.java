@@ -367,7 +367,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jScrollPane1 = new javax.swing.JScrollPane();
         JTree_Inicio = new javax.swing.JTree();
         btn_movimientos = new javax.swing.JButton();
-        btn_estadoCuenta = new javax.swing.JButton();
+        btn_cuentasRegistradas = new javax.swing.JButton();
         btn_nomina = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -547,15 +547,15 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jPanel1.add(btn_movimientos);
         btn_movimientos.setBounds(400, 300, 200, 40);
 
-        btn_estadoCuenta.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        btn_estadoCuenta.setText("Estado de Cuenta");
-        btn_estadoCuenta.addActionListener(new java.awt.event.ActionListener() {
+        btn_cuentasRegistradas.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        btn_cuentasRegistradas.setText("Cuentas Registradas");
+        btn_cuentasRegistradas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_estadoCuentaActionPerformed(evt);
+                btn_cuentasRegistradasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_estadoCuenta);
-        btn_estadoCuenta.setBounds(400, 370, 200, 40);
+        jPanel1.add(btn_cuentasRegistradas);
+        btn_cuentasRegistradas.setBounds(400, 370, 200, 40);
 
         btn_nomina.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         btn_nomina.setText("Nomina");
@@ -2133,18 +2133,21 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_btn_nominaActionPerformed
 
-    private void btn_estadoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_estadoCuentaActionPerformed
+    private void btn_cuentasRegistradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cuentasRegistradasActionPerformed
 
         try {
             Map parametros = new HashMap();
 
+            String mes = JOptionPane.showInputDialog(this, "Ejemplo: Enero = 01..", "Ingrese el Mes con Numero", JOptionPane.INFORMATION_MESSAGE);
+
+            parametros.put("mes", mes);
             parametros.put("n_cuenta", JLabel_N_Cuenta.getText().trim());
 
             JasperReport jr = JasperCompileManager.compileReport("src/reportes/report_estadoCuenta.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.Conexion());
 
             JasperViewer jv = new JasperViewer(jp, false);
-            jv.setTitle("Estado de Cuenta");
+            jv.setTitle("Cuentas Registradas");
             jv.setExtendedState(PrincipalForm.MAXIMIZED_BOTH);
             jv.setVisible(true);
 
@@ -2152,7 +2155,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             System.out.println(ex.getMessage());
         }
 
-    }//GEN-LAST:event_btn_estadoCuentaActionPerformed
+    }//GEN-LAST:event_btn_cuentasRegistradasActionPerformed
 
     private void btn_Nuevo_SegurosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Nuevo_SegurosActionPerformed
 
@@ -2557,7 +2560,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn_Nuevo_Cliente;
     private javax.swing.JButton btn_Nuevo_Movimiento;
     private javax.swing.JButton btn_Nuevo_Seguros;
-    private javax.swing.JButton btn_estadoCuenta;
+    private javax.swing.JButton btn_cuentasRegistradas;
     private javax.swing.JButton btn_movimientos;
     private javax.swing.JButton btn_nomina;
     private javax.swing.JComboBox<String> combo_Pais;
