@@ -2,6 +2,9 @@
 import DTO.Clientes_DTO;
 import DTO.CuentasDTO;
 import Validaciones.validaciones;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,12 +19,27 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -75,7 +93,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             Generar_Datos_Seguros();
             fecha();
 
-            JLabel_id_usuario.setText(Usuario.id_usuario);
+            JLabel_N_Cuenta.setText(Usuario.id_usuario);
 
             groupSexo_Cliente.add(rad_Masculino);
             groupSexo_Cliente.add(rad_Femenino);
@@ -84,7 +102,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             h1.start();
 
             txt_id_cliente.setVisible(false);
-            JLabel_id_usuario.setVisible(false);
+            JLabel_N_Cuenta.setVisible(false);
 
             v.validar_Solo_Letras(txt_Nombre);
             v.validar_Solo_Letras(txt_Ap_Paterno);
@@ -314,6 +332,25 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     }
 
+    public String Generar_Correo_Cuenta(Connection conn) throws SQLException {
+
+        PreparedStatement stm1 = conn.prepareStatement("SELECT email "
+                + "FROM datos_usuarios INNER JOIN cuenta ON cuenta.id_usuario = datos_usuarios.id_usuarios "
+                + "WHERE n_cuenta = '" + JLabel_N_Cuenta.getText() + "';");
+        ResultSet rs = null;
+        rs = stm1.executeQuery();
+        String email = "";
+
+        if (rs.next()) {
+
+            email = rs.getString("email");
+
+        }
+
+        return email;
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -335,7 +372,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         JLabel_Hora = new javax.swing.JLabel();
-        JLabel_id_usuario = new javax.swing.JLabel();
+        JLabel_N_Cuenta = new javax.swing.JLabel();
         JPanelClientes = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -541,8 +578,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         JLabel_Hora.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jPanel1.add(JLabel_Hora);
         JLabel_Hora.setBounds(640, 480, 140, 20);
-        jPanel1.add(JLabel_id_usuario);
-        JLabel_id_usuario.setBounds(710, 460, 70, 20);
+        jPanel1.add(JLabel_N_Cuenta);
+        JLabel_N_Cuenta.setBounds(710, 460, 70, 20);
 
         JTabbedPrincipal.addTab("Menu", jPanel1);
 
@@ -1999,7 +2036,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         try {
             Map parametros = new HashMap();
 
-            parametros.put("n_cuenta", JLabel_id_usuario.getText().trim());
+            parametros.put("n_cuenta", JLabel_N_Cuenta.getText().trim());
 
             JasperReport jr = JasperCompileManager.compileReport("src/reportes/report_Movimientos.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.Conexion());
@@ -2009,10 +2046,85 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             jv.setExtendedState(PrincipalForm.MAXIMIZED_BOTH);
             jv.setVisible(true);
 
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-        }
+            jv.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent evt) {
 
+                    int a = JOptionPane.showConfirmDialog(null, "Deseas Enviar los Movimientos a tu Correo Electronico?");
+                    if (JOptionPane.OK_OPTION == a) {
+
+                        JFileChooser chooser = new JFileChooser("");
+                        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("PDF", "pdf");
+                        chooser.setFileFilter(filtroImagen);
+                        chooser.setDialogTitle("Cargar PDF");
+                        File file = null;
+                        if (chooser.showOpenDialog(null) == 0) {
+                            file = chooser.getSelectedFile();
+                        }
+
+                        try {
+
+                            Properties propiedad = new Properties();
+                            propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+                            propiedad.setProperty("mail.smtp.starttls.enable", "true");
+                            propiedad.setProperty("mail.smtp.port", "587");
+                            propiedad.setProperty("mail.smtp.auth", "true");
+
+                            Session sesion = Session.getDefaultInstance(propiedad);
+
+                            String correoEnvia = "sistema.bancario.une@gmail.com";
+                            String contrasena = "sistema12345";
+                            String destinatario = Generar_Correo_Cuenta(conn.Conexion());
+                            String asunto = "Movimientos de Cuenta PDF";
+                            String mensaje = "Gracias por Usar Nuestro Sistema Bancario.!";
+
+                            MimeMessage mail = new MimeMessage(sesion);
+
+                            // Se compone la parte del texto
+                            BodyPart texto = new MimeBodyPart();
+                            texto.setText("Movimientos de Cuenta PDF");
+
+                            BodyPart adjunto = new MimeBodyPart();
+                            adjunto.setDataHandler(new DataHandler(new FileDataSource(file.getAbsolutePath())));
+                            adjunto.setFileName("Movimientos_de_Cuenta_PDF.pdf");
+
+                            // Una MultiParte para agrupar texto e imagen.
+                            MimeMultipart multiParte = new MimeMultipart();
+                            multiParte.addBodyPart(texto);
+                            multiParte.addBodyPart(adjunto);
+
+                            try {
+                                mail.setFrom(new InternetAddress(correoEnvia));
+                                mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+                                mail.setSubject(asunto);
+                                mail.setText(mensaje);
+                                mail.setContent(multiParte);
+
+                                Transport transporte = sesion.getTransport("smtp");
+                                transporte.connect(correoEnvia, contrasena);
+                                transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+                                transporte.close();
+
+                                JOptionPane.showMessageDialog(null, "Correo Enviado");
+
+                            } catch (AddressException ex) {
+                                Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (MessagingException ex) {
+                                Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        } catch (SQLException | MessagingException ex) {
+                            Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    } else {
+
+                    }
+                }
+            });
+        } catch (JRException ex) {
+//            System.out.println(ex.getMessage());
+        }
 
     }//GEN-LAST:event_btn_movimientosActionPerformed
 
@@ -2023,6 +2135,22 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void btn_estadoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_estadoCuentaActionPerformed
 
+        try {
+            Map parametros = new HashMap();
+
+            parametros.put("n_cuenta", JLabel_N_Cuenta.getText().trim());
+
+            JasperReport jr = JasperCompileManager.compileReport("src/reportes/report_estadoCuenta.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, conn.Conexion());
+
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setTitle("Estado de Cuenta");
+            jv.setExtendedState(PrincipalForm.MAXIMIZED_BOTH);
+            jv.setVisible(true);
+
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }//GEN-LAST:event_btn_estadoCuentaActionPerformed
 
@@ -2400,7 +2528,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JComboBox<String> Combo_Empresas_Seguros;
     private javax.swing.JComboBox<String> Combo_Tipo_Seguro;
     private javax.swing.JLabel JLabel_Hora;
-    public static javax.swing.JLabel JLabel_id_usuario;
+    public static javax.swing.JLabel JLabel_N_Cuenta;
     private javax.swing.JPanel JPanelClientes;
     private javax.swing.JPanel JPanel_Usuarios;
     private javax.swing.JTabbedPane JTabbedPrincipal;
