@@ -68,6 +68,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String buscar_Banco;
     String buscar_Seguro;
     String buscar_usuario;
+    String buscar_movimiento;
 
     private DatagramSocket socket;
     Direccion_IP ip = new Direccion_IP();
@@ -76,6 +77,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
+
+    Date now = new Date(System.currentTimeMillis());
 
     public PrincipalForm() {
         try {
@@ -93,8 +96,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             Generar_ID_cliente();
             Generar_Datos_Seguros();
             fecha();
+            llenarComboNC();
 
             JLabel_N_Cuenta.setText(Usuario.id_usuario);
+
+            txt_fm.setText(String.valueOf(now));
 
             groupSexo_Cliente.add(rad_Masculino);
             groupSexo_Cliente.add(rad_Femenino);
@@ -111,10 +117,48 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             v.validar_Solo_Numeros(txt_Telefono);
             v.validar_Solo_Numeros(txt_monto_seguro);
 
+            validarMovimientos();
+
         } catch (SocketException ex) {
             Logger.getLogger(PrincipalForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void validarMovimientos() {
+
+        v.validar_Solo_Letras(txt_tm);
+        v.validar_Solo_Numeros(txt_s);
+        v.validar_Solo_Numeros(txt_buscar_id);
+        v.validar_Punto(txt_s);
+
+    }
+
+    private void llenarComboNC() {
+
+        try {
+
+            consultarNC(conn.Conexion());
+
+        } catch (SQLException e) {
+        }
+    }
+
+    public void consultarNC(Connection conn) throws SQLException {
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ps = conn.prepareStatement("SELECT CONCAT (cuenta.n_cuenta, ' - ', a_paterno, ' ', a_materno, ' ', nombre_cliente ) AS RESULTADOS FROM clientes INNER JOIN cuenta ON clientes.id_clientes = cuenta.id_cliente WHERE estado = 'Activo'");
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+
+            String resultado = (rs.getString(1));
+
+            combo_cd.addItem(resultado);
+
+        }
     }
 
     public String sexo_Cliente() {
@@ -209,13 +253,11 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         limpiar_Campos(txt_id);
         limpiar_Campos(txt_tm);
-        limpiar_Campos(txt_fm);
+        txt_fm.setText(String.valueOf(now));
         limpiar_Campos(txt_s);
-        limpiar_Campos(txt_nc);
-        limpiar_Campos(txt_cd);
         limpiar_Campos(txt_buscar_id);
 
-        System.out.println(JPanelClientes.getSize());
+        Generar_ID();
 
     }
 
@@ -457,26 +499,26 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jButtonEditarCuenta = new javax.swing.JButton();
         jButtonEliminarCuenta = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        txt_id = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txt_buscar_id = new javax.swing.JTextField();
+        btn_Buscar_Movimiento = new javax.swing.JButton();
+        combo_nc = new javax.swing.JComboBox<>();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        combo_cd = new javax.swing.JComboBox<>();
         txt_tm = new javax.swing.JTextField();
         txt_fm = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        txt_id = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         txt_s = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
         btn_Nuevo_Movimiento = new javax.swing.JButton();
         btn_Guardar_Movimiento = new javax.swing.JButton();
         btn_Cancelar_Movimiento = new javax.swing.JButton();
         btn_Editar_Movimiento = new javax.swing.JButton();
         btn_Eliminar_Movimiento = new javax.swing.JButton();
-        jLabel31 = new javax.swing.JLabel();
-        txt_cd = new javax.swing.JTextField();
-        txt_nc = new javax.swing.JTextField();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        txt_buscar_id = new javax.swing.JTextField();
-        btn_Buscar_Movimiento = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -1065,21 +1107,41 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Movimientos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        txt_id.setEnabled(false);
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Buscar por ID:");
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel27.setText("ID:");
+        btn_Buscar_Movimiento.setText("Buscar");
+        btn_Buscar_Movimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Buscar_MovimientoActionPerformed(evt);
+            }
+        });
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel28.setText("Tipo Movimiento:");
+        combo_nc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel32.setText("Numero Cuenta:");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setText("Cuenta Destino:");
+
+        combo_cd.setToolTipText("");
 
         txt_fm.setEnabled(false);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel29.setText("Fecha Movimiento:");
 
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel28.setText("Tipo Movimiento:");
+
+        txt_id.setEnabled(false);
+
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel30.setText("Saldo:");
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setText("ID:");
 
         btn_Nuevo_Movimiento.setText("Nuevo");
         btn_Nuevo_Movimiento.addActionListener(new java.awt.event.ActionListener() {
@@ -1116,22 +1178,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel31.setText("Cuenta Destino:");
-
-        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel32.setText("Numero Cuenta:");
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel16.setText("Buscar por ID:");
-
-        btn_Buscar_Movimiento.setText("Buscar");
-        btn_Buscar_Movimiento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_Buscar_MovimientoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1141,7 +1187,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(86, 86, 86)
                         .addComponent(btn_Nuevo_Movimiento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                         .addComponent(btn_Guardar_Movimiento)
                         .addGap(53, 53, 53)
                         .addComponent(btn_Cancelar_Movimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1167,26 +1213,31 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(txt_fm)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel32)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_nc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_buscar_id, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel32)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(combo_nc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_Buscar_Movimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btn_Editar_Movimiento)
                             .addComponent(jLabel31))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_cd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_Eliminar_Movimiento, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_buscar_id, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_Buscar_Movimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(btn_Eliminar_Movimiento))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(combo_cd, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1200,23 +1251,25 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                     .addComponent(jLabel27)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
-                    .addComponent(txt_nc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(txt_tm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31)
-                    .addComponent(txt_cd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(combo_nc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel28)
+                        .addComponent(txt_tm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel31))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(combo_cd, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(txt_fm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel30)
                             .addComponent(txt_s, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Nuevo_Movimiento)
                     .addComponent(btn_Guardar_Movimiento)
@@ -1885,65 +1938,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private void jButtonEliminarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCuentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEliminarCuentaActionPerformed
-
-    private void btn_Nuevo_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Nuevo_MovimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_Nuevo_MovimientoActionPerformed
-
-    private void btn_Guardar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Guardar_MovimientoActionPerformed
-
-        try {
-
-            String id_movimiento;
-            String tipo_movimiento;
-            String fecha_movimiento;
-            double saldo;
-            String n_cuenta;
-            String cuenta_destino;
-
-            Date now = new Date(System.currentTimeMillis());
-
-            id_movimiento = txt_id.getText().trim();
-            tipo_movimiento = txt_tm.getText().trim();
-            fecha_movimiento = String.valueOf(now);
-            saldo = Double.parseDouble(txt_s.getText().trim());
-            n_cuenta = txt_nc.getText().trim();
-            cuenta_destino = txt_cd.getText().trim();
-
-            String mensaje = "NewMovimiento " + tipo_movimiento + " " + fecha_movimiento + " " + saldo + " " + n_cuenta + " " + cuenta_destino + " ";
-            byte datos[] = mensaje.getBytes();
-            JOptionPane.showMessageDialog(null, mensaje);
-            //crear enviarPaquete
-
-            DatagramPacket snd = ip.Direccion(datos);
-            socket.send(snd);//enviar paquete
-
-        } catch (IOException exceptionES) {
-            exceptionES.printStackTrace();
-        }
-        try {
-            socket = new DatagramSocket();
-        } catch (SocketException excepcionSocket) {
-            excepcionSocket.printStackTrace();
-            System.exit(1);
-        }
-    }//GEN-LAST:event_btn_Guardar_MovimientoActionPerformed
-
-    private void btn_Cancelar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar_MovimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_Cancelar_MovimientoActionPerformed
-
-    private void btn_Editar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Editar_MovimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_Editar_MovimientoActionPerformed
-
-    private void btn_Eliminar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Eliminar_MovimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_Eliminar_MovimientoActionPerformed
-
-    private void btn_Buscar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_MovimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_Buscar_MovimientoActionPerformed
 
     private void btn_Buscar_BancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_BancoActionPerformed
 
@@ -2641,6 +2635,186 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_usuarios_jButton_eliminarActionPerformed
 
+    private void btn_Buscar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_MovimientoActionPerformed
+
+        if (txt_buscar_id.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el ID del Movimiento para Buscar!", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
+            txt_buscar_id.requestFocus();
+
+        } else {
+
+            btn_Editar_Movimiento.setEnabled(true);
+            btn_Eliminar_Movimiento.setEnabled(true);
+            btn_Guardar_Movimiento.setEnabled(false);
+
+            try {
+                //obtener mensaje del campo de texto y convertirlo en arrreglo byte
+                buscar_movimiento = txt_buscar_id.getText().trim();
+                String mensaje = "SearchMovimiento" + " " + buscar_movimiento + " ";
+                byte datos[] = mensaje.getBytes();
+                //          //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);
+                //enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                esperarPaquetesMovimiento();
+                socket = new DatagramSocket();
+
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        }
+    }//GEN-LAST:event_btn_Buscar_MovimientoActionPerformed
+
+    private void btn_Nuevo_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Nuevo_MovimientoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Limpiar los Campos?");
+        if (JOptionPane.OK_OPTION == a) {
+            limpiar_Movimiento();
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Nuevo_MovimientoActionPerformed
+
+    private void btn_Guardar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Guardar_MovimientoActionPerformed
+
+        try {
+
+            String id_movimiento;
+            String tipo_movimiento;
+            String fecha_movimiento;
+            double saldo;
+            String n_cuenta;
+            String cuenta_destino;
+
+            id_movimiento = txt_id.getText().trim();
+            tipo_movimiento = txt_tm.getText().trim();
+            fecha_movimiento = String.valueOf(now);
+            saldo = Double.parseDouble(txt_s.getText().trim());
+            n_cuenta = String.valueOf(combo_nc.getSelectedItem());
+
+            cuenta_destino = String.valueOf(combo_cd.getSelectedItem());
+
+            String[] arreglo_cuenta = cuenta_destino.split(" ");
+
+            String mensaje = "NewMovimiento " + tipo_movimiento + " " + fecha_movimiento + " " + saldo + " " + n_cuenta + " " + arreglo_cuenta[0] + " ";
+            byte datos[] = mensaje.getBytes();
+            JOptionPane.showMessageDialog(null, mensaje);
+            //crear enviarPaquete
+
+            DatagramPacket snd = ip.Direccion(datos);
+            socket.send(snd);//enviar paquete
+
+        } catch (IOException exceptionES) {
+            exceptionES.printStackTrace();
+        }
+        try {
+            socket = new DatagramSocket();
+
+        } catch (SocketException excepcionSocket) {
+            excepcionSocket.printStackTrace();
+            System.exit(1);
+        }
+
+    }//GEN-LAST:event_btn_Guardar_MovimientoActionPerformed
+
+    private void btn_Cancelar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar_MovimientoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Cancelar?");
+
+        if (JOptionPane.OK_OPTION == a) {
+
+            limpiar_Movimiento();
+
+            JTabbedPrincipal.setSelectedIndex(0);
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Cancelar_MovimientoActionPerformed
+
+    private void btn_Editar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Editar_MovimientoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar este Movimiento?");
+        if (JOptionPane.OK_OPTION == a) {
+
+            try {
+
+                String id_movimiento;
+                String tipo_movimiento;
+                String fecha_movimiento;
+                double saldo;
+                String n_cuenta;
+                String cuenta_destino;
+
+                id_movimiento = txt_buscar_id.getText().trim();
+                tipo_movimiento = txt_tm.getText().trim();
+                fecha_movimiento = String.valueOf(now);
+                saldo = Double.parseDouble(txt_s.getText().trim());
+                n_cuenta = String.valueOf(combo_nc.getSelectedItem());
+                cuenta_destino = String.valueOf(combo_cd.getSelectedItem());
+
+                String mensaje = "EditMovimiento " + id_movimiento + " " + tipo_movimiento + " " + fecha_movimiento + " " + saldo + " " + n_cuenta + " " + cuenta_destino + " ";
+                byte datos[] = mensaje.getBytes();
+                JOptionPane.showMessageDialog(null, mensaje);
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Editar_MovimientoActionPerformed
+
+    private void btn_Eliminar_MovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Eliminar_MovimientoActionPerformed
+
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar este Movimiento?");
+
+        if (JOptionPane.OK_OPTION == a) {
+
+            try {
+                String id_movimientos;
+                id_movimientos = txt_buscar_id.getText();
+                String mensaje = "DeleteMovimiento " + id_movimientos + " Registro Borrado";
+                byte datos[] = mensaje.getBytes();
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
+            catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_Eliminar_MovimientoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2832,6 +3006,37 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//fin del metodo e
 
+    private void esperarPaquetesMovimiento() {
+        try {
+            //establecer el paquete
+            byte datos[] = new byte[100];
+            DatagramPacket recibirPaquete = new DatagramPacket(
+                    datos, datos.length);
+            socket.receive(recibirPaquete);//esperar un paquete
+            String cad = (new String(recibirPaquete.getData(),
+                    0, recibirPaquete.getLength()));
+            String[] variables;
+            variables = cad.split(" ");
+
+            if (variables[1].equals("null")) {
+
+                JOptionPane.showMessageDialog(this, "No se encontro este resultado");
+
+            } else {
+                txt_id.setText(variables[0]);
+                txt_tm.setText(variables[1]);
+                txt_fm.setText(variables[2] + " " + variables[3] + " " + variables[4] + " " + variables[5] + " " + variables[6] + " " + variables[7]);
+                txt_s.setText(variables[8]);
+                combo_cd.setName(variables[9]);
+                combo_nc.setName(variables[10]);
+            }
+
+        } catch (IOException excepcion) {
+
+            excepcion.printStackTrace();
+        }
+    }//fin del metodo e
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo_Cliente_Banco;
@@ -2873,6 +3078,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn_nomina;
     private javax.swing.JComboBox<String> combo_Pais;
     private javax.swing.JComboBox<String> combo_Tipo_Cuenta;
+    private javax.swing.JComboBox<String> combo_cd;
+    private javax.swing.JComboBox<String> combo_nc;
     private javax.swing.ButtonGroup groupSexo_Cliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscarCuenta;
@@ -2945,14 +3152,12 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txt_Telefono;
     private javax.swing.JTextField txt_Telefono_Banco;
     private javax.swing.JTextField txt_buscar_id;
-    private javax.swing.JTextField txt_cd;
     private javax.swing.JTextField txt_fm;
     public static javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_idSeguro_Buscar_Seguros;
     private javax.swing.JTextField txt_id_Buscar_Banco;
     private javax.swing.JTextField txt_id_cliente;
     private javax.swing.JFormattedTextField txt_monto_seguro;
-    private javax.swing.JTextField txt_nc;
     private javax.swing.JTextField txt_nombre_Buscar;
     private javax.swing.JTextField txt_s;
     private javax.swing.JTextField txt_tm;
