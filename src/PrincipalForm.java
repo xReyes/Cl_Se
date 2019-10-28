@@ -67,6 +67,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String otro_seguro;
     String buscar_Banco;
     String buscar_Seguro;
+    String buscar_usuario;
 
     private DatagramSocket socket;
     Direccion_IP ip = new Direccion_IP();
@@ -215,6 +216,17 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         limpiar_Campos(txt_buscar_id);
 
         System.out.println(JPanelClientes.getSize());
+
+    }
+
+    public void limpar_Usuarios() {
+
+        limpiar_Campos(usuario_txt_nombre2);
+        limpiar_Campos(usuario_txt_parteno1);
+        limpiar_Campos(usuario_txt_materno);
+        limpiar_Campos(usuario_txt_telefono1);
+        limpiar_Campos(usuario_txt_email1);
+        limpiar_Campos(usuario_txt_domicilio);
 
     }
 
@@ -403,9 +415,28 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         btn_Editar_Cliente = new javax.swing.JButton();
         txt_id_cliente = new javax.swing.JTextField();
         JPanel_Usuarios = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        usuario_label_id1 = new javax.swing.JLabel();
+        usuario_txt_id1 = new javax.swing.JTextField();
+        usuario_label_nombre2 = new javax.swing.JLabel();
+        usuario_txt_nombre2 = new javax.swing.JTextField();
+        usuario_label_paterno1 = new javax.swing.JLabel();
+        usuario_txt_parteno1 = new javax.swing.JTextField();
+        usuario_label_materno = new javax.swing.JLabel();
+        usuario_txt_materno = new javax.swing.JTextField();
+        usuario_label_domicilio = new javax.swing.JLabel();
+        usuario_txt_domicilio = new javax.swing.JTextField();
+        usuario_label_email1 = new javax.swing.JLabel();
+        usuario_txt_email1 = new javax.swing.JTextField();
+        usuario_txt_telefono1 = new javax.swing.JTextField();
+        usuario_label_telefono1 = new javax.swing.JLabel();
+        usuario_label_buscar = new javax.swing.JLabel();
+        usuario_txt_buscar = new javax.swing.JTextField();
+        usuarios_jButton_buscar = new javax.swing.JButton();
+        usuarios_jButton_nuevo = new javax.swing.JButton();
+        usuarios_jButton_guardar = new javax.swing.JButton();
+        usuarios_jButton_cancelar = new javax.swing.JButton();
+        usuarios_jButton_editar = new javax.swing.JButton();
+        usuarios_jButton_eliminar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jTextFieldIdClienteCuenta = new javax.swing.JTextField();
@@ -745,16 +776,131 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         JPanel_Usuarios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuarios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         JPanel_Usuarios.setLayout(null);
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setText("Gustavo");
-        JPanel_Usuarios.add(jLabel14);
-        jLabel14.setBounds(16, 30, 51, 17);
+        usuario_label_id1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_id1.setText("Usuario Id");
+        JPanel_Usuarios.add(usuario_label_id1);
+        usuario_label_id1.setBounds(70, 90, 61, 17);
 
-        jLabel17.setText("ID");
-        JPanel_Usuarios.add(jLabel17);
-        jLabel17.setBounds(27, 73, 11, 14);
-        JPanel_Usuarios.add(jTextField1);
-        jTextField1.setBounds(90, 70, 140, 20);
+        usuario_txt_id1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_id1);
+        usuario_txt_id1.setBounds(160, 80, 100, 30);
+
+        usuario_label_nombre2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_nombre2.setText("Nombre");
+        JPanel_Usuarios.add(usuario_label_nombre2);
+        usuario_label_nombre2.setBounds(70, 140, 49, 17);
+
+        usuario_txt_nombre2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_nombre2);
+        usuario_txt_nombre2.setBounds(160, 130, 190, 30);
+
+        usuario_label_paterno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_paterno1.setText("A.Paterno");
+        JPanel_Usuarios.add(usuario_label_paterno1);
+        usuario_label_paterno1.setBounds(70, 190, 70, 17);
+
+        usuario_txt_parteno1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_parteno1);
+        usuario_txt_parteno1.setBounds(160, 180, 190, 30);
+
+        usuario_label_materno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_materno.setText("A.Materno");
+        JPanel_Usuarios.add(usuario_label_materno);
+        usuario_label_materno.setBounds(70, 240, 70, 17);
+
+        usuario_txt_materno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_materno);
+        usuario_txt_materno.setBounds(160, 230, 190, 30);
+
+        usuario_label_domicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_domicilio.setText("Domicilio:");
+        JPanel_Usuarios.add(usuario_label_domicilio);
+        usuario_label_domicilio.setBounds(380, 290, 70, 17);
+
+        usuario_txt_domicilio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_domicilio);
+        usuario_txt_domicilio.setBounds(460, 280, 290, 30);
+
+        usuario_label_email1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_email1.setText("Email:");
+        JPanel_Usuarios.add(usuario_label_email1);
+        usuario_label_email1.setBounds(470, 190, 36, 17);
+
+        usuario_txt_email1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_email1);
+        usuario_txt_email1.setBounds(550, 180, 190, 30);
+
+        usuario_txt_telefono1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_telefono1);
+        usuario_txt_telefono1.setBounds(550, 130, 190, 30);
+
+        usuario_label_telefono1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_telefono1.setText("Telefono:");
+        JPanel_Usuarios.add(usuario_label_telefono1);
+        usuario_label_telefono1.setBounds(470, 140, 57, 17);
+
+        usuario_label_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        usuario_label_buscar.setText("Buscar por A.paterno:");
+        JPanel_Usuarios.add(usuario_label_buscar);
+        usuario_label_buscar.setBounds(390, 30, 140, 17);
+
+        usuario_txt_buscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPanel_Usuarios.add(usuario_txt_buscar);
+        usuario_txt_buscar.setBounds(540, 20, 120, 30);
+
+        usuarios_jButton_buscar.setText("Buscar");
+        usuarios_jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarios_jButton_buscarActionPerformed(evt);
+            }
+        });
+        JPanel_Usuarios.add(usuarios_jButton_buscar);
+        usuarios_jButton_buscar.setBounds(670, 20, 73, 30);
+
+        usuarios_jButton_nuevo.setText("Nuevo");
+        usuarios_jButton_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarios_jButton_nuevoActionPerformed(evt);
+            }
+        });
+        JPanel_Usuarios.add(usuarios_jButton_nuevo);
+        usuarios_jButton_nuevo.setBounds(100, 420, 80, 23);
+
+        usuarios_jButton_guardar.setText("Guardar");
+        usuarios_jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarios_jButton_guardarActionPerformed(evt);
+            }
+        });
+        JPanel_Usuarios.add(usuarios_jButton_guardar);
+        usuarios_jButton_guardar.setBounds(200, 420, 80, 23);
+
+        usuarios_jButton_cancelar.setText("Cancelar");
+        usuarios_jButton_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarios_jButton_cancelarActionPerformed(evt);
+            }
+        });
+        JPanel_Usuarios.add(usuarios_jButton_cancelar);
+        usuarios_jButton_cancelar.setBounds(310, 420, 80, 23);
+
+        usuarios_jButton_editar.setText("Editar");
+        usuarios_jButton_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarios_jButton_editarActionPerformed(evt);
+            }
+        });
+        JPanel_Usuarios.add(usuarios_jButton_editar);
+        usuarios_jButton_editar.setBounds(420, 420, 80, 23);
+
+        usuarios_jButton_eliminar.setText("Eliminar");
+        usuarios_jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usuarios_jButton_eliminarActionPerformed(evt);
+            }
+        });
+        JPanel_Usuarios.add(usuarios_jButton_eliminar);
+        usuarios_jButton_eliminar.setBounds(530, 420, 80, 23);
 
         JTabbedPrincipal.addTab("Usuarios", JPanel_Usuarios);
 
@@ -2358,6 +2504,143 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_Combo_Tipo_SeguroActionPerformed
 
+    private void usuarios_jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarios_jButton_buscarActionPerformed
+        if (usuario_txt_buscar.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el ID para Buscar!", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
+            usuario_txt_buscar.requestFocus();
+
+        } else {
+
+            try {
+                //obtener mensaje del campo de texto y convertirlo en arrreglo byte
+                buscar_usuario = usuario_txt_buscar.getText().trim();
+                String mensaje = "SearchUsuario" + " " + buscar_usuario + " ";
+                byte datos[] = mensaje.getBytes();
+                //          //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);
+                //enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                esperarPaquetesUsuarios();
+                socket = new DatagramSocket();
+
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        }
+    }//GEN-LAST:event_usuarios_jButton_buscarActionPerformed
+
+    private void usuarios_jButton_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarios_jButton_nuevoActionPerformed
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Limpiar los Campos?");
+        if (JOptionPane.OK_OPTION == a) {
+            limpar_Usuarios();
+
+        } else {
+
+        }
+    }//GEN-LAST:event_usuarios_jButton_nuevoActionPerformed
+
+    private void usuarios_jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarios_jButton_guardarActionPerformed
+        try {
+            String nombre = v.reemplazar_espacios(usuario_txt_nombre2);
+            String paterno = v.reemplazar_espacios(usuario_txt_parteno1);
+            String materno = v.reemplazar_espacios(usuario_txt_materno);
+            String telefono = v.reemplazar_espacios(usuario_txt_telefono1);
+            String email = v.reemplazar_espacios(usuario_txt_email1);
+            String domicilio = v.reemplazar_espacios(usuario_txt_domicilio);
+
+            String mensaje = "NuevoUsuario " + nombre + " " + paterno + " " + materno + " " + telefono + " " + email + " " + domicilio + " ";
+            byte datos[] = mensaje.getBytes();
+            JOptionPane.showMessageDialog(null, mensaje);
+            //crear enviarPaquete
+
+            DatagramPacket snd = ip.Direccion(datos);
+            socket.send(snd);//enviar paquete
+        } catch (IOException exceptionES) {
+            exceptionES.printStackTrace();
+        }
+        try {
+            socket = new DatagramSocket();
+        } catch (SocketException excepcionSocket) {
+            excepcionSocket.printStackTrace();
+            System.exit(1);
+        }
+    }//GEN-LAST:event_usuarios_jButton_guardarActionPerformed
+
+    private void usuarios_jButton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarios_jButton_cancelarActionPerformed
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Cancelar?");
+        if (JOptionPane.OK_OPTION == a) {
+            limpar_Usuarios();
+            JTabbedPrincipal.setSelectedIndex(0);
+
+        } else {
+
+        }
+    }//GEN-LAST:event_usuarios_jButton_cancelarActionPerformed
+
+    private void usuarios_jButton_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarios_jButton_editarActionPerformed
+        try {
+            String id = v.reemplazar_espacios(usuario_txt_id1);
+            String nombre = v.reemplazar_espacios(usuario_txt_nombre2);
+            String paterno = v.reemplazar_espacios(usuario_txt_parteno1);
+            String materno = v.reemplazar_espacios(usuario_txt_materno);
+            String telefono = v.reemplazar_espacios(usuario_txt_telefono1);
+            String email = v.reemplazar_espacios(usuario_txt_email1);
+            String domicilio = v.reemplazar_espacios(usuario_txt_domicilio);
+
+            String mensaje = "NuevoUsuarioEditar " + id + " " + nombre + " " + paterno + " " + materno + " " + telefono + " " + email + " " + domicilio + " ";
+            byte datos[] = mensaje.getBytes();
+            JOptionPane.showMessageDialog(null, mensaje);
+            //crear enviarPaquete
+
+            DatagramPacket snd = ip.Direccion(datos);
+            socket.send(snd);//enviar paquete
+        } catch (IOException exceptionES) {
+            exceptionES.printStackTrace();
+        }
+        try {
+            socket = new DatagramSocket();
+        } catch (SocketException excepcionSocket) {
+            excepcionSocket.printStackTrace();
+            System.exit(1);
+        }
+    }//GEN-LAST:event_usuarios_jButton_editarActionPerformed
+
+    private void usuarios_jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarios_jButton_eliminarActionPerformed
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Eliminar el Usuario?");
+        if (JOptionPane.OK_OPTION == a) {
+
+            try {
+                String id_usuario;
+                id_usuario = usuario_txt_id1.getText();
+                String mensaje = "DeleteUsuario " + id_usuario + " Registro Borrado";
+                byte datos[] = mensaje.getBytes();
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } //atrapar los problemas que puedan ocurrir al crear objeto DatagramSocket
+            catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        } else {
+
+        }
+    }//GEN-LAST:event_usuarios_jButton_eliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2524,6 +2807,31 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//fin del metodo e
 
+    private void esperarPaquetesUsuarios() {
+        try {
+            //establecer el paquete
+            byte datos[] = new byte[100];
+            DatagramPacket recibirPaquete = new DatagramPacket(
+                    datos, datos.length);
+            socket.receive(recibirPaquete);//esperar un paquete
+            String cad = (new String(recibirPaquete.getData(),
+                    0, recibirPaquete.getLength()));
+            String[] variables;
+            variables = cad.split(" ");
+
+            usuario_txt_id1.setText(variables[0]);
+            usuario_txt_nombre2.setText(variables[1]);
+            usuario_txt_parteno1.setText(variables[2]);
+            usuario_txt_materno.setText(variables[3]);
+            usuario_txt_telefono1.setText(variables[4]);
+            usuario_txt_email1.setText(variables[5]);
+            usuario_txt_domicilio.setText(variables[6]);
+
+        } catch (IOException excepcion) {
+            excepcion.printStackTrace();
+        }
+    }//fin del metodo e
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo_Cliente_Banco;
@@ -2577,10 +2885,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -2621,7 +2927,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldBuscarCuenta;
     private javax.swing.JTextField jTextFieldFechaAperturaCuenta;
     private javax.swing.JTextField jTextFieldIdClienteCuenta;
@@ -2651,6 +2956,28 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txt_nombre_Buscar;
     private javax.swing.JTextField txt_s;
     private javax.swing.JTextField txt_tm;
+    private javax.swing.JLabel usuario_label_buscar;
+    private javax.swing.JLabel usuario_label_domicilio;
+    private javax.swing.JLabel usuario_label_email1;
+    private javax.swing.JLabel usuario_label_id1;
+    private javax.swing.JLabel usuario_label_materno;
+    private javax.swing.JLabel usuario_label_nombre2;
+    private javax.swing.JLabel usuario_label_paterno1;
+    private javax.swing.JLabel usuario_label_telefono1;
+    private javax.swing.JTextField usuario_txt_buscar;
+    private javax.swing.JTextField usuario_txt_domicilio;
+    private javax.swing.JTextField usuario_txt_email1;
+    private javax.swing.JTextField usuario_txt_id1;
+    private javax.swing.JTextField usuario_txt_materno;
+    private javax.swing.JTextField usuario_txt_nombre2;
+    private javax.swing.JTextField usuario_txt_parteno1;
+    private javax.swing.JTextField usuario_txt_telefono1;
+    private javax.swing.JButton usuarios_jButton_buscar;
+    private javax.swing.JButton usuarios_jButton_cancelar;
+    private javax.swing.JButton usuarios_jButton_editar;
+    private javax.swing.JButton usuarios_jButton_eliminar;
+    private javax.swing.JButton usuarios_jButton_guardar;
+    private javax.swing.JButton usuarios_jButton_nuevo;
     // End of variables declaration//GEN-END:variables
 
     /*
@@ -2659,7 +2986,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     Luis - Cambiamos la fecha a Varchar en Movimientos y eliminamos la Llave Foranea de id_movimientos en Cuenta.
     Beth - Cambiamos la fecha a Varchar en Empresas.
     Reyes - Agrege campo de Estado en Banco, Seguros, Cambiamos Llave Foranea de id_cuenta por n_cuenta en Seguros.
-    
+    Gus - Agregar estado en datos Usuario.
     
     ----------------
     
