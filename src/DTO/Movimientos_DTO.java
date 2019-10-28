@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Movimientos_DTO {
 
+    private String id_movimiento;
     private String tipo_movimiento;
     private String fecha_movimiento;
     private double saldo;
@@ -19,6 +20,16 @@ public class Movimientos_DTO {
     private String cuenta_destino;
 
     private ResultSet rs;
+
+    Date now = new Date(System.currentTimeMillis());
+
+    public String getId_movimiento() {
+        return id_movimiento;
+    }
+
+    public void setId_movimiento(String id_movimiento) {
+        this.id_movimiento = id_movimiento;
+    }
 
     public String getTipo_movimiento() {
         return tipo_movimiento;
@@ -62,44 +73,54 @@ public class Movimientos_DTO {
 
     @Override
     public String toString() {
-        return "Movimientos_DTO{" + "tipo_movimiento=" + tipo_movimiento + ", fecha_movimiento=" + fecha_movimiento + ", saldo=" + saldo + ", n_cuenta=" + n_cuenta + ", cuenta_destino=" + cuenta_destino + ", rs=" + rs + '}';
+        return "Movimientos_DTO{" + "tipo_movimiento=" + tipo_movimiento + ", fecha_movimiento=" + fecha_movimiento + ", saldo=" + saldo + ", n_cuenta=" + n_cuenta + ", cuenta_destino=" + cuenta_destino + ", rs=" + rs + ", now=" + now + '}';
     }
 
     public void Insert(Movimientos_DTO dto, Connection conn) throws SQLException {
         PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO movimientos (tipo_movimiento, fecha_movimiento, saldo, n_cuenta, cuenta_destino) "
-                + "VALUES  (?, ?, ?, ?, ?);");
-
-        Date now = new Date(System.currentTimeMillis());
+                "INSERT INTO movimientos (tipo_movimiento, fecha_movimiento, saldo, n_cuenta, cuenta_destino, estatus) "
+                + "VALUES  (?, ?, ?, ?, ?, ?);");
 
         ps.setString(1, dto.getTipo_movimiento());
         ps.setString(2, dto.getFecha_movimiento());
         ps.setDouble(3, dto.getSaldo());
         ps.setString(4, dto.getN_cuenta());
         ps.setString(5, dto.getCuenta_destino());
+        ps.setString(6, "Activo");
 
         ps.executeUpdate();
     }
 
-//    public void Delete(Movimientos_DTO dto, Connection conn) throws SQLException {
-//
-//        PreparedStatement stmt1 = conn.prepareStatement("UPDATE movimientos SET id_movimiento = ? WHERE nombre_Cliente = '" + this.nombre + "';");
-//        stmt1.setString(1, "Inactivo");
-//        stmt1.executeUpdate();
-//
-//    }
-//
-//    public void Edit(Clientes_DTO dto, Connection conn) {
-//
-//    }
-    public void Search(Clientes_DTO dto, Connection conn) throws SQLException {
+    public void Edit(Movimientos_DTO dto, Connection conn) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(
+                "UPDATE movimientos SET tipo_movimiento = ?, fecha_movimiento = ?, saldo = ?, n_cuenta = ?, cuenta_destino = ?, estatus = ? "
+                + "WHERE id_movimiento = '" + this.id_movimiento + "';");
 
-        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM movimientos WHERE id_movimiento = '?';");
-        stmt1.setString(1, dto.getNombre());
+        ps.setString(1, dto.getTipo_movimiento());
+        ps.setString(2, dto.getFecha_movimiento());
+        ps.setDouble(3, dto.getSaldo());
+        ps.setString(4, dto.getN_cuenta());
+        ps.setString(5, dto.getCuenta_destino());
+        ps.setString(6, "Activo");
+
+        ps.executeUpdate();
+
+    }
+
+    public void Delete(Movimientos_DTO dto, Connection conn) throws SQLException {
+        PreparedStatement stmt1 = conn.prepareStatement("UPDATE movimientos SET estatus = 'Inactivo' WHERE id_movimiento = '" + this.id_movimiento + "';");
+        stmt1.executeUpdate();
+
+    }
+
+    public void Search(Movimientos_DTO dto, Connection conn) throws SQLException {
+
+        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM movimientos WHERE estatus = 'Activo' and id_movimiento = '" + this.id_movimiento + "';");
         rs = stmt1.executeQuery();
 
         if (rs.next()) {
 
+            this.id_movimiento = rs.getString("id_movimiento");
             this.tipo_movimiento = rs.getString("tipo_movimiento");
             this.fecha_movimiento = rs.getString("fecha_movimiento");
             this.saldo = rs.getDouble("saldo");
