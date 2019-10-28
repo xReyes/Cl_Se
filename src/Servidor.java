@@ -4,6 +4,7 @@ import DTO.Clientes_DTO;
 import DTO.CuentasDTO;
 import DTO.Movimientos_DTO;
 import DTO.Seguros_DTO;
+import DTO.Usuarios_DTO;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -80,6 +81,7 @@ public class Servidor extends javax.swing.JFrame {
                     CuentasDTO cuentasDTO = new CuentasDTO();
                     Usuario user = new Usuario();
                     Seguros_DTO seguros_dto = new Seguros_DTO();
+                    Usuarios_DTO usuariosDTO = new Usuarios_DTO();
                     //*****
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
@@ -137,34 +139,29 @@ public class Servidor extends javax.swing.JFrame {
 
                         case "EditMovimiento":
 
-                            movimiento_dto.setId_movimiento(variables[1]);
+//                            movimiento_dto.setId_movimiento(variables[1]);
                             movimiento_dto.setTipo_movimiento(variables[2]);
-                            movimiento_dto.setFecha_movimiento(String.valueOf(now));
+//                            movimiento_dto.setFecha_movimiento(String.valueOf(now));
                             movimiento_dto.setSaldo(Double.parseDouble(variables[9]));
                             movimiento_dto.setN_cuenta(variables[10]);
                             movimiento_dto.setCuenta_destino(variables[11]);
 
-                            movimiento_dto.Edit(movimiento_dto, conn);
-
+//                            movimiento_dto.Edit(movimiento_dto, conn);
                             JOptionPane.showMessageDialog(null, "Movimiento Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
 
                             break;
                         case "DeleteMovimiento":
 
-                            movimiento_dto.setId_movimiento(variables[1]);
-
-                            movimiento_dto.Delete(movimiento_dto, conn);
-
+//                            movimiento_dto.setId_movimiento(variables[1]);
+//                            movimiento_dto.Delete(movimiento_dto, conn);
                             JOptionPane.showMessageDialog(null, "Movimiento Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
 
                             break;
                         case "SearchMovimiento":
 
-                            movimiento_dto.setId_movimiento(variables[1]);
-                            movimiento_dto.Search(movimiento_dto, conn);
-
-                            mensaje = movimiento_dto.getId_movimiento() + " " + movimiento_dto.getTipo_movimiento() + " " + movimiento_dto.getFecha_movimiento() + " " + movimiento_dto.getSaldo() + " " + movimiento_dto.getN_cuenta() + " " + movimiento_dto.getCuenta_destino() + " ";
-
+//                            movimiento_dto.setId_movimiento(variables[1]);
+//                            movimiento_dto.Search(movimiento_dto, conn);
+//                            mensaje = movimiento_dto.getId_movimiento() + " " + movimiento_dto.getTipo_movimiento() + " " + movimiento_dto.getFecha_movimiento() + " " + movimiento_dto.getSaldo() + " " + movimiento_dto.getN_cuenta() + " " + movimiento_dto.getCuenta_destino() + " ";
                             break;
 
                         case "NewBanco":
@@ -266,6 +263,56 @@ public class Servidor extends javax.swing.JFrame {
                             mensaje = seguros_dto.getId_seguro() + " " + seguros_dto.getEmpresa() + " " + seguros_dto.getTipo_seguro() + " " + seguros_dto.getMonto() + " " + seguros_dto.getCuenta() + " ";
 
                             break;
+
+                        case "NuevoUsuario":
+
+                            usuariosDTO.setNombre(variables[1]);
+                            usuariosDTO.setA_paterno(variables[2]);
+                            usuariosDTO.setA_materno(variables[3]);
+                            usuariosDTO.setTelefono(variables[4]);
+                            usuariosDTO.setEmail(variables[5]);
+                            usuariosDTO.setDomicilio(variables[6]);
+
+                            usuariosDTO.Insert(usuariosDTO, conn);
+
+                            JOptionPane.showMessageDialog(this, "Usuario agregado");
+
+                            break;
+
+                        case "NuevoUsuarioEditar":
+
+                            usuariosDTO.setNombre(variables[1]);
+                            usuariosDTO.setNombre(variables[2]);
+                            usuariosDTO.setA_paterno(variables[3]);
+                            usuariosDTO.setA_materno(variables[4]);
+                            usuariosDTO.setTelefono(variables[5]);
+                            usuariosDTO.setEmail(variables[6]);
+                            usuariosDTO.setDomicilio(variables[7]);
+
+                            usuariosDTO.Edit(usuariosDTO, conn);
+
+                            JOptionPane.showMessageDialog(this, "Usuario Editado");
+
+                            break;
+
+                        case "NuevoUsuarioEliminar":
+
+                            usuariosDTO.setId_usuarios(variables[1]);
+
+                            usuariosDTO.Delete(usuariosDTO, conn);
+
+                            JOptionPane.showMessageDialog(null, "Usuario Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+
+                        case "SearcUsuario":
+                            usuariosDTO.setId_usuarios(variables[1]);
+
+                            usuariosDTO.Search(usuariosDTO, conn);
+
+                            mensaje = usuariosDTO.getId_usuarios() + " " + usuariosDTO.getNombre() + " " + usuariosDTO.getA_paterno() + " " + usuariosDTO.getA_materno() + " " + usuariosDTO.getTelefono() + " " + usuariosDTO.getEmail() + " " + usuariosDTO.getDomicilio() + " ";
+                            break;
+
                         default:
                             break;
                     }
