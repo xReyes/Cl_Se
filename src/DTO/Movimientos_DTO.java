@@ -92,20 +92,4 @@ public class Movimientos_DTO {
 //    public void Edit(Clientes_DTO dto, Connection conn) {
 //
 //    }
-    public void Search(Clientes_DTO dto, Connection conn) throws SQLException {
-
-        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM movimientos WHERE id_movimiento = '?';");
-        stmt1.setString(1, dto.getNombre());
-        rs = stmt1.executeQuery();
-
-        if (rs.next()) {
-
-            this.tipo_movimiento = rs.getString("tipo_movimiento");
-            this.fecha_movimiento = rs.getString("fecha_movimiento");
-            this.saldo = rs.getDouble("saldo");
-            this.n_cuenta = rs.getString("n_cuenta");
-            this.cuenta_destino = rs.getString("cuenta_destino");
-
-        }
-    }
 }
