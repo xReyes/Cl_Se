@@ -69,6 +69,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     String buscar_Seguro;
     String buscar_usuario;
     String buscar_movimiento;
+    String buscar_Empresa;
 
     private DatagramSocket socket;
     Direccion_IP ip = new Direccion_IP();
@@ -520,8 +521,28 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         btn_Editar_Movimiento = new javax.swing.JButton();
         btn_Eliminar_Movimiento = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txt_idEmpresa = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        txt_fechaEmpresas = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        txt_montoEmpresas = new javax.swing.JTextField();
+        jLabel44 = new javax.swing.JLabel();
+        txt_plazo = new javax.swing.JTextField();
+        jLabel45 = new javax.swing.JLabel();
+        txt_tazaEmpresa = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel46 = new javax.swing.JLabel();
+        combo_Tipo_CuentaEmpresas = new javax.swing.JComboBox<>();
+        combo_Banco_Empresas = new javax.swing.JComboBox<>();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        txt_reperesentanteEmpresa = new javax.swing.JTextField();
+        txt_BuscarIDEmpresa = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
@@ -1284,33 +1305,181 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Empresas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel18.setText("Beth");
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setText("ID");
 
-        jButton1.setText("jButton1");
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setText("Fecha");
+
+        txt_fechaEmpresas.setToolTipText("formatp YYY-MM-DD");
+        txt_fechaEmpresas.setName(""); // NOI18N
+        txt_fechaEmpresas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fechaEmpresasActionPerformed(evt);
+            }
+        });
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel42.setText("Monto");
+
+        jLabel44.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel44.setText("Plazo");
+
+        jLabel45.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel45.setText("Taza");
+
+        jButton2.setText("Nuevo");
+
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Editar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Eliminar");
+
+        jLabel46.setText("Tipo de cuenta");
+
+        combo_Tipo_CuentaEmpresas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nomina", "cheques" }));
+
+        combo_Banco_Empresas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", " " }));
+
+        jLabel47.setText("ID Banco ");
+
+        jLabel48.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel48.setText("Representante");
+
+        txt_reperesentanteEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_reperesentanteEmpresaActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Buscar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(jButton1)))
-                .addContainerGap(569, Short.MAX_VALUE))
+            .addGap(0, 776, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(66, 66, 66)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel17)
+                                        .addGap(22, 22, 22))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel42)
+                                            .addComponent(jLabel19)
+                                            .addComponent(jLabel44)
+                                            .addComponent(jLabel45))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_tazaEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txt_idEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                                        .addComponent(txt_fechaEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(72, 72, 72))
+                                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(txt_montoEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(txt_plazo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                                        .addComponent(jLabel48)
+                                                        .addGap(31, 31, 31)
+                                                        .addComponent(txt_reperesentanteEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel47)
+                                                            .addComponent(jLabel46))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(combo_Tipo_CuentaEmpresas, 0, 100, Short.MAX_VALUE)
+                                                            .addComponent(combo_Banco_Empresas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                                        .addComponent(jButton3)
+                                                        .addGap(40, 40, 40)
+                                                        .addComponent(jButton4)))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                        .addComponent(txt_BuscarIDEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jButton5)))))
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGap(107, 107, 107)
+                            .addComponent(jButton1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(67, 67, 67)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(jButton1)
-                .addContainerGap(377, Short.MAX_VALUE))
+            .addGap(0, 481, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(41, 41, 41)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_BuscarIDEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton5))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_idEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17))
+                    .addGap(27, 27, 27)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_fechaEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_reperesentanteEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel19)
+                        .addComponent(jLabel48))
+                    .addGap(28, 28, 28)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_montoEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel42)
+                        .addComponent(jLabel47)
+                        .addComponent(combo_Banco_Empresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(26, 26, 26)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_plazo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel44)
+                        .addComponent(jLabel46)
+                        .addComponent(combo_Tipo_CuentaEmpresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(27, 27, 27)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_tazaEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel45))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3)
+                        .addComponent(jButton4))
+                    .addGap(41, 41, 41)))
         );
 
         JTabbedPrincipal.addTab("Empresas", jPanel6);
@@ -2815,6 +2984,132 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_btn_Eliminar_MovimientoActionPerformed
 
+    private void txt_fechaEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaEmpresasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fechaEmpresasActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+
+            String fecha_apertura;
+            String monto;
+            String plazo;
+            String taza;
+            String representante;
+            String id_banco;
+            String tipo_cuenta;
+
+            fecha_apertura = v.reemplazar_espacios(txt_fechaEmpresas);
+            monto = v.reemplazar_espacios(txt_montoEmpresas);
+            plazo = v.reemplazar_espacios(txt_plazo);
+            taza = v.reemplazar_espacios(txt_tazaEmpresa);
+            representante = v.reemplazar_espacios(txt_reperesentanteEmpresa);
+            id_banco = combo_Banco_Empresas.getSelectedItem().toString().replaceAll(" ", "_");
+
+            tipo_cuenta = combo_Tipo_CuentaEmpresas.getSelectedItem().toString().replaceAll(" ", "_");
+
+            String mensaje = "NewEmpresa " + fecha_apertura + " " + monto + " " + plazo + " " + taza + " " + representante + " " + id_banco + " " + tipo_cuenta + " ";
+            byte datos[] = mensaje.getBytes();
+            JOptionPane.showMessageDialog(null, mensaje);
+            //crear enviarPaquete
+
+            DatagramPacket snd = ip.Direccion(datos);
+            socket.send(snd);//enviar paquete
+
+        } catch (IOException exceptionES) {
+            exceptionES.printStackTrace();
+        }
+        try {
+            socket = new DatagramSocket();
+        } catch (SocketException excepcionSocket) {
+            excepcionSocket.printStackTrace();
+            System.exit(1);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Editar la empressa?");
+        if (JOptionPane.OK_OPTION == a) {
+
+            try {
+
+                String fecha_apertuura;
+                String monto;
+                String taza;
+                String plazo;
+                String representante;
+                String id_empresa;
+                String id_banco;
+                String tipo_cuenta;
+
+                id_empresa = txt_idEmpresa.getText().trim();
+                fecha_apertuura = v.reemplazar_espacios(txt_fechaEmpresas);
+                monto = v.reemplazar_espacios(txt_montoEmpresas);
+                plazo = v.reemplazar_espacios(txt_plazo);
+                taza = v.reemplazar_espacios(txt_tazaEmpresa);
+                representante = v.reemplazar_espacios(txt_reperesentanteEmpresa);
+                id_banco = combo_Banco_Empresas.getSelectedItem().toString().replaceAll("", "_");
+                tipo_cuenta = combo_Tipo_CuentaEmpresas.getSelectedItem().toString().replaceAll(" ", "_");
+
+                String mensaje = "EditEmpresa " + id_empresa + " " + fecha_apertuura + " " + monto + " " + plazo + " " + taza + " " + representante + " " + id_banco + " " + tipo_cuenta + " ";
+                byte datos[] = mensaje.getBytes();
+                JOptionPane.showMessageDialog(null, mensaje);
+                //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);//enviar paquete
+
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                socket = new DatagramSocket();
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        } else {
+
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txt_reperesentanteEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_reperesentanteEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_reperesentanteEmpresaActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (txt_BuscarIDEmpresa.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresa el id para Buscar!", "Campo Vacio", JOptionPane.WARNING_MESSAGE);
+            txt_BuscarIDEmpresa.requestFocus();
+
+        } else {
+
+            try {
+                //obtener mensaje del campo de texto y convertirlo en arrreglo byte
+                buscar_Empresa = txt_BuscarIDEmpresa.getText().trim();
+                String mensaje = "SearchEmpresa" + " " + buscar_Empresa + " ";
+                byte datos[] = mensaje.getBytes();
+                //          //crear enviarPaquete
+
+                DatagramPacket snd = ip.Direccion(datos);
+                socket.send(snd);
+                //enviar paquete
+            } catch (IOException exceptionES) {
+                exceptionES.printStackTrace();
+            }
+            try {
+                esperarPaquetesEmpresas();
+                socket = new DatagramSocket();
+
+            } catch (SocketException excepcionSocket) {
+                excepcionSocket.printStackTrace();
+                System.exit(1);
+            }
+
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3037,6 +3332,33 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//fin del metodo e
 
+    private void esperarPaquetesEmpresas() {
+        try {
+            //establecer el paquete
+            byte datos[] = new byte[100];
+            DatagramPacket recibirPaquete = new DatagramPacket(
+                    datos, datos.length);
+            socket.receive(recibirPaquete);//esperar un paquete
+            String cad = (new String(recibirPaquete.getData(),
+                    0, recibirPaquete.getLength()));
+            String[] variables;
+            variables = cad.split(" ");
+
+            txt_idEmpresa.setText(variables[0]);
+            txt_fechaEmpresas.setText(variables[1]);
+            txt_montoEmpresas.setText(variables[2]);
+            txt_plazo.setText(variables[3]);
+
+            txt_tazaEmpresa.setText(variables[4]);
+            txt_reperesentanteEmpresa.setText(variables[5]);
+            combo_Banco_Empresas.setSelectedItem(variables[6]);
+            combo_Tipo_CuentaEmpresas.setSelectedItem(variables[7]);
+
+        } catch (IOException excepcion) {
+            excepcion.printStackTrace();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo_Cliente_Banco;
@@ -3076,12 +3398,18 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn_cuentasRegistradas;
     private javax.swing.JButton btn_movimientos;
     private javax.swing.JButton btn_nomina;
+    private javax.swing.JComboBox<String> combo_Banco_Empresas;
     private javax.swing.JComboBox<String> combo_Pais;
     private javax.swing.JComboBox<String> combo_Tipo_Cuenta;
+    private javax.swing.JComboBox<String> combo_Tipo_CuentaEmpresas;
     private javax.swing.JComboBox<String> combo_cd;
     private javax.swing.JComboBox<String> combo_nc;
     private javax.swing.ButtonGroup groupSexo_Cliente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonBuscarCuenta;
     private javax.swing.JButton jButtonEditarCuenta;
     private javax.swing.JButton jButtonEliminarCuenta;
@@ -3094,7 +3422,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -3120,7 +3449,13 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -3144,6 +3479,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JRadioButton rad_Masculino;
     private javax.swing.JTextField txt_Ap_Materno;
     private javax.swing.JTextField txt_Ap_Paterno;
+    private javax.swing.JTextField txt_BuscarIDEmpresa;
     private javax.swing.JTextField txt_Direccion;
     private javax.swing.JTextField txt_Direccion_Banco;
     private javax.swing.JTextField txt_Email;
@@ -3152,14 +3488,20 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txt_Telefono;
     private javax.swing.JTextField txt_Telefono_Banco;
     private javax.swing.JTextField txt_buscar_id;
+    private javax.swing.JTextField txt_fechaEmpresas;
     private javax.swing.JTextField txt_fm;
     public static javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_idEmpresa;
     private javax.swing.JTextField txt_idSeguro_Buscar_Seguros;
     private javax.swing.JTextField txt_id_Buscar_Banco;
     private javax.swing.JTextField txt_id_cliente;
+    private javax.swing.JTextField txt_montoEmpresas;
     private javax.swing.JFormattedTextField txt_monto_seguro;
     private javax.swing.JTextField txt_nombre_Buscar;
+    private javax.swing.JTextField txt_plazo;
+    private javax.swing.JTextField txt_reperesentanteEmpresa;
     private javax.swing.JTextField txt_s;
+    private javax.swing.JTextField txt_tazaEmpresa;
     private javax.swing.JTextField txt_tm;
     private javax.swing.JLabel usuario_label_buscar;
     private javax.swing.JLabel usuario_label_domicilio;
