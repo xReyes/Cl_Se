@@ -2,6 +2,7 @@
 import DTO.Bancos_DTO;
 import DTO.Clientes_DTO;
 import DTO.CuentasDTO;
+import DTO.Empresa_DTO;
 import DTO.Movimientos_DTO;
 import DTO.Seguros_DTO;
 import DTO.Usuarios_DTO;
@@ -82,6 +83,7 @@ public class Servidor extends javax.swing.JFrame {
                     Usuario user = new Usuario();
                     Seguros_DTO seguros_dto = new Seguros_DTO();
                     Usuarios_DTO usuariosDTO = new Usuarios_DTO();
+                    Empresa_DTO dtoE = new Empresa_DTO();
                     //*****
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
@@ -311,6 +313,37 @@ public class Servidor extends javax.swing.JFrame {
                             usuariosDTO.Search(usuariosDTO, conn);
 
                             mensaje = usuariosDTO.getId_usuarios() + " " + usuariosDTO.getNombre() + " " + usuariosDTO.getA_paterno() + " " + usuariosDTO.getA_materno() + " " + usuariosDTO.getTelefono() + " " + usuariosDTO.getEmail() + " " + usuariosDTO.getDomicilio() + " ";
+                            break;
+
+                        case "NewEmpresa":
+                            dtoE.setFecha_apertura(variables[1]);
+                            dtoE.setMonto(variables[2]);
+                            dtoE.setPlazo(variables[3]);
+                            dtoE.setTaza(variables[4]);
+                            dtoE.setRepresentante(variables[5]);
+                            dtoE.setId_banco(variables[6]);
+                            dtoE.setTipo_cuenta(variables[7]);
+                            dtoE.Insert(dtoE, conn);
+                            JOptionPane.showMessageDialog(null, "Empresa Agregada con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+
+                        case "SearchEmpresa":
+                            dtoE.setId_empresa(variables[1]);
+                            dtoE.Search(dtoE, conn);
+                            mensaje = dtoE.getId_empresa() + " " + dtoE.getFecha_apertura() + " " + dtoE.getMonto() + " " + dtoE.getPlazo() + " " + dtoE.getTaza() + " " + dtoE.getRepresentante() + " " + dtoE.getId_banco() + " " + dtoE.getTipo_cuenta() + " ";
+                            break;
+                        case "EditEmpresa":
+                            dtoE.setId_empresa(variables[1]);
+                            dtoE.setFecha_apertura(variables[2]);
+                            dtoE.setMonto(variables[3]);
+                            dtoE.setPlazo(variables[4]);
+                            dtoE.setTaza(variables[5]);
+                            dtoE.setRepresentante(variables[6]);
+                            dtoE.setId_banco(variables[7]);
+                            dtoE.setTipo_cuenta(variables[8]);
+
+                            dtoE.Edit(dtoE, conn);
+                            JOptionPane.showMessageDialog(null, "Empresa Editada con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
 
                         default:
