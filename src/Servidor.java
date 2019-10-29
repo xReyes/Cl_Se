@@ -140,30 +140,30 @@ public class Servidor extends javax.swing.JFrame {
                             break;
 
                         case "EditMovimiento":
-
-//                            movimiento_dto.setId_movimiento(variables[1]);
+                            Date now1 = new Date(System.currentTimeMillis());
+                            movimiento_dto.setId_movimiento(variables[1]);
                             movimiento_dto.setTipo_movimiento(variables[2]);
-//                            movimiento_dto.setFecha_movimiento(String.valueOf(now));
+                            movimiento_dto.setFecha_movimiento(String.valueOf(now1));
                             movimiento_dto.setSaldo(Double.parseDouble(variables[9]));
                             movimiento_dto.setN_cuenta(variables[10]);
                             movimiento_dto.setCuenta_destino(variables[11]);
 
-//                            movimiento_dto.Edit(movimiento_dto, conn);
+                            movimiento_dto.Edit(movimiento_dto, conn);
                             JOptionPane.showMessageDialog(null, "Movimiento Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
 
                             break;
                         case "DeleteMovimiento":
 
-//                            movimiento_dto.setId_movimiento(variables[1]);
-//                            movimiento_dto.Delete(movimiento_dto, conn);
+                            movimiento_dto.setId_movimiento(variables[1]);
+                            movimiento_dto.Delete(movimiento_dto, conn);
                             JOptionPane.showMessageDialog(null, "Movimiento Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
 
                             break;
                         case "SearchMovimiento":
 
-//                            movimiento_dto.setId_movimiento(variables[1]);
-//                            movimiento_dto.Search(movimiento_dto, conn);
-//                            mensaje = movimiento_dto.getId_movimiento() + " " + movimiento_dto.getTipo_movimiento() + " " + movimiento_dto.getFecha_movimiento() + " " + movimiento_dto.getSaldo() + " " + movimiento_dto.getN_cuenta() + " " + movimiento_dto.getCuenta_destino() + " ";
+                            movimiento_dto.setId_movimiento(variables[1]);
+                            movimiento_dto.Search(movimiento_dto, conn);
+                            mensaje = movimiento_dto.getId_movimiento() + " " + movimiento_dto.getTipo_movimiento() + " " + movimiento_dto.getFecha_movimiento() + " " + movimiento_dto.getSaldo() + " " + movimiento_dto.getN_cuenta() + " " + movimiento_dto.getCuenta_destino() + " ";
                             break;
 
                         case "NewBanco":
