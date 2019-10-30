@@ -160,7 +160,7 @@ public class Clientes_DTO {
 
     public void Search(Clientes_DTO dto, Connection conn) throws SQLException {
 
-        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM clientes WHERE nombre_Cliente = '" + this.nombre + "';");
+        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM clientes WHERE id_clientes = '" + this.id_clientes + "' AND estado ='Activo';");
         rs = stmt1.executeQuery();
 
         if (rs.next()) {
