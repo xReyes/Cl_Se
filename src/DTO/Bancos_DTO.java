@@ -114,9 +114,9 @@ public class Bancos_DTO {
 
     public void Search(Bancos_DTO dto, Connection conn) throws SQLException {
 
-        PreparedStatement stmt1 = conn.prepareStatement("SELECT banco.*, CONCAT(id_clientes, '_', nombre_Cliente, ' ', a_paterno, ' ', a_materno) AS cliente "
+        PreparedStatement stmt1 = conn.prepareStatement("SELECT banco.*, CONCAT(id_clientes, '_', nombre_Cliente, '_', a_paterno, '_', a_materno) AS cliente "
                 + "FROM banco INNER JOIN clientes ON banco.id_cliente = clientes.id_clientes "
-                + "WHERE id_banco = '" + this.id_banco + "';");
+                + "WHERE id_banco = '" + this.id_banco + "' AND banco.estado = 'Activo';");
         rs = stmt1.executeQuery();
 
         if (rs.next()) {

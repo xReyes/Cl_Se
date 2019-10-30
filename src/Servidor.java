@@ -124,7 +124,7 @@ public class Servidor extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Cliente Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         case "SearchCliente":
-                            cliente_dto.setNombre(variables[1]);
+                            cliente_dto.setId_clientes(variables[1]);
                             cliente_dto.Search(cliente_dto, conn);
                             mensaje = cliente_dto.getId_clientes() + " " + cliente_dto.getNombre() + " " + cliente_dto.getAp_Paterno() + " " + cliente_dto.getAp_Materno() + " " + cliente_dto.getSexo() + " " + cliente_dto.getDireccion() + " " + cliente_dto.getTelefono() + " " + cliente_dto.getEmail() + " " + cliente_dto.getPais() + " " + cliente_dto.getTipo_cuenta() + " ";
                             break;
