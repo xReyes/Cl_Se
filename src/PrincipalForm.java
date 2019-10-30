@@ -1,6 +1,6 @@
 
 import DTO.Clientes_DTO;
-import validaciones.validaciones;
+import Validaciones.validaciones;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import javax.activation.DataHandler;
-//import javax.activation.FileDataSource;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -96,12 +96,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             Generar_ID_cliente();
             Generar_Datos_Seguros();
             fecha();
-            fechaCuenta();
             llenarComboNC();
 
             JLabel_N_Cuenta.setText(Usuario.id_usuario);
-            
-            jTextFieldNoDeCuenta.setText(generarNoDeCuenta());
 
             txt_fm.setText(String.valueOf(now));
 
@@ -251,18 +248,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         combo_Tipo_Cuenta.setSelectedIndex(0);
 
     }
-    
-    public void limpiar_cuenta() {
-        
-        limpiar_Campos(jTextFieldBuscarCuenta);
-        limpiar_Campos(jTextFieldIdUsuarioCuenta);
-        limpiar_Campos(jTextFieldNoDeCuenta);
-        jTextFieldNoDeCuenta.setText(generarNoDeCuenta());
-        limpiar_Campos(jTextFieldSaldoAperturaCuenta);
-        
-        jComboBoxClienteCuenta.setSelectedIndex(0);
-        jComboBoxClienteCuenta.setSelectedIndex(0);
-    }
 
     public void limpiar_Movimiento() {
 
@@ -341,7 +326,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             Genener_ID_Empresas_Seguros(conn.Conexion());
             Genener_N_Cuenta_Seguros(conn.Conexion());
-            generarClientesComboCuentas(conn.Conexion());
 
         } catch (SQLException e) {
         }
@@ -381,22 +365,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
 
     }
-    
-    public void generarClientesComboCuentas(Connection conn) throws SQLException {
-        
-        PreparedStatement stm1 = conn.prepareStatement("SELECT CONCAT(id_clientes, '_', CONCAT(nombre_Cliente,' ', a_paterno, ' ', a_materno)) AS cliente "
-                + "FROM clientes;");
-        ResultSet rs = null;
-        rs = stm1.executeQuery();
-
-        jComboBoxClienteCuenta.addItem("Selecciona...");
-
-        while (rs.next()) {
-
-            jComboBoxClienteCuenta.addItem(rs.getString("cliente"));
-
-        }
-    }
 
     private void fecha() {
 
@@ -405,15 +373,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
 
         txt_fm.setText(String.valueOf(now));
-    }
-    
-    public void fechaCuenta() {
-        
-        Date now = new Date();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
-
-        jTextFieldFechaAperturaCuenta.setText(date.format(now));
     }
 
     public void limpiar_Banco() {
@@ -444,19 +403,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
         return email;
 
-    }
-    
-    public String generarNoDeCuenta() {
-        
-        int valor = 0;
-        String noDeCuenta = "";
-        for (int i = 0; i < 7; i ++) {
-            
-            valor = (int)Math.floor(Math.random()*9);
-            noDeCuenta = noDeCuenta + String.valueOf(valor);
-        }
-        
-        return noDeCuenta;
     }
 
     /**
@@ -535,6 +481,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         usuarios_jButton_eliminar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
+        jTextFieldIdClienteCuenta = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jTextFieldIdUsuarioCuenta = new javax.swing.JTextField();
         jTextFieldBuscarCuenta = new javax.swing.JTextField();
@@ -551,9 +498,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jButtonGuardarCuenta = new javax.swing.JButton();
         jButtonEditarCuenta = new javax.swing.JButton();
         jButtonEliminarCuenta = new javax.swing.JButton();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
-        jComboBoxClienteCuenta = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         txt_buscar_id = new javax.swing.JTextField();
@@ -647,7 +591,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel11.setFont(new java.awt.Font("Segoe UI Emoji", 0, 24)); // NOI18N
         jLabel11.setText("Bienvenido(a) a Nuestro Sistema Bancario");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(280, 220, 450, 27);
+        jLabel11.setBounds(280, 220, 450, 26);
 
         JTree_Inicio.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Inicio");
@@ -839,7 +783,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         combo_Tipo_Cuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Premier" }));
 
         combo_Pais.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        combo_Pais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afganistan", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyan", "Bahamas", "Banglades", "Barbados", "Barein", "Belgica", "Belice", "Benin", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Butan", "Cabo Verde", "Camboya", "Camerun", "Canada", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos arabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "Espana", "Estados Unidos", "Estonia", "Etiopaa", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabon", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisau", "Haiti", "Honduras", "Hungria", "India", "Indonesia", "Irak", "Iran", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomon", "Israel", "Italia", "Jamaica", "Japon", "Jordania", "Kazajistan", "Kenia", "Kirguistan", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Mali", "Malta", "Marruecos", "Mauricio", "Mauritania", "Mexico", "Micronesia", "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Noruega", "Nueva Zelanda", "Oman", "Paises Bajos", "Pakistan", "Palaos", "Panama", "Papua Nueva Guinea", "Paraguay", "Peru", "Polonia", "Portugal", "Reino Unido", "Republica Centroafricana", "Republica Checa", "Republica del Congo", "Republica Democrática del Congo", "Republica Dominicana", "Republica Sudafricana", "Ruanda", "Rumania", "Rusia", "Samoa", "San Cristobal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucia", "Santo Tome y Principe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudan", "Sudan del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistan", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Tunez", "Turkmenistan", "Turquia", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue" }));
+        combo_Pais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afganistan", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyan", "Bahamas", "Banglades", "Barbados", "Barein", "Belgica", "Belice", "Benin", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Butan", "Cabo Verde", "Camboya", "Camerun", "Canada", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos arabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "Espana", "Estados Unidos", "Estonia", "Etiopaa", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabon", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisau", "Haiti", "Honduras", "Hungria", "India", "Indonesia", "Irak", "Iran", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomon", "Israel", "Italia", "Jamaica", "Japon", "Jordania", "Kazajistan", "Kenia", "Kirguistan", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Mali", "Malta", "Marruecos", "Mauricio", "Mauritania", "Mexico", "Micronesia", "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Noruega", "Nueva Zelanda", "Oman", "Paises Bajos", "Pakistan", "Palaos", "Panama", "Papua Nueva Guinea", "Paraguay", "Peru", "Polonia", "Portugal", "Reino Unido", "Republica Centroafricana", "Republica Checa", "Republica del Congo", "Republica DemocrÃ¡tica del Congo", "Republica Dominicana", "Republica Sudafricana", "Ruanda", "Rumania", "Rusia", "Samoa", "San Cristobal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucia", "Santo Tome y Principe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudan", "Sudan del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistan", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Tunez", "Turkmenistan", "Turquia", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue" }));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Nombre:");
@@ -1014,7 +958,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         usuario_label_id1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario_label_id1.setText("Usuario Id");
         JPanel_Usuarios.add(usuario_label_id1);
-        usuario_label_id1.setBounds(70, 90, 66, 17);
+        usuario_label_id1.setBounds(70, 90, 61, 17);
 
         usuario_txt_id1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         JPanel_Usuarios.add(usuario_txt_id1);
@@ -1023,7 +967,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         usuario_label_nombre2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario_label_nombre2.setText("Nombre");
         JPanel_Usuarios.add(usuario_label_nombre2);
-        usuario_label_nombre2.setBounds(70, 140, 50, 17);
+        usuario_label_nombre2.setBounds(70, 140, 49, 17);
 
         usuario_txt_nombre2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         JPanel_Usuarios.add(usuario_txt_nombre2);
@@ -1059,7 +1003,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         usuario_label_email1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario_label_email1.setText("Email:");
         JPanel_Usuarios.add(usuario_label_email1);
-        usuario_label_email1.setBounds(470, 190, 38, 17);
+        usuario_label_email1.setBounds(470, 190, 36, 17);
 
         usuario_txt_email1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         JPanel_Usuarios.add(usuario_txt_email1);
@@ -1072,7 +1016,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         usuario_label_telefono1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario_label_telefono1.setText("Telefono:");
         JPanel_Usuarios.add(usuario_label_telefono1);
-        usuario_label_telefono1.setBounds(470, 140, 60, 17);
+        usuario_label_telefono1.setBounds(470, 140, 57, 17);
 
         usuario_label_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario_label_buscar.setText("Buscar por A.paterno:");
@@ -1099,7 +1043,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_nuevo);
-        usuarios_jButton_nuevo.setBounds(100, 420, 80, 21);
+        usuarios_jButton_nuevo.setBounds(100, 420, 80, 23);
 
         usuarios_jButton_guardar.setText("Guardar");
         usuarios_jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -1108,7 +1052,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_guardar);
-        usuarios_jButton_guardar.setBounds(200, 420, 80, 21);
+        usuarios_jButton_guardar.setBounds(200, 420, 80, 23);
 
         usuarios_jButton_cancelar.setText("Cancelar");
         usuarios_jButton_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -1117,7 +1061,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_cancelar);
-        usuarios_jButton_cancelar.setBounds(310, 420, 80, 21);
+        usuarios_jButton_cancelar.setBounds(310, 420, 80, 23);
 
         usuarios_jButton_editar.setText("Editar");
         usuarios_jButton_editar.addActionListener(new java.awt.event.ActionListener() {
@@ -1126,7 +1070,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_editar);
-        usuarios_jButton_editar.setBounds(420, 420, 80, 21);
+        usuarios_jButton_editar.setBounds(420, 420, 80, 23);
 
         usuarios_jButton_eliminar.setText("Eliminar");
         usuarios_jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -1135,7 +1079,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_eliminar);
-        usuarios_jButton_eliminar.setBounds(530, 420, 80, 21);
+        usuarios_jButton_eliminar.setBounds(530, 420, 80, 23);
 
         JTabbedPrincipal.addTab("Usuarios", JPanel_Usuarios);
 
@@ -1145,11 +1089,12 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("Cliente id");
 
+        jTextFieldIdClienteCuenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel24.setText("Usuario id");
 
         jTextFieldIdUsuarioCuenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextFieldIdUsuarioCuenta.setEnabled(false);
 
         jTextFieldBuscarCuenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -1173,7 +1118,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         jLabel23.setText("Fecha apertura");
 
         jTextFieldFechaAperturaCuenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextFieldFechaAperturaCuenta.setEnabled(false);
 
         jComboBoxTipoCuenta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBoxTipoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nomina", "cheques" }));
@@ -1210,29 +1154,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jButtonNuevo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonNuevo.setText("Nuevo");
-        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevoActionPerformed(evt);
-            }
-        });
-
-        jButtonCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-
-        jComboBoxClienteCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxClienteCuenta.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxClienteCuentaItemStateChanged(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1247,20 +1168,14 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                             .addComponent(jLabel26)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButtonCancelar)
-                    .addComponent(jComboBoxTipoCuenta, javax.swing.GroupLayout.Alignment.LEADING, 0, 135, Short.MAX_VALUE)
-                    .addComponent(jTextFieldSaldoAperturaCuenta, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldFechaAperturaCuenta, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNoDeCuenta, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxClienteCuenta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldIdClienteCuenta, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jComboBoxTipoCuenta, 0, 135, Short.MAX_VALUE)
+                            .addComponent(jTextFieldSaldoAperturaCuenta)
+                            .addComponent(jTextFieldFechaAperturaCuenta)
+                            .addComponent(jTextFieldNoDeCuenta))
                         .addGap(37, 37, 37)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -1273,16 +1188,15 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                                 .addComponent(jLabel24)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextFieldIdUsuarioCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(166, 166, 166)))
-                        .addContainerGap(22, Short.MAX_VALUE))
+                                .addGap(166, 166, 166))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(197, 197, 197)
                         .addComponent(jButtonGuardarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addGap(47, 47, 47)
                         .addComponent(jButtonEditarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jButtonEliminarCuenta)
-                        .addGap(104, 104, 104))))
+                        .addGap(55, 55, 55)
+                        .addComponent(jButtonEliminarCuenta)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1290,9 +1204,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                 .addGap(82, 82, 82)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
+                    .addComponent(jTextFieldIdClienteCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24)
-                    .addComponent(jTextFieldIdUsuarioCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxClienteCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldIdUsuarioCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
@@ -1321,10 +1235,8 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGuardarCuenta)
                     .addComponent(jButtonEditarCuenta)
-                    .addComponent(jButtonEliminarCuenta)
-                    .addComponent(jButtonNuevo)
-                    .addComponent(jButtonCancelar))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jButtonEliminarCuenta))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         JTabbedPrincipal.addTab("Cuentas", jPanel4);
@@ -1880,7 +1792,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         Combo_Empresas_Seguros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         Combo_Tipo_Seguro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        Combo_Tipo_Seguro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona...", "Vida", "Poliza Temporal", "Ordinario de vida o vitalicio", "Seguro Dotal", "Gastos Medicos Mayores", "Salud", "Responsabilidad civil y riesgos profesionales", "Seguros de Auto", "Protección de Hogar", "Otra.." }));
+        Combo_Tipo_Seguro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona...", "Vida", "Poliza Temporal", "Ordinario de vida o vitalicio", "Seguro Dotal", "Gastos Medicos Mayores", "Salud", "Responsabilidad civil y riesgos profesionales", "Seguros de Auto", "ProtecciÃ³n de Hogar", "Otra.." }));
         Combo_Tipo_Seguro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Combo_Tipo_SeguroActionPerformed(evt);
@@ -2278,7 +2190,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             String fechaApertura;
             String saldoApertura;
 
-            idCliente = jComboBoxClienteCuenta.getSelectedItem().toString().substring(0, 1);
+            idCliente = v.reemplazar_espacios(jTextFieldIdClienteCuenta);
             idUsuario = v.reemplazar_espacios(jTextFieldIdUsuarioCuenta);
             noDeCuenta = v.reemplazar_espacios(jTextFieldNoDeCuenta);
             tipoCuenta = v.reemplazar_espacios_combos(jComboBoxTipoCuenta);
@@ -2307,8 +2219,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
     private void jButtonEditarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCuentaActionPerformed
         // TODO add your handling code here:
-        
-        
     }//GEN-LAST:event_jButtonEditarCuentaActionPerformed
 
     private void jButtonEliminarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCuentaActionPerformed
@@ -2601,7 +2511,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                             texto.setText("Movimientos de Cuenta PDF");
 
                             BodyPart adjunto = new MimeBodyPart();
-                            //adjunto.setDataHandler(new DataHandler(new FileDataSource(file.getAbsolutePath())));
+                            adjunto.setDataHandler(new DataHandler(new FileDataSource(file.getAbsolutePath())));
                             adjunto.setFileName("Movimientos_de_Cuenta_PDF.pdf");
 
                             // Una MultiParte para agrupar texto e imagen.
@@ -3317,32 +3227,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jComboBoxClienteCuentaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxClienteCuentaItemStateChanged
-        // TODO add your handling code here:
-        
-        jTextFieldIdUsuarioCuenta.setText(jComboBoxClienteCuenta.getSelectedItem().toString().substring(0, 1));
-    }//GEN-LAST:event_jComboBoxClienteCuentaItemStateChanged
-
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        // TODO add your handling code here:
-        int a = JOptionPane.showConfirmDialog(this, "Estas Seguro de Cancelar?");
-
-        if (JOptionPane.OK_OPTION == a) {
-
-            limpiar_cuenta();
-
-            JTabbedPrincipal.setSelectedIndex(0);
-
-        } else {
-
-        }
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
-        // TODO add your handling code here:
-        limpiar_cuenta();
-    }//GEN-LAST:event_jButtonNuevoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -3474,7 +3358,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             String[] variables;
             variables = cad.split(" ");
 
-            jComboBoxClienteCuenta.setSelectedItem(variables[0]);
+            jTextFieldIdClienteCuenta.setText(variables[0]);
             jTextFieldIdUsuarioCuenta.setText(variables[1]);
             jTextFieldNoDeCuenta.setText(variables[2]);
             jTextFieldFechaAperturaCuenta.setText(variables[3]);
@@ -3647,12 +3531,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonBuscarCuenta;
-    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEditarCuenta;
     private javax.swing.JButton jButtonEliminarCuenta;
     private javax.swing.JButton jButtonGuardarCuenta;
-    private javax.swing.JButton jButtonNuevo;
-    private javax.swing.JComboBox<String> jComboBoxClienteCuenta;
     private javax.swing.JComboBox<String> jComboBoxTipoCuenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -3710,6 +3591,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldBuscarCuenta;
     private javax.swing.JTextField jTextFieldFechaAperturaCuenta;
+    private javax.swing.JTextField jTextFieldIdClienteCuenta;
     private javax.swing.JTextField jTextFieldIdUsuarioCuenta;
     private javax.swing.JTextField jTextFieldNoDeCuenta;
     private javax.swing.JTextField jTextFieldSaldoAperturaCuenta;
