@@ -110,6 +110,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
 
             txt_id_cliente.setVisible(false);
             JLabel_N_Cuenta.setVisible(false);
+            usuario_txt_id1.setEnabled(false);
 
             v.validar_Solo_Letras(txt_Nombre);
             v.validar_Solo_Letras(txt_Ap_Paterno);
@@ -269,6 +270,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         limpiar_Campos(usuario_txt_telefono1);
         limpiar_Campos(usuario_txt_email1);
         limpiar_Campos(usuario_txt_domicilio);
+        limpiar_Campos(usuario_txt_id1);
+        limpiar_Campos(usuario_txt_buscar);
+        
 
     }
 
@@ -457,7 +461,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         btn_Editar_Cliente = new javax.swing.JButton();
         txt_id_cliente = new javax.swing.JTextField();
         JPanel_Usuarios = new javax.swing.JPanel();
-        usuario_label_id1 = new javax.swing.JLabel();
         usuario_txt_id1 = new javax.swing.JTextField();
         usuario_label_nombre2 = new javax.swing.JLabel();
         usuario_txt_nombre2 = new javax.swing.JTextField();
@@ -783,7 +786,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         combo_Tipo_Cuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Premier" }));
 
         combo_Pais.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        combo_Pais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afganistan", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyan", "Bahamas", "Banglades", "Barbados", "Barein", "Belgica", "Belice", "Benin", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Butan", "Cabo Verde", "Camboya", "Camerun", "Canada", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos arabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "Espana", "Estados Unidos", "Estonia", "Etiopaa", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabon", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisau", "Haiti", "Honduras", "Hungria", "India", "Indonesia", "Irak", "Iran", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomon", "Israel", "Italia", "Jamaica", "Japon", "Jordania", "Kazajistan", "Kenia", "Kirguistan", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Mali", "Malta", "Marruecos", "Mauricio", "Mauritania", "Mexico", "Micronesia", "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Noruega", "Nueva Zelanda", "Oman", "Paises Bajos", "Pakistan", "Palaos", "Panama", "Papua Nueva Guinea", "Paraguay", "Peru", "Polonia", "Portugal", "Reino Unido", "Republica Centroafricana", "Republica Checa", "Republica del Congo", "Republica DemocrÃ¡tica del Congo", "Republica Dominicana", "Republica Sudafricana", "Ruanda", "Rumania", "Rusia", "Samoa", "San Cristobal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucia", "Santo Tome y Principe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudan", "Sudan del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistan", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Tunez", "Turkmenistan", "Turquia", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue" }));
+        combo_Pais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Afganistan", "Albania", "Alemania", "Andorra", "Angola", "Antigua y Barbuda", "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyan", "Bahamas", "Banglades", "Barbados", "Barein", "Belgica", "Belice", "Benin", "Bielorrusia", "Birmania", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Butan", "Cabo Verde", "Camboya", "Camerun", "Canada", "Catar", "Chad", "Chile", "China", "Chipre", "Ciudad del Vaticano", "Colombia", "Comoras", "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia", "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador", "Emiratos arabes Unidos", "Eritrea", "Eslovaquia", "Eslovenia", "Espana", "Estados Unidos", "Estonia", "Etiopaa", "Filipinas", "Finlandia", "Fiyi", "Francia", "Gabon", "Gambia", "Georgia", "Ghana", "Granada", "Grecia", "Guatemala", "Guyana", "Guinea", "Guinea ecuatorial", "Guinea-Bisau", "Haiti", "Honduras", "Hungria", "India", "Indonesia", "Irak", "Iran", "Irlanda", "Islandia", "Islas Marshall", "Islas Salomon", "Israel", "Italia", "Jamaica", "Japon", "Jordania", "Kazajistan", "Kenia", "Kirguistan", "Kiribati", "Kuwait", "Laos", "Lesoto", "Letonia", "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo", "Macedonia del Norte", "Madagascar", "Malasia", "Malaui", "Maldivas", "Mali", "Malta", "Marruecos", "Mauricio", "Mauritania", "Mexico", "Micronesia", "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Noruega", "Nueva Zelanda", "Oman", "Paises Bajos", "Pakistan", "Palaos", "Panama", "Papua Nueva Guinea", "Paraguay", "Peru", "Polonia", "Portugal", "Reino Unido", "Republica Centroafricana", "Republica Checa", "Republica del Congo", "Republica Democrática del Congo", "Republica Dominicana", "Republica Sudafricana", "Ruanda", "Rumania", "Rusia", "Samoa", "San Cristobal y Nieves", "San Marino", "San Vicente y las Granadinas", "Santa Lucia", "Santo Tome y Principe", "Senegal", "Serbia", "Seychelles", "Sierra Leona", "Singapur", "Siria", "Somalia", "Sri Lanka", "Suazilandia", "Sudan", "Sudan del Sur", "Suecia", "Suiza", "Surinam", "Tailandia", "Tanzania", "Tayikistan", "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Tunez", "Turkmenistan", "Turquia", "Tuvalu", "Ucrania", "Uganda", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Yibuti", "Zambia", "Zimbabue" }));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Nombre:");
@@ -955,14 +958,9 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         JPanel_Usuarios.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuarios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         JPanel_Usuarios.setLayout(null);
 
-        usuario_label_id1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        usuario_label_id1.setText("Usuario Id");
-        JPanel_Usuarios.add(usuario_label_id1);
-        usuario_label_id1.setBounds(70, 90, 61, 17);
-
         usuario_txt_id1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         JPanel_Usuarios.add(usuario_txt_id1);
-        usuario_txt_id1.setBounds(160, 80, 100, 30);
+        usuario_txt_id1.setBounds(160, 80, 70, 30);
 
         usuario_label_nombre2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario_label_nombre2.setText("Nombre");
@@ -1027,59 +1025,86 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         JPanel_Usuarios.add(usuario_txt_buscar);
         usuario_txt_buscar.setBounds(540, 20, 120, 30);
 
+        usuarios_jButton_buscar.setBackground(new java.awt.Color(255, 255, 255));
+        usuarios_jButton_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
         usuarios_jButton_buscar.setText("Buscar");
+        usuarios_jButton_buscar.setContentAreaFilled(false);
+        usuarios_jButton_buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuarios_jButton_buscar.setOpaque(false);
+        usuarios_jButton_buscar.setPreferredSize(new java.awt.Dimension(65, 59));
+        usuarios_jButton_buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         usuarios_jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarios_jButton_buscarActionPerformed(evt);
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_buscar);
-        usuarios_jButton_buscar.setBounds(670, 20, 73, 30);
+        usuarios_jButton_buscar.setBounds(670, 20, 80, 60);
 
+        usuarios_jButton_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
         usuarios_jButton_nuevo.setText("Nuevo");
+        usuarios_jButton_nuevo.setContentAreaFilled(false);
+        usuarios_jButton_nuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuarios_jButton_nuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         usuarios_jButton_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarios_jButton_nuevoActionPerformed(evt);
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_nuevo);
-        usuarios_jButton_nuevo.setBounds(100, 420, 80, 23);
+        usuarios_jButton_nuevo.setBounds(160, 400, 80, 60);
 
+        usuarios_jButton_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
         usuarios_jButton_guardar.setText("Guardar");
+        usuarios_jButton_guardar.setContentAreaFilled(false);
+        usuarios_jButton_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuarios_jButton_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         usuarios_jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarios_jButton_guardarActionPerformed(evt);
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_guardar);
-        usuarios_jButton_guardar.setBounds(200, 420, 80, 23);
+        usuarios_jButton_guardar.setBounds(240, 400, 80, 60);
 
+        usuarios_jButton_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         usuarios_jButton_cancelar.setText("Cancelar");
+        usuarios_jButton_cancelar.setContentAreaFilled(false);
+        usuarios_jButton_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuarios_jButton_cancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         usuarios_jButton_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarios_jButton_cancelarActionPerformed(evt);
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_cancelar);
-        usuarios_jButton_cancelar.setBounds(310, 420, 80, 23);
+        usuarios_jButton_cancelar.setBounds(320, 400, 80, 60);
 
+        usuarios_jButton_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         usuarios_jButton_editar.setText("Editar");
+        usuarios_jButton_editar.setContentAreaFilled(false);
+        usuarios_jButton_editar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuarios_jButton_editar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         usuarios_jButton_editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarios_jButton_editarActionPerformed(evt);
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_editar);
-        usuarios_jButton_editar.setBounds(420, 420, 80, 23);
+        usuarios_jButton_editar.setBounds(390, 400, 80, 60);
 
+        usuarios_jButton_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
         usuarios_jButton_eliminar.setText("Eliminar");
+        usuarios_jButton_eliminar.setContentAreaFilled(false);
+        usuarios_jButton_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        usuarios_jButton_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         usuarios_jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usuarios_jButton_eliminarActionPerformed(evt);
             }
         });
         JPanel_Usuarios.add(usuarios_jButton_eliminar);
-        usuarios_jButton_eliminar.setBounds(530, 420, 80, 23);
+        usuarios_jButton_eliminar.setBounds(460, 400, 80, 60);
 
         JTabbedPrincipal.addTab("Usuarios", JPanel_Usuarios);
 
@@ -1792,7 +1817,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
         Combo_Empresas_Seguros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         Combo_Tipo_Seguro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        Combo_Tipo_Seguro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona...", "Vida", "Poliza Temporal", "Ordinario de vida o vitalicio", "Seguro Dotal", "Gastos Medicos Mayores", "Salud", "Responsabilidad civil y riesgos profesionales", "Seguros de Auto", "ProtecciÃ³n de Hogar", "Otra.." }));
+        Combo_Tipo_Seguro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona...", "Vida", "Poliza Temporal", "Ordinario de vida o vitalicio", "Seguro Dotal", "Gastos Medicos Mayores", "Salud", "Responsabilidad civil y riesgos profesionales", "Seguros de Auto", "Protección de Hogar", "Otra.." }));
         Combo_Tipo_Seguro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Combo_Tipo_SeguroActionPerformed(evt);
@@ -2794,7 +2819,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             try {
                 //obtener mensaje del campo de texto y convertirlo en arrreglo byte
                 buscar_usuario = usuario_txt_buscar.getText().trim();
-                String mensaje = "SearchUsuario" + " " + buscar_usuario + " ";
+                String mensaje = "SearchUsuario_1" + " " + buscar_usuario + " ";
                 byte datos[] = mensaje.getBytes();
                 //          //crear enviarPaquete
 
@@ -2899,7 +2924,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
             try {
                 String id_usuario;
                 id_usuario = usuario_txt_id1.getText();
-                String mensaje = "DeleteUsuario " + id_usuario + " Registro Borrado";
+                String mensaje = "DeleteUsuario_1 " + id_usuario + " Registro Borrado";
                 byte datos[] = mensaje.getBytes();
                 //crear enviarPaquete
 
@@ -3626,7 +3651,6 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel usuario_label_buscar;
     private javax.swing.JLabel usuario_label_domicilio;
     private javax.swing.JLabel usuario_label_email1;
-    private javax.swing.JLabel usuario_label_id1;
     private javax.swing.JLabel usuario_label_materno;
     private javax.swing.JLabel usuario_label_nombre2;
     private javax.swing.JLabel usuario_label_paterno1;

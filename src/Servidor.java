@@ -283,7 +283,7 @@ public class Servidor extends javax.swing.JFrame {
 
                         case "NuevoUsuarioEditar":
 
-                            usuariosDTO.setNombre(variables[1]);
+                            usuariosDTO.setId_usuarios(variables[1]);
                             usuariosDTO.setNombre(variables[2]);
                             usuariosDTO.setA_paterno(variables[3]);
                             usuariosDTO.setA_materno(variables[4]);
@@ -297,7 +297,7 @@ public class Servidor extends javax.swing.JFrame {
 
                             break;
 
-                        case "NuevoUsuarioEliminar":
+                        case "DeleteUsuario_1":
 
                             usuariosDTO.setId_usuarios(variables[1]);
 
@@ -307,12 +307,13 @@ public class Servidor extends javax.swing.JFrame {
 
                             break;
 
-                        case "SearcUsuario":
+                        case "SearcUsuario_1":
                             usuariosDTO.setId_usuarios(variables[1]);
 
                             usuariosDTO.Search(usuariosDTO, conn);
 
                             mensaje = usuariosDTO.getId_usuarios() + " " + usuariosDTO.getNombre() + " " + usuariosDTO.getA_paterno() + " " + usuariosDTO.getA_materno() + " " + usuariosDTO.getTelefono() + " " + usuariosDTO.getEmail() + " " + usuariosDTO.getDomicilio() + " ";
+
                             break;
 
                         case "NewEmpresa":
