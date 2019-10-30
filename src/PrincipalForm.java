@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import javax.activation.DataHandler;
-//import javax.activation.FileDataSource;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -2601,7 +2601,7 @@ public class PrincipalForm extends javax.swing.JFrame implements Runnable {
                             texto.setText("Movimientos de Cuenta PDF");
 
                             BodyPart adjunto = new MimeBodyPart();
-                            //adjunto.setDataHandler(new DataHandler(new FileDataSource(file.getAbsolutePath())));
+                            adjunto.setDataHandler(new DataHandler(new FileDataSource(file.getAbsolutePath())));
                             adjunto.setFileName("Movimientos_de_Cuenta_PDF.pdf");
 
                             // Una MultiParte para agrupar texto e imagen.
