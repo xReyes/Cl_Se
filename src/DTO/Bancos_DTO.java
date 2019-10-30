@@ -9,9 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JComboBox;
 
 /**
  *
@@ -117,7 +114,9 @@ public class Bancos_DTO {
 
     public void Search(Bancos_DTO dto, Connection conn) throws SQLException {
 
-        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM banco WHERE sucursal = '" + this.sucursal + "';");
+        PreparedStatement stmt1 = conn.prepareStatement("SELECT banco.*, CONCAT(id_clientes, '_', nombre_Cliente, ' ', a_paterno, ' ', a_materno) AS cliente "
+                + "FROM banco INNER JOIN clientes ON banco.id_cliente = clientes.id_clientes "
+                + "WHERE id_banco = '" + this.id_banco + "';");
         rs = stmt1.executeQuery();
 
         if (rs.next()) {
@@ -125,7 +124,7 @@ public class Bancos_DTO {
             this.telefono = rs.getString("telefono");
             this.direccion = rs.getString("direccion");
             this.sucursal = rs.getString("sucursal");
-            this.id_cliente = rs.getString("id_cliente");
+            this.id_cliente = rs.getString("cliente");
 
         }
 

@@ -2,7 +2,10 @@
 import DTO.Bancos_DTO;
 import DTO.Clientes_DTO;
 import DTO.CuentasDTO;
+import DTO.Empresa_DTO;
 import DTO.Movimientos_DTO;
+import DTO.Seguros_DTO;
+import DTO.Usuarios_DTO;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -72,11 +75,16 @@ public class Servidor extends javax.swing.JFrame {
                     Conexion obj = new Conexion();
                     conn = obj.Conexion();
 
+                    //***** DECLARACION DE LAS CLASES.
                     Clientes_DTO cliente_dto = new Clientes_DTO();
                     Movimientos_DTO movimiento_dto = new Movimientos_DTO();
                     Bancos_DTO banco_dto = new Bancos_DTO();
                     CuentasDTO cuentasDTO = new CuentasDTO();
                     Usuario user = new Usuario();
+                    Seguros_DTO seguros_dto = new Seguros_DTO();
+                    Usuarios_DTO usuariosDTO = new Usuarios_DTO();
+                    Empresa_DTO dtoE = new Empresa_DTO();
+                    //*****
 
                     String cad = (new String(recibirPaquete.getData(), 0, recibirPaquete.getLength()));
                     String[] variables;
@@ -130,6 +138,34 @@ public class Servidor extends javax.swing.JFrame {
                             movimiento_dto.Insert(movimiento_dto, conn);
                             JOptionPane.showMessageDialog(null, "Movimiento Agreado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
+
+                        case "EditMovimiento":
+                            Date now1 = new Date(System.currentTimeMillis());
+                            movimiento_dto.setId_movimiento(variables[1]);
+                            movimiento_dto.setTipo_movimiento(variables[2]);
+                            movimiento_dto.setFecha_movimiento(String.valueOf(now1));
+                            movimiento_dto.setSaldo(Double.parseDouble(variables[9]));
+                            movimiento_dto.setN_cuenta(variables[10]);
+                            movimiento_dto.setCuenta_destino(variables[11]);
+
+                            movimiento_dto.Edit(movimiento_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Movimiento Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "DeleteMovimiento":
+
+                            movimiento_dto.setId_movimiento(variables[1]);
+                            movimiento_dto.Delete(movimiento_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Movimiento Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "SearchMovimiento":
+
+                            movimiento_dto.setId_movimiento(variables[1]);
+                            movimiento_dto.Search(movimiento_dto, conn);
+                            mensaje = movimiento_dto.getId_movimiento() + " " + movimiento_dto.getTipo_movimiento() + " " + movimiento_dto.getFecha_movimiento() + " " + movimiento_dto.getSaldo() + " " + movimiento_dto.getN_cuenta() + " " + movimiento_dto.getCuenta_destino() + " ";
+                            break;
+
                         case "NewBanco":
                             banco_dto.setTelefono(variables[1]);
                             banco_dto.setDireccion(variables[2]);
@@ -153,7 +189,7 @@ public class Servidor extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Banco Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         case "SearchBanco":
-                            banco_dto.setSucursal(variables[1]);
+                            banco_dto.setId_banco(variables[1]);
                             banco_dto.Search(banco_dto, conn);
                             mensaje = banco_dto.getId_banco() + " " + banco_dto.getTelefono() + " " + banco_dto.getDireccion() + " " + banco_dto.getSucursal() + " " + banco_dto.getId_cliente() + " ";
                             break;
@@ -170,12 +206,12 @@ public class Servidor extends javax.swing.JFrame {
 
                             cuentasDTO.insert(cuentasDTO, conn);
                             break;
-                            
+
                         case "SearchCuenta":
-                            
+
                             cuentasDTO.setNoDeCuenta(Integer.parseInt(variables[1]));
                             cuentasDTO = cuentasDTO.search(cuentasDTO, conn);
-                            
+
                             mensaje = String.valueOf(cuentasDTO.getIdCliente()) + " " + String.valueOf(cuentasDTO.getIdUsuario()) + " " + String.valueOf(cuentasDTO.getNoDeCuenta()) + " " + cuentasDTO.getFechaApertura() + " " + cuentasDTO.getTipoCuenta() + " " + String.valueOf(cuentasDTO.getSaldoApertura()) + " ";
                             break;
 
@@ -194,6 +230,122 @@ public class Servidor extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Usuario Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
 
                             break;
+                        case "NewSure":
+                            seguros_dto.setEmpresa(variables[1]);
+                            seguros_dto.setTipo_seguro(variables[2]);
+                            seguros_dto.setMonto(variables[3]);
+                            seguros_dto.setCuenta(variables[4]);
+
+                            seguros_dto.Insert(seguros_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Seguro Agregado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "EditSure":
+                            seguros_dto.setId_seguro(variables[1]);
+                            seguros_dto.setEmpresa(variables[2]);
+                            seguros_dto.setTipo_seguro(variables[3]);
+                            seguros_dto.setMonto(variables[4]);
+                            seguros_dto.setCuenta(variables[5]);
+
+                            seguros_dto.Edit(seguros_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Seguro Editado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "DeleteSure":
+                            seguros_dto.setId_seguro(variables[1]);
+
+                            seguros_dto.Delete(seguros_dto, conn);
+                            JOptionPane.showMessageDialog(null, "Banco Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        case "SearchSure":
+                            seguros_dto.setId_seguro(variables[1]);
+
+                            seguros_dto.Search(seguros_dto, conn);
+                            mensaje = seguros_dto.getId_seguro() + " " + seguros_dto.getEmpresa() + " " + seguros_dto.getTipo_seguro() + " " + seguros_dto.getMonto() + " " + seguros_dto.getCuenta() + " ";
+
+                            break;
+
+                        case "NuevoUsuario":
+
+                            usuariosDTO.setNombre(variables[1]);
+                            usuariosDTO.setA_paterno(variables[2]);
+                            usuariosDTO.setA_materno(variables[3]);
+                            usuariosDTO.setTelefono(variables[4]);
+                            usuariosDTO.setEmail(variables[5]);
+                            usuariosDTO.setDomicilio(variables[6]);
+
+                            usuariosDTO.Insert(usuariosDTO, conn);
+
+                            JOptionPane.showMessageDialog(this, "Usuario agregado");
+
+                            break;
+
+                        case "NuevoUsuarioEditar":
+
+                            usuariosDTO.setNombre(variables[1]);
+                            usuariosDTO.setNombre(variables[2]);
+                            usuariosDTO.setA_paterno(variables[3]);
+                            usuariosDTO.setA_materno(variables[4]);
+                            usuariosDTO.setTelefono(variables[5]);
+                            usuariosDTO.setEmail(variables[6]);
+                            usuariosDTO.setDomicilio(variables[7]);
+
+                            usuariosDTO.Edit(usuariosDTO, conn);
+
+                            JOptionPane.showMessageDialog(this, "Usuario Editado");
+
+                            break;
+
+                        case "NuevoUsuarioEliminar":
+
+                            usuariosDTO.setId_usuarios(variables[1]);
+
+                            usuariosDTO.Delete(usuariosDTO, conn);
+
+                            JOptionPane.showMessageDialog(null, "Usuario Eliminado con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+
+                        case "SearcUsuario":
+                            usuariosDTO.setId_usuarios(variables[1]);
+
+                            usuariosDTO.Search(usuariosDTO, conn);
+
+                            mensaje = usuariosDTO.getId_usuarios() + " " + usuariosDTO.getNombre() + " " + usuariosDTO.getA_paterno() + " " + usuariosDTO.getA_materno() + " " + usuariosDTO.getTelefono() + " " + usuariosDTO.getEmail() + " " + usuariosDTO.getDomicilio() + " ";
+                            break;
+
+                        case "NewEmpresa":
+                            dtoE.setFecha_apertura(variables[1]);
+                            dtoE.setMonto(variables[2]);
+                            dtoE.setPlazo(variables[3]);
+                            dtoE.setTaza(variables[4]);
+                            dtoE.setRepresentante(variables[5]);
+                            dtoE.setId_banco(variables[6]);
+                            dtoE.setTipo_cuenta(variables[7]);
+                            dtoE.Insert(dtoE, conn);
+                            JOptionPane.showMessageDialog(null, "Empresa Agregada con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+
+                        case "SearchEmpresa":
+                            dtoE.setId_empresa(variables[1]);
+                            dtoE.Search(dtoE, conn);
+                            mensaje = dtoE.getId_empresa() + " " + dtoE.getFecha_apertura() + " " + dtoE.getMonto() + " " + dtoE.getPlazo() + " " + dtoE.getTaza() + " " + dtoE.getRepresentante() + " " + dtoE.getId_banco() + " " + dtoE.getTipo_cuenta() + " ";
+                            break;
+                        case "EditEmpresa":
+                            dtoE.setId_empresa(variables[1]);
+                            dtoE.setFecha_apertura(variables[2]);
+                            dtoE.setMonto(variables[3]);
+                            dtoE.setPlazo(variables[4]);
+                            dtoE.setTaza(variables[5]);
+                            dtoE.setRepresentante(variables[6]);
+                            dtoE.setId_banco(variables[7]);
+                            dtoE.setTipo_cuenta(variables[8]);
+
+                            dtoE.Edit(dtoE, conn);
+                            JOptionPane.showMessageDialog(null, "Empresa Editada con Exito", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+
                         default:
                             break;
                     }

@@ -78,7 +78,7 @@ public class CuentasDTO {
 
     public void insert(CuentasDTO dto, Connection conn) throws SQLException {
         PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO cuenta (n_cuenta, tipo_cuenta, id_movimiento, fecha_apertura, saldo_apertura, id_cliente, id_usuario) "
+                "INSERT INTO cuenta (n_cuenta, tipo_cuenta, fecha_apertura, saldo_apertura, id_cliente, id_usuario) "
                 + "VALUES  (?, ?, null, ?, ?, ?, ?);");
 
         ps.setInt(1, dto.getNoDeCuenta());

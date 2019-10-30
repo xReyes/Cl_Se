@@ -15,7 +15,10 @@ public class Usuario {
     private String email;
     private String domicilio;
 
+    public static String id_usuario;
+
     ResultSet rs;
+    ResultSet rs1;
 
     public void SetNombre(String nombre) {
         this.nombre = nombre;
@@ -130,14 +133,19 @@ public class Usuario {
 
     public boolean Login(Usuario dto, Connection conn) throws SQLException {
 
-        PreparedStatement stm = conn.prepareStatement("SELECT * FROM usuarios WHERE nombre = ? and password = ?; ");
-        stm.setString(1, dto.getNombre());
+        PreparedStatement stm = conn.prepareStatement("SELECT * FROM usuarios WHERE perfil = ? and password = ?; ");
+        stm.setString(1, dto.getPerfil());
         stm.setString(2, dto.getPassword());
         rs = stm.executeQuery();
 
         if (rs.next()) {
 
-            if (this.nombre.equals(rs.getString("nombre")) && this.password.equals(rs.getString("password"))) {
+            if (this.perfil.equals(rs.getString("perfil")) && this.password.equals(rs.getString("password"))) {
+                PreparedStatement stm1 = conn.prepareStatement("SELECT n_cuenta FROM cuenta WHERE id_cliente = '" + rs.getString("id_usuario") + "'; ");
+                rs1 = stm1.executeQuery();
+                if (rs1.next()) {
+                    id_usuario = rs1.getString("n_cuenta");
+                }
 
                 return true;
 
